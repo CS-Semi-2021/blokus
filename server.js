@@ -5,9 +5,26 @@ let fs = require('fs');
 const { isObject } = require('util');
 
 //HTTPサーバの作成
-let server = http.createServer(function(req, res){
-    res.writeHead(200, {'Content-Type' : 'text/html'});
-    res.end(fs.readFileSync(__dirname + `/index.html`, 'utf-8'));
+
+let server = http.createServer(function (req, res) {
+  //サーバー起動
+
+  let url = '.'+(req.url.endsWith("/") ? req.url + "flamingo.html" : req.url);
+  //URLの最後が/ならflamingo.htmlを表示し、それ以外はそのURLのファイル名を変数へ。
+
+  console.log(url);
+  //htmlでリクエストされるコンテンツをコンソールに出力
+
+  if (fs.existsSync(url)) {
+    //ファイルがあれば
+    fs.readFile(url, (err, data) => {
+      if (!err) {
+        //res.writeHead(200, {"Content-Type": "text/html"});  
+        res.writeHead(200, {"Content-Type": getType(url)});  //関数を用いてtext以外の拡張子にも対応
+        res.end(data);
+      }
+    });
+  }
 }).listen(3000);
 
 let name = new Array(); //ユーザーネーム
@@ -73,6 +90,25 @@ io.sockets.on('connection', function(soket){
         }
     });
 });
+
+function getType(_url) {
+  //拡張子をみて一致したらタイプを返す関数
+  var types = {
+    ".html": "text/html",
+    ".css": "text/css",
+    ".js": "text/javascript",
+    ".png": "image/png",
+    ".jpg": "image/jpeg",
+    ".gif": "image/gif",
+    ".svg": "svg+xml"
+  }
+  for (var key in types) {
+    if (_url.endsWith(key)) {
+      return types[key];
+    }
+  }
+  return "text/plain";
+}
 
 function rank(){ //スコアの低い順にソート
     let namef;

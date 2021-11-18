@@ -1,5 +1,5 @@
 //モジュールの読み込み
-let http = requitre('http');
+let http = require('http');
 let socketio = require('socket.io')(http);
 let fs = require('fs');
 const { isObject } = require('util');
@@ -7,7 +7,7 @@ const { isObject } = require('util');
 //HTTPサーバの作成
 let server = http.createServer(function(req, res){
     res.writeHead(200, {'Content-Type' : 'text/html'});
-    res.end(fs.readFileSync(_dirname + `/index.html`, 'utf-8'));
+    res.end(fs.readFileSync(__dirname + `/index.html`, 'utf-8'));
 }).listen(3000);
 
 let name = new Array(); //ユーザーネーム
@@ -18,7 +18,7 @@ let board = new Array(board2); //盤面の配列
 
 let pass = 0; //pass回数
 let score = new Array();
-
+let io = socketio.listen(server);
 //connectionイベントを受信する
 io.sockets.on('connection', function(soket){
     //first_connectionイベントの受信

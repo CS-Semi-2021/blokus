@@ -1,0 +1,18 @@
+
+.addColor {
+	/*display: none; 画像削除*/
+    opacity:0.2;
+    display:inline-block;
+}
+
+.canvaswrap{
+    position:relative;
+    top:0;
+    left:0;
+}
+
+.canvaswrap canvas{
+    position:absolute;
+    top:0;
+    left:0;
+}

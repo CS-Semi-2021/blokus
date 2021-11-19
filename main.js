@@ -27,6 +27,67 @@ let nearcolumn;
 let PlayerColor = ["green", "pink", "blue", "orange"]; //プレイヤーのピースカラー
 let playerNum = 1; //プレイヤーナンバー1~4
 
+// 画面表示切り替え
+function Display(operation) {
+    if (operation == "index") {
+        document.getElementById("index").style.display = "block";
+        document.getElementById("kiyaku").style.display = "none";
+        document.getElementById("policy").style.display = "none";
+        document.getElementById("rule").style.display = "none";
+        document.getElementById("main_menu").style.display = "none";
+        document.getElementById("create-room").style.display = "none";
+        document.getElementById("blokus").style.display = "none";
+    } else if (operation == "kiyaku") {
+        document.getElementById("index").style.display = "none";
+        document.getElementById("kiyaku").style.display = "block";
+        document.getElementById("policy").style.display = "none";
+        document.getElementById("rule").style.display = "none";
+        document.getElementById("main_menu").style.display = "none";
+        document.getElementById("create-room").style.display = "none";
+        document.getElementById("blokus").style.display = "none";
+    } else if (operation == "policy") {
+        document.getElementById("index").style.display = "none";
+        document.getElementById("kiyaku").style.display = "none";
+        document.getElementById("policy").style.display = "block";
+        document.getElementById("rule").style.display = "none";
+        document.getElementById("main_menu").style.display = "none";
+        document.getElementById("create-room").style.display = "none";
+        document.getElementById("blokus").style.display = "none";
+    } else if (operation == "rule") {
+        document.getElementById("index").style.display = "none";
+        document.getElementById("kiyaku").style.display = "none";
+        document.getElementById("policy").style.display = "none";
+        document.getElementById("rule").style.display = "block";
+        document.getElementById("main_menu").style.display = "none";
+        document.getElementById("create-room").style.display = "none";
+        document.getElementById("blokus").style.display = "none";
+    } else if (operation == "main_menu") {
+        document.getElementById("index").style.display = "none";
+        document.getElementById("kiyaku").style.display = "none";
+        document.getElementById("policy").style.display = "none";
+        document.getElementById("rule").style.display = "none";
+        document.getElementById("main_menu").style.display = "block";
+        document.getElementById("create-room").style.display = "none";
+        document.getElementById("blokus").style.display = "none";
+    } else if (operation == "create-room") {
+        document.getElementById("index").style.display = "none";
+        document.getElementById("kiyaku").style.display = "none";
+        document.getElementById("policy").style.display = "none";
+        document.getElementById("rule").style.display = "none";
+        document.getElementById("main_menu").style.display = "none";
+        document.getElementById("create-room").style.display = "block";
+        document.getElementById("blokus").style.display = "none";
+    } else if (operation == "blokus") {
+        document.getElementById("index").style.display = "none";
+        document.getElementById("kiyaku").style.display = "none";
+        document.getElementById("policy").style.display = "none";
+        document.getElementById("rule").style.display = "none";
+        document.getElementById("main_menu").style.display = "none";
+        document.getElementById("create-room").style.display = "none";
+        document.getElementById("blokus").style.display = "block";
+    }
+}
+
 //盤面
 //Boardは行列表現！XY座標とはちがうから混同しないように！
 //Board[i][j]　iが↓成分　jが->成分
@@ -523,14 +584,5 @@ onload = function() {
         //使用したピースの画像をcssを使って非表示or半透明表示にする。
         document.getElementById("changes" + selectNum).classList.add("addColor");
     }
-}
 
-function Display(operation) {
-    if (operation == "create") {
-        document.getElementById("create-room").style.display = "none";
-        document.getElementById("blokus").style.display = "block";
-    } else if (operation == "back") {
-        document.getElementById("create-room").style.display = "block";
-        document.getElementById("blokus").style.display = "none";
-    }
 }

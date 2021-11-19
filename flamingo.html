@@ -8,54 +8,112 @@
 
     <body>
         <script src="./main.js"></script>
-        <div class="create-room" id="create-room">
+        <div class="index" id="index">
+            <div class="index-wrapper">
+                <div class="index-detail">
+                    <h2 class="subtitle">みんなで楽しめるテリトリー戦略ゲーム</h2>
+                    <h1 class="title">Blokus</h1>
+
+                    <button type="button" onClick="Display('rule')">ルール</button>
+                    <button type="button" onClick="Display('main_menu')">メインメニュー</button>
+                    <button type="button" onClick="Display('kiyaku')">利用規約</button>
+                    <button type="button" onClick="Display('policy')">プライバシーポリシー</button>
+                </div>
+            </div>
+            <div class="index-image">
+                <img src="/images/shape_polyomino.png">
+            </div>
+        </div>
+        <div class="kiyaku" id="kiyaku" style="display:none;">
             <h2 class="subtitle">みんなで楽しめるテリトリー戦略ゲーム</h2>
             <h1 class="title">Blokus</h1>
-            <h2>ルーム作成・参加</h2>
-            <form action="../" method="GET">
-                <div class="room-create-form">
-                    <div><input id="room-name" type="text" name="r" /></div>
-                    <div><a onclick="Display('create')"><button id="send-btn" type="submit">作成・参加（テストとしてここを押せばゲーム画面へ）</button></a></div>
+            <h2>利用規約</h2>
+
+            <button class="index" id="index" onClick="Display('index')">戻る</button>
+        </div>
+        <div class="policy" id="policy" style="display:none;">
+            <h2 class="subtitle">みんなで楽しめるテリトリー戦略ゲーム</h2>
+            <h1 class="title">Blokus</h1>
+            <h2>プライバシーポリシー</h2>
+
+            <button class="index" id="index" onClick="Display('index')">戻る</button>
+        </div>
+        <div class="rule" id="rule" style="display:none;">
+            <div class="index-wrapper">
+                <div class="index-detail">
+                    <h2 class="subtitle">みんなで楽しめるテリトリー戦略ゲーム</h2>
+                    <h1 class="title">Blokus</h1>
+                    <h2>ルール説明</h2>
+                    <p class="explain">
+                        プレイヤーは決められた色のピースをボードにできるだけ多く配置していきます。 <br>最終的に配置したピースのマス目が、最も多いプレイヤーが勝ちとなります。 スコアは手元に残ったピースのマス目を数えます。
+                    </p>
+                    <p class="explain">
+                        <h3>ゲームスタート</h3>
+                        各プレイヤーは自分のピースの色を決めて、21個のピースを手元に持ちます。先行を決めて、右回りにプレイを始めます。
+                    </p>
+                    <p class="explain">
+                        <h3>ゲームの進め方(4人で遊ぶ時)</h3>
+                        1. 初めの順番がきたら、ボードの隅にマスを埋めるようにピースを1つ置いてゲームを始めます。<br>2. 順番が回ってくる度に、1つずつピースを置いていきます。置くピースは、既にボードに置いた自分のピースのいずれかの角と角がつながるように置かなければいけません。同じ色のピースは辺をくっつけて置いてはいけません。<br>3. 色の違うピースは他の色のピースの辺に接してもかまいません。一度置いたピースは動かすことはできません。ピースを置く場所がなくなったプレイヤーはその時点で終了です。全プレイヤーがピースを置けなくなったらゲームは終了です。
+                    </p>
+                    <p class="explain">
+                        <h3>スコアの付け方</h3>
+                        <h4>簡単なスコア</h4>
+                        ゲームが終了したら、残ったピースのマス目を数えてください。残ったマス目の数が1番少ない人が、ゲームの勝者です。
+                        <h4>アドバンスドスコア</h4>
+                        ゲームを数回続ける場合は、アドバンスドスコアを試してみましょう。<br>手元にピースを残したプレイヤーは、1マス-1点でスコアを付けます。自分のピースを全部置くことができたプレイヤーは+15点、更に1マスのピースであがった場合はボーナスとして+5点で計+20点になります。
+                    </p>
+                    <p class="explain">
+                        <h3>バリエーション</h3>
+                        <h4>2人で遊ぶとき</h4>
+                        ・1人で2色を使ってプレイします。対角同士の角2つが自分のスタートポジションです。<br>・ルールは4人用と同じです。交互に右回りに置いていきます。<br>・ゲームが終了したら、プレイした色のスコアを合計します。
+                        <h4>3人で遊ぶとき</h4>
+                        ・それぞれ、プレイする色が決まります。<br>・余った色はのピースは、フリーピースとなり3人が交互にプレイします。<br>・スコアは4人用と同じように集計しますが、フリーピースのスコアはポイントに入れません。
+                        <!--
+                        <h4>1人で遊ぶとき</h4>
+                        -->
+                    </p>
+                    <p class="explain">
+                        <h3>ヒント</h3>
+                        ・ゲーム序盤では、陣地を最大に広げるために中央に向けてピースを置いていきます。<br>・ゲームが進むにつれ、ボードが埋まり置きにくくなるので、大きいピースから置いていきます。<br>・ピースの形をよく理解して、攻めと守りで使い分けます。<br>・自分だけが確実に置ける陣地を確保します。あとでゆっくり置ける場所を作っておいて他に広げます。
+                    </p>
+                    <button onClick="Display('index')">戻る</button>
                 </div>
-            </form>
-            <h2>説明</h2>
-            <ul>
-                <li>ルームの開設、既存のルームに参加が可能</li>
-                <li>ルーム名はn文字以上n文字以下</li>
-            </ul>
-            <h2>ルール</h2>
-                <p class="explain">
-                    プレイヤーは決められた色のピースをボードにできるだけ多く配置していきます。 <br>最終的に配置したピースのマス目が、最も多いプレイヤーが勝ちとなります。 スコアは手元に残ったピースのマス目を数えます。
-                </p>
-                <p class="explain">
-                    <h3>ゲームスタート</h3>
-                    各プレイヤーは自分のピースの色を決めて、21個のピースを手元に持ちます。先行を決めて、右回りにプレイを始めます。
-                </p>
-                <p class="explain">
-                    <h3>ゲームの進め方(4人で遊ぶ時)</h3>
-                    1. 初めの順番がきたら、ボードの隅にマスを埋めるようにピースを1つ置いてゲームを始めます。<br>2. 順番が回ってくる度に、1つずつピースを置いていきます。置くピースは、既にボードに置いた自分のピースのいずれかの角と角がつながるように置かなければいけません。同じ色のピースは辺をくっつけて置いてはいけません。<br>3. 色の違うピースは他の色のピースの辺に接してもかまいません。一度置いたピースは動かすことはできません。ピースを置く場所がなくなったプレイヤーはその時点で終了です。全プレイヤーがピースを置けなくなったらゲームは終了です。
-                </p>
-                <p class="explain">
-                    <h3>スコアの付け方</h3>
-                    <h4>簡単なスコア</h4>
-                    ゲームが終了したら、残ったピースのマス目を数えてください。残ったマス目の数が1番少ない人が、ゲームの勝者です。
-                    <h4>アドバンスドスコア</h4>
-                    ゲームを数回続ける場合は、アドバンスドスコアを試してみましょう。<br>手元にピースを残したプレイヤーは、1マス-1点でスコアを付けます。自分のピースを全部置くことができたプレイヤーは+15点、更に1マスのピースであがった場合はボーナスとして+5点で計+20点になります。
-                </p>
-                <p class="explain">
-                    <h3>バリエーション</h3>
-                    <h4>2人で遊ぶとき</h4>
-                    ・1人で2色を使ってプレイします。対角同士の角2つが自分のスタートポジションです。<br>・ルールは4人用と同じです。交互に右回りに置いていきます。<br>・ゲームが終了したら、プレイした色のスコアを合計します。
-                    <h4>3人で遊ぶとき</h4>
-                    ・それぞれ、プレイする色が決まります。<br>・余った色はのピースは、フリーピースとなり3人が交互にプレイします。<br>・スコアは4人用と同じように集計しますが、フリーピースのスコアはポイントに入れません。
-                    <!--
-                    <h4>1人で遊ぶとき</h4>
-                    -->
-                </p>
-                <p class="explain">
-                    <h3>ヒント</h3>
-                    ・ゲーム序盤では、陣地を最大に広げるために中央に向けてピースを置いていきます。<br>・ゲームが進むにつれ、ボードが埋まり置きにくくなるので、大きいピースから置いていきます。<br>・ピースの形をよく理解して、攻めと守りで使い分けます。<br>・自分だけが確実に置ける陣地を確保します。あとでゆっくり置ける場所を作っておいて他に広げます。
-                </p>
+            </div>
+        </div>
+        <div class="main_menu" id="main_menu" style="display:none;">
+            <h2 class="subtitle">みんなで楽しめるテリトリー戦略ゲーム</h2>
+            <h1 class="title">Blokus</h1>
+            <h2>メインメニュー</h2>
+            <button onClick="Display('create-room')">ルーム作成</button>
+            <button onClick="Display('index')">トップに戻る</button>
+            <div class="rooms">
+                <button class="room" id="room">[ルーム名]</button>
+                <button onClick="Display('blokus')">テスト用：Blokus</button>
+            </div>
+        </div>
+        <div class="create-room" id="create-room" style="display:none;">
+            <div class="index-wrapper">
+                <div class="index-detail">
+                    <h2 class="subtitle">みんなで楽しめるテリトリー戦略ゲーム</h2>
+                    <h1 class="title">Blokus</h1>
+                    <div class="room-create">
+                        <h2>ルーム作成</h2>
+                        <form method="POST" action="/room_create">
+                            <h3>
+                                ルーム名：<input type="text" name="name" required maxlength="20" size="20">
+                                <br>人数：
+                                <input type="radio" id="num4" name="num" value="4" checked><label for="4">4</label>
+                                <input type="radio" id="num3" name="num" value="3"><label for="3">3</label>
+                                <input type="radio" id="num2" name="num" value="2"><label for="2">2</label><br>
+                                <input type="radio" id="public" name="state" value="public" checked><label for="public">public</label>
+                                <input type="radio" id="private" name="state" value="private"><label for="private">private</label>
+                            </h3>
+                            <input type="submit" value="ルームを作成">
+                        </form>
+                    </div>
+                    <button onClick="Display('main_menu')">戻る</button>
+                </div>
+            </div>
         </div>
         <div class="blokus" id="blokus" style="display:none;">
             <h1>Blokus</h1>
@@ -92,7 +150,7 @@
             <img id = "changes19" src="images/image19.png" onclick="loads(19);">
             <img id = "changes20" src="images/image20.png" onclick="loads(20);">
 
-            <br><input type="button" class="back-to-top" id="back-to-top" onclick="Display('back')" value="トップへ戻る"/>
+            <br><button onClick="Display('main_menu')">退出する</button>
         </div>
     </body>
 </html>

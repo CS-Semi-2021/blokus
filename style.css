@@ -1,18 +1,188 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 100%;
+    font-family: 'Hiragino Sans', sans-serif;
+    line-height: 1.7;
+    letter-spacing: 1px;
+}
+
+body {
+    margin: 0;
+    background-color: #f6faff;
+    color: #6c7686;
+    padding: 100px;
+}
+
+a {
+    display: block;
+    text-decoration: none;
+    color: #2d3133;
+    font-size: 14px;
+}
+
+a:hover {
+    transition: all 0.3s ease;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin: 0;
+}
+
+h1 {
+    font-weight: 600;
+}
+
+
+/* index ================================ */
+
+.index-wrapper {
+    max-width: 1200px;
+    min-width: 920px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    padding: 60px;
+}
+
+.index-detail {
+    width: 36%;
+    min-width: 320px;
+    margin-top: -40px;
+}
+
+.index-detail .subtitle {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.index-detail .title {
+    font-size: 54px;
+    line-height: 66px;
+    letter-spacing: 2px;
+    margin-bottom: 24px;
+}
+
+.index-detail .rule-button,
+.index-detail .main-menu-button,
+.index-button,
+.index-detail .kiyaku-button,
+.index-detail .policy-button,
+.create {
+    width: 184px;
+    height: 48px;
+    text-align: center;
+    line-height: 45px;
+    font-weight: 600;
+    color: #42cea9;
+    ;
+    background-color: #ffffff;
+    border: 2px solid #58d2b2;
+    border-radius: 2px;
+}
+
+.room {
+    width: 184px;
+    height: 48px;
+    text-align: center;
+    line-height: 45px;
+    font-weight: 600;
+    color: #d46bcf;
+    ;
+    background-color: #ffffff;
+    border: 2px solid #d258cc;
+    border-radius: 2px;
+    margin-top: 15px;
+}
+
+.index-detail .rule-button:hover,
+.index-detail .main-menu-button:hover,
+.index-button:hover,
+.kiyaku-button:hover,
+.policy-button:hover,
+.create:hover {
+    color: #ffffff;
+    background-color: #58d2b2;
+}
+
+.room:hover {
+    color: #ffffff;
+    background-color: #d258cc;
+}
+
+.rule-button,
+.main-menu-button,
+.index-button,
+.kiyaku-button,
+.policy-button,
+.create {
+    cursor: pointer;
+    margin-bottom: 24px;
+}
+
+.index-image {
+    width: 64%;
+    text-align: center;
+    overflow: hidden;
+}
+
+.index-image img {
+    width: 88%;
+}
+
+
+/* header ================================ */
+
+header {
+    height: 56px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #f0f4f9;
+}
+
+
+/* main_menu ============================== */
+
+
+/* create ================================= */
+
+.room-create {
+    padding-bottom: 20px;
+}
+
+
+/* rule =================================== */
+
+.explain {
+    padding-bottom: 20px;
+}
+
+
+/* game =================================== */
 
 .addColor {
-	/*display: none; 画像削除*/
-    opacity:0.2;
-    display:inline-block;
+    /*display: none; 画像削除*/
+    opacity: 0.2;
+    display: inline-block;
 }
 
-.canvaswrap{
-    position:relative;
-    top:0;
-    left:0;
+.canvaswrap {
+    position: relative;
+    top: 0;
+    left: 0;
 }
 
-.canvaswrap canvas{
-    position:absolute;
-    top:0;
-    left:0;
+.canvaswrap canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
 }

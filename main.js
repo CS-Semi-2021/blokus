@@ -174,8 +174,8 @@ let Pieces = [piece0, piece1, piece2, piece3, piece4, piece5, piece6, piece7, pi
 
 onload = function(){
     draw3();
-}
 
+    
 function draw3(){
     canvas = document.getElementById("rectangle3");
     canvas4 = document.getElementById("rectangle4");

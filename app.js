@@ -9,7 +9,8 @@ let piece; //手持ちのコマ数
 
 let board2 = new Array(); //盤面の2次元目
 let board = new Array(board2); //盤面の配列
-
+//import player from "flamingo.html";
+username = Math.floor(Math.random()*1000000000);
 //first_connectionイベント
 if(first == 0){
     socket.emit("fist_connection",{user : username});
@@ -29,8 +30,13 @@ socket.on('game_start', function(data){
     }
     if(nowturn % 4 == mynumber){
         //自分のターンのときの処理を関数で呼び出す
+        draw3();
+
+        socket.emit('finish_turn', {barray : board});
     }else{
         //自分のターン出ないときの処理を関数で呼び出す
+        drawOnly();
+        
     }
 });
 

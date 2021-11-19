@@ -42,11 +42,12 @@ io.sockets.on('connection', function(soket){
     socket.on('first_connection', function(data){
         name[number] = data.username;
         number++;
+        console.log(name[number-1]);
     });
 
     let count = 0;//ターン数
     //ゲームの開始合図
-    if(number == 4){
+    if(number == 2){
         //game_startイベントの送信
         io.emit('game_start',{value : name, turn : count});
     }

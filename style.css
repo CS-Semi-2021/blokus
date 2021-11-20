@@ -301,21 +301,44 @@ kiyaku, policy については同じように文章だけの画面になるの�
 }
 
 
-/* game =================================== */
+/* blokus =================================== */
 
 .addColor {
+    /*display: none; 画像削除*/
     opacity: 0.2;
     display: inline-block;
 }
 
 .canvaswrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.mains {
     position: relative;
     top: 0;
     left: 0;
 }
 
-.canvaswrap canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
+.button-in-blokus {
+    width: 184px;
+    height: 48px;
+    text-align: center;
+    line-height: 45px;
+    font-weight: 600;
+    color: #42cea9;
+    background-color: #ffffff;
+    border: 2px solid #58d2b2;
+    border-radius: 2px;
+}
+
+.button-in-blokus:hover {
+    color: #ffffff;
+    background-color: #58d2b2;
+}
+
+.button-in-blokus {
+    cursor: pointer;
+    margin-bottom: 24px;
 }

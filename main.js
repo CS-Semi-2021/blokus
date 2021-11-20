@@ -1,11 +1,18 @@
-//・1ターン目の処理(角に置くやつ)　・使用ピースの画像を半透明化　・選んでいるピースをカーソルの位置に表示　を追加
+//画面サイズにあわせるやつ
+
+// to たいせい
+// 1つのページにするためにonload()が読み込んでくれなくて中身を外に出したらうまく言ったんだけど
+// こいつだとそれがうまくいかねえ
+// by えーき
+
 let canvas;
 let ctx;
 let canvas4;
 let ctx4;
 let canvasBack;
 let ctxBack;
-let squareSize = 50;
+let squareSize;
+let canvasSize;
 let countTurn = 1;
 
 let DrawFlag = 0; //カーソルの位置にピースを半透明で描くときに使う（mousemoveでのみ使う）。描いた場合は1、盤面の範囲外にでてしまうなどで描けなかったときは0
@@ -248,6 +255,15 @@ let Pieces = [piece0, piece1, piece2, piece3, piece4, piece5, piece6, piece7, pi
 
 // toたいせい onloadの中身をすべて外に出しました byえいき
 function draw3() {
+    if (document.documentElement.clientWidth / 2 > document.documentElement.clientHeight) {
+        canvasSize = Math.floor(document.documentElement.clientHeight);
+    } else {
+        canvasSize = Math.floor(document.documentElement.clientWidth / 2);
+    }
+
+    //canvasSize = Math.floor(document.documentElement.clientWidth / 2);
+    //canvasSize = Math.floor(document.documentElement.clientHeight * 0.8);
+    squareSize = Math.floor(canvasSize / 20);
     canvasBack = document.getElementById("rectangleBack"); //メインキャンバスの裏にあるキャンバス。メインキャンバス上にマウスポインタがある際、ポインタの位置に半透明のピースを描くだけ
     canvas = document.getElementById("rectangle3"); //メインキャンバス、配列Boardの情報に基づく
     canvas4 = document.getElementById("rectangle4"); //サブキャンバス、選んでいるピースを描く。ピース選択状態（メインキャンバスにおける状態）になると赤線で囲まれる
@@ -258,6 +274,48 @@ function draw3() {
     ctx = canvas.getContext('2d');
     ctx4 = canvas4.getContext('2d');
 
+
+
+    // bannmenのfitCanvasSize()の中身;
+    canvas.width = squareSize * 20;
+    canvas.height = squareSize * 20;
+    canvas4.width = squareSize * 5;
+    canvas4.height = squareSize * 5;
+    canvasBack.width = squareSize * 20;
+    canvasBack.height = squareSize * 20;
+    //document.getElementById("rectangle4").classList.add("subcan");
+    //こっから↓はcssみたいなやつ
+    let target4 = document.getElementById("rectangle4");
+    target4.style.position = "absolute";
+    target4.style.top = squareSize * 13 + "px";
+    target4.style.left = squareSize * 21 + "px";
+
+    let targetRotate = document.getElementById("button1");
+    targetRotate.style.position = "absolute";
+    targetRotate.style.top = squareSize * 18 + "px";
+    targetRotate.style.left = squareSize * 21 + "px";
+    targetRotate.style.width = squareSize * 5 + "px";
+    targetRotate.style.height = squareSize * 1 + "px";
+
+    let targetReverse = document.getElementById("button2");
+    targetReverse.style.position = "absolute";
+    targetReverse.style.top = squareSize * 19 + "px";
+    targetReverse.style.left = squareSize * 21 + "px";
+    targetReverse.style.width = squareSize * 5 + "px";
+    targetReverse.style.height = squareSize * 1 + "px";
+
+    let targetPic;
+    for (let i = 0; i < 21; i++) {
+        targetPic = document.getElementById("changes" + i);
+        targetPic.style.position = "absolute";
+        targetPic.style.top = squareSize * Math.floor(i / 4) * 3 + "px";
+        targetPic.style.left = squareSize * 27 + squareSize * (i % 4) * 3 + "px";
+        targetPic.style.width = squareSize * 3 + "px";
+    }
+
+
+
+    // bannmenのdraw3の中身
     for (let i = 0; i < 20; i++) {
         for (let j = 0; j < 20; j++) {
             ctx.strokeRect(j * squareSize, i * squareSize, squareSize, squareSize);
@@ -265,7 +323,7 @@ function draw3() {
     }
     //枠線を書く
     ctx.beginPath();
-    ctx.lineWidth = 5;
+    ctx.lineWidth = 3;
     ctx.moveTo(10 * squareSize, 0);
     ctx.lineTo(10 * squareSize, 20 * squareSize);
     ctx.moveTo(0, 10 * squareSize);
@@ -279,6 +337,8 @@ function draw3() {
     canvas.addEventListener('mousedown', mouseUp);
     canvas.addEventListener('mousemove', mouseMove);
     canvas.addEventListener('mouseleave', mouseLeave);
+
+
 }
 
 

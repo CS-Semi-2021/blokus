@@ -293,39 +293,42 @@
         <div class="blokus" id="blokus" style="display:none;">
             <h1>Blokus</h1>
 
-            <div class="canvaswrap">
-                <canvas id="rectangle3" width="1000" height="1000"></canvas>
+            <div class="mains">
+                <div class="canvaswrap">
+                    <canvas id="rectangle3" width="1000" height="1000"></canvas>
+                </div>
+                <canvas id="rectangleBack" width="1000" height="1000"></canvas>
+                <canvas id="rectangle4" width="250" height="250"></canvas>
+                
+                <br>
+                <input class="button-in-blokus" type="button" value="Rotate!" onclick="Rotate()"　id="button1">
+                <input class="button-in-blokus" type="button" value="Reverse!" onclick="Reverse()"　id="button2">
+                <p></p>
+                
+                <img id = "changes0" src="images/image0.png" onclick="loads(0);">   
+                <img id = "changes1" src="images/image1.png" onclick="loads(1);">
+                <img id = "changes2" src="images/image2.png" onclick="loads(2);">
+                <img id = "changes3" src="images/image3.png" onclick="loads(3);">
+                <img id = "changes4" src="images/image4.png" onclick="loads(4);">
+                <img id = "changes5" src="images/image5.png" onclick="loads(5);">
+                <img id = "changes6" src="images/image6.png" onclick="loads(6);">
+                <img id = "changes7" src="images/image7.png" onclick="loads(7);">
+                <img id = "changes8" src="images/image8.png" onclick="loads(8);">
+                <img id = "changes9" src="images/image9.png" onclick="loads(9);">
+                <img id = "changes10" src="images/image10.png" onclick="loads(10);">
+                <img id = "changes11" src="images/image11.png" onclick="loads(11);">
+                <img id = "changes12" src="images/image12.png" onclick="loads(12);">
+                <img id = "changes13" src="images/image13.png" onclick="loads(13);">
+                <img id = "changes14" src="images/image14.png" onclick="loads(14);">
+                <img id = "changes15" src="images/image15.png" onclick="loads(15);">
+                <img id = "changes16" src="images/image16.png" onclick="loads(16);">
+                <img id = "changes17" src="images/image17.png" onclick="loads(17);">
+                <img id = "changes18" src="images/image18.png" onclick="loads(18);">
+                <img id = "changes19" src="images/image19.png" onclick="loads(19);">
+                <img id = "changes20" src="images/image20.png" onclick="loads(20);">
             </div>
-            <canvas id="rectangleBack" width="1000" height="1000"></canvas>
-            <canvas id="rectangle4" width="250" height="250"></canvas>
-            
-            <input type="button" value="Rotate!" onclick="Rotate()">
-            <input type="button" value="Reverse!" onclick="Reverse()">
-            <p></p>
-            
-            <img id = "changes0" src="images/image0.png" onclick="loads(0);">   
-            <img id = "changes1" src="images/image1.png" onclick="loads(1);">
-            <img id = "changes2" src="images/image2.png" onclick="loads(2);">
-            <img id = "changes3" src="images/image3.png" onclick="loads(3);">
-            <img id = "changes4" src="images/image4.png" onclick="loads(4);">
-            <img id = "changes5" src="images/image5.png" onclick="loads(5);">
-            <img id = "changes6" src="images/image6.png" onclick="loads(6);">
-            <img id = "changes7" src="images/image7.png" onclick="loads(7);">
-            <img id = "changes8" src="images/image8.png" onclick="loads(8);">
-            <img id = "changes9" src="images/image9.png" onclick="loads(9);">
-            <img id = "changes10" src="images/image10.png" onclick="loads(10);">
-            <img id = "changes11" src="images/image11.png" onclick="loads(11);">
-            <img id = "changes12" src="images/image12.png" onclick="loads(12);">
-            <img id = "changes13" src="images/image13.png" onclick="loads(13);">
-            <img id = "changes14" src="images/image14.png" onclick="loads(14);">
-            <img id = "changes15" src="images/image15.png" onclick="loads(15);">
-            <img id = "changes16" src="images/image16.png" onclick="loads(16);">
-            <img id = "changes17" src="images/image17.png" onclick="loads(17);">
-            <img id = "changes18" src="images/image18.png" onclick="loads(18);">
-            <img id = "changes19" src="images/image19.png" onclick="loads(19);">
-            <img id = "changes20" src="images/image20.png" onclick="loads(20);">
 
-            <br><button onClick="Display('main-menu')">退出する</button>
+            <button class="button-in-blokus" onClick="Display('main-menu')">退出する</button>
         </div>
     </body>
 </html>

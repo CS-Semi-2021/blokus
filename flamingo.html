@@ -8,6 +8,8 @@
 
     <body>
         <script src="./main.js"></script>
+
+        <!--　タイトル画面 index -->
         <div class="index" id="index">
             <div class="index-wrapper">
                 <div class="index-detail">
@@ -15,7 +17,7 @@
                     <h1 class="title">Blokus</h1>
 
                     <button type="button" onClick="Display('rule')">ルール</button>
-                    <button type="button" onClick="Display('main_menu')">メインメニュー</button>
+                    <button type="button" onClick="Display('main-menu')">メインメニュー</button>
                     <button type="button" onClick="Display('kiyaku')">利用規約</button>
                     <button type="button" onClick="Display('policy')">プライバシーポリシー</button>
                 </div>
@@ -24,6 +26,8 @@
                 <img src="/images/shape_polyomino.png">
             </div>
         </div>
+
+        <!-- 利用規約 kiyaku -->
         <div class="kiyaku" id="kiyaku" style="display:none;">
             <h2 class="subtitle">みんなで楽しめるテリトリー戦略ゲーム</h2>
             <h1 class="title">Blokus</h1>
@@ -31,6 +35,8 @@
 
             <button class="index" id="index" onClick="Display('index')">戻る</button>
         </div>
+
+        <!--　プライバシーポリシー policy -->
         <div class="policy" id="policy" style="display:none;">
             <h2 class="subtitle">みんなで楽しめるテリトリー戦略ゲーム</h2>
             <h1 class="title">Blokus</h1>
@@ -38,6 +44,8 @@
 
             <button class="index" id="index" onClick="Display('index')">戻る</button>
         </div>
+
+        <!-- ルール説明 rule -->
         <div class="rule" id="rule" style="display:none;">
             <div class="index-wrapper">
                 <div class="index-detail">
@@ -80,7 +88,9 @@
                 </div>
             </div>
         </div>
-        <div class="main_menu" id="main_menu" style="display:none;">
+
+        <!-- メインメニュー main-menu -->
+        <div class="main-menu" id="main-menu" style="display:none;">
             <h2 class="subtitle">みんなで楽しめるテリトリー戦略ゲーム</h2>
             <h1 class="title">Blokus</h1>
             <h2>メインメニュー</h2>
@@ -91,6 +101,8 @@
                 <button onClick="Display('blokus')">テスト用：Blokus</button>
             </div>
         </div>
+
+        <!-- ルーム作成 create-room -->
         <div class="create-room" id="create-room" style="display:none;">
             <div class="index-wrapper">
                 <div class="index-detail">
@@ -111,10 +123,12 @@
                             <input type="submit" value="ルームを作成">
                         </form>
                     </div>
-                    <button onClick="Display('main_menu')">戻る</button>
+                    <button onClick="Display('main-menu')">戻る</button>
                 </div>
             </div>
         </div>
+
+        <!-- ゲーム画面 -->
         <div class="blokus" id="blokus" style="display:none;">
             <h1>Blokus</h1>
 
@@ -123,6 +137,14 @@
             </div>
             <canvas id="rectangleBack" width="1000" height="1000"></canvas>
             <canvas id="rectangle4" width="250" height="250"></canvas>
+
+            <!-- たいせいが書いたやつ
+            <div class="canvaswrap">
+                <canvas id="rectangle3" width="1000" height="1000"></canvas>
+            </div>
+            <canvas id="rectangleBack" width="1000" height="1000"></canvas>
+            <canvas id="rectangle4" width="250" height="250"></canvas>
+            -->
             
             <input type="button" value="Rotate!" onclick="Rotate()">
             <input type="button" value="Reverse!" onclick="Reverse()">
@@ -150,7 +172,7 @@
             <img id = "changes19" src="images/image19.png" onclick="loads(19);">
             <img id = "changes20" src="images/image20.png" onclick="loads(20);">
 
-            <br><button onClick="Display('main_menu')">退出する</button>
+            <br><button onClick="Display('main-menu')">退出する</button>
         </div>
     </body>
 </html>

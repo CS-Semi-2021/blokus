@@ -170,7 +170,6 @@ header {
 /* game =================================== */
 
 .addColor {
-    /*display: none; 画像削除*/
     opacity: 0.2;
     display: inline-block;
 }

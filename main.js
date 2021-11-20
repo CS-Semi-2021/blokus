@@ -34,7 +34,7 @@ function Display(operation) {
         document.getElementById("kiyaku").style.display = "none";
         document.getElementById("policy").style.display = "none";
         document.getElementById("rule").style.display = "none";
-        document.getElementById("main_menu").style.display = "none";
+        document.getElementById("main-menu").style.display = "none";
         document.getElementById("create-room").style.display = "none";
         document.getElementById("blokus").style.display = "none";
     } else if (operation == "kiyaku") {
@@ -42,7 +42,7 @@ function Display(operation) {
         document.getElementById("kiyaku").style.display = "block";
         document.getElementById("policy").style.display = "none";
         document.getElementById("rule").style.display = "none";
-        document.getElementById("main_menu").style.display = "none";
+        document.getElementById("main-menu").style.display = "none";
         document.getElementById("create-room").style.display = "none";
         document.getElementById("blokus").style.display = "none";
     } else if (operation == "policy") {
@@ -50,7 +50,7 @@ function Display(operation) {
         document.getElementById("kiyaku").style.display = "none";
         document.getElementById("policy").style.display = "block";
         document.getElementById("rule").style.display = "none";
-        document.getElementById("main_menu").style.display = "none";
+        document.getElementById("main-menu").style.display = "none";
         document.getElementById("create-room").style.display = "none";
         document.getElementById("blokus").style.display = "none";
     } else if (operation == "rule") {
@@ -58,15 +58,15 @@ function Display(operation) {
         document.getElementById("kiyaku").style.display = "none";
         document.getElementById("policy").style.display = "none";
         document.getElementById("rule").style.display = "block";
-        document.getElementById("main_menu").style.display = "none";
+        document.getElementById("main-menu").style.display = "none";
         document.getElementById("create-room").style.display = "none";
         document.getElementById("blokus").style.display = "none";
-    } else if (operation == "main_menu") {
+    } else if (operation == "main-menu") {
         document.getElementById("index").style.display = "none";
         document.getElementById("kiyaku").style.display = "none";
         document.getElementById("policy").style.display = "none";
         document.getElementById("rule").style.display = "none";
-        document.getElementById("main_menu").style.display = "block";
+        document.getElementById("main-menu").style.display = "block";
         document.getElementById("create-room").style.display = "none";
         document.getElementById("blokus").style.display = "none";
     } else if (operation == "create-room") {
@@ -74,7 +74,7 @@ function Display(operation) {
         document.getElementById("kiyaku").style.display = "none";
         document.getElementById("policy").style.display = "none";
         document.getElementById("rule").style.display = "none";
-        document.getElementById("main_menu").style.display = "none";
+        document.getElementById("main-menu").style.display = "none";
         document.getElementById("create-room").style.display = "block";
         document.getElementById("blokus").style.display = "none";
     } else if (operation == "blokus") {
@@ -82,9 +82,11 @@ function Display(operation) {
         document.getElementById("kiyaku").style.display = "none";
         document.getElementById("policy").style.display = "none";
         document.getElementById("rule").style.display = "none";
-        document.getElementById("main_menu").style.display = "none";
+        document.getElementById("main-menu").style.display = "none";
         document.getElementById("create-room").style.display = "none";
         document.getElementById("blokus").style.display = "block";
+        //onload();
+        draw3();
     }
 }
 
@@ -244,345 +246,340 @@ let Pieces = [piece0, piece1, piece2, piece3, piece4, piece5, piece6, piece7, pi
     piece11, piece12, piece13, piece14, piece15, piece16, piece17, piece18, piece19, piece20, piece21
 ]
 
-onload = function() {
-    draw3();
+// toたいせい onloadの中身をすべて外に出しました byえいき
+function draw3() {
+    canvasBack = document.getElementById("rectangleBack"); //メインキャンバスの裏にあるキャンバス。メインキャンバス上にマウスポインタがある際、ポインタの位置に半透明のピースを描くだけ
+    canvas = document.getElementById("rectangle3"); //メインキャンバス、配列Boardの情報に基づく
+    canvas4 = document.getElementById("rectangle4"); //サブキャンバス、選んでいるピースを描く。ピース選択状態（メインキャンバスにおける状態）になると赤線で囲まれる
+    if (!canvas || !canvas.getContext || !canvasBack || !canvasBack.getContext || !canvas4 || !canvas4.getContext) {
+        return false;
+    }
+    ctxBack = canvasBack.getContext('2d');
+    ctx = canvas.getContext('2d');
+    ctx4 = canvas4.getContext('2d');
 
-
-    function draw3() {
-        canvasBack = document.getElementById("rectangleBack"); //メインキャンバスの裏にあるキャンバス。メインキャンバス上にマウスポインタがある際、ポインタの位置に半透明のピースを描くだけ
-        canvas = document.getElementById("rectangle3"); //メインキャンバス、配列Boardの情報に基づく
-        canvas4 = document.getElementById("rectangle4"); //サブキャンバス、選んでいるピースを描く。ピース選択状態（メインキャンバスにおける状態）になると赤線で囲まれる
-        if (!canvas || !canvas.getContext || !canvasBack || !canvasBack.getContext || !canvas4 || !canvas4.getContext) {
-            return false;
+    for (let i = 0; i < 20; i++) {
+        for (let j = 0; j < 20; j++) {
+            ctx.strokeRect(j * squareSize, i * squareSize, squareSize, squareSize);
         }
-        ctxBack = canvasBack.getContext('2d');
-        ctx = canvas.getContext('2d');
-        ctx4 = canvas4.getContext('2d');
+    }
+    //枠線を書く
+    ctx.beginPath();
+    ctx.lineWidth = 5;
+    ctx.moveTo(10 * squareSize, 0);
+    ctx.lineTo(10 * squareSize, 20 * squareSize);
+    ctx.moveTo(0, 10 * squareSize);
+    ctx.lineTo(20 * squareSize, 10 * squareSize);
+    ctx.stroke();
+    ctx.lineWidth = 1;
 
-        for (let i = 0; i < 20; i++) {
-            for (let j = 0; j < 20; j++) {
-                ctx.strokeRect(j * squareSize, i * squareSize, squareSize, squareSize);
-            }
+    Coloring();
+
+    canvas4.addEventListener('mousedown', mouseDown);
+    canvas.addEventListener('mousedown', mouseUp);
+    canvas.addEventListener('mousemove', mouseMove);
+    canvas.addEventListener('mouseleave', mouseLeave);
+}
+
+
+function mouseMove(event) {
+    //メインキャンバス上でマウスが動かされると実行される
+    if (SelectFlag == 0) {
+        //ピースが選択状態にないときなにもしない
+        return;
+    }
+    if (Math.floor(event.offsetX / squareSize) == x && Math.floor(event.offsetY / squareSize) == y) {
+        //マウスポインタがあるマスが前回と変わっていないなら処理なし
+        return;
+    }
+    //前回の半透明でcanvasBackに塗ったマスを透明に塗る
+    if (DrawFlag == 1) {
+        //DrawFlagが0の時は前回のマスで色塗りをしてないので白塗りの必要なし。
+        for (let i = 0; i < Pieces[selectNum].childline.length; i++) {
+            ctxBack.clearRect(x * squareSize + Pieces[selectNum].childcolumn[i] * squareSize, y * squareSize + Pieces[selectNum].childline[i] * squareSize, squareSize, squareSize);
         }
-        //枠線を書く
-        ctx.beginPath();
-        ctx.lineWidth = 5;
-        ctx.moveTo(10 * squareSize, 0);
-        ctx.lineTo(10 * squareSize, 20 * squareSize);
-        ctx.moveTo(0, 10 * squareSize);
-        ctx.lineTo(20 * squareSize, 10 * squareSize);
-        ctx.stroke();
-        ctx.lineWidth = 1;
+    }
+    x = Math.floor(event.offsetX / squareSize);
+    y = Math.floor(event.offsetY / squareSize);
 
-        Coloring();
 
-        canvas4.addEventListener('mousedown', mouseDown);
-        canvas.addEventListener('mousedown', mouseUp);
-        canvas.addEventListener('mousemove', mouseMove);
-        canvas.addEventListener('mouseleave', mouseLeave);
+    for (let i = 0; i < Pieces[selectNum].childline.length; i++) {
+        if (Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] < 0 || Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] < 0 || Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] > 19 || Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] > 19) {
+            //盤面の外にピースがでないかの判定。でるなら色塗りをしないのでDrawFlagを0にして処理終了
+            DrawFlag = 0;
+            return;
+        }
+    }
+    //↓選択中のピースを裏キャンバスに半透明で描く
+    DrawFlag = 1;
+    ctxBack.globalAlpha = 0.3;
+    ctxBack.fillStyle = PlayerColor[playerNum - 1];
+    for (let i = 0; i < Pieces[selectNum].childline.length; i++) {
+        ctxBack.fillRect(x * squareSize + Pieces[selectNum].childcolumn[i] * squareSize, y * squareSize + Pieces[selectNum].childline[i] * squareSize, squareSize, squareSize);
+    }
+}
+
+
+function mouseLeave(event) {
+    //マウスポインタがメインcanvasの外にでたらmousemoveで塗られた半透明のマスがなくなるようにする
+    if (DrawFlag == 1) {
+        for (let i = 0; i < Pieces[selectNum].childline.length; i++) {
+            ctxBack.clearRect(x * squareSize + Pieces[selectNum].childcolumn[i] * squareSize, y * squareSize + +Pieces[selectNum].childline[i] * squareSize, squareSize, squareSize);
+        }
+    }
+    DrawFlag = 0;
+    x = 20;
+    y = 20;
+}
+
+
+function mouseDown(event) {
+    //サブCanvasの上でクリックされると実行される関数
+    if (selectNum == 21) {
+        //ピースが選ばれていないなら何もしない
+        SelectFlag = 0;
+    } else {
+        SelectFlag = 1;
+        //サブキャンバスを赤枠で囲む
+        ctx4.lineWidth = 1;
+        ctx4.beginPath();
+        ctx4.strokeStyle = "red";
+        ctx4.strokeRect(0, 0, squareSize * 5, squareSize * 5);
+        ctx4.stroke();
+    }
+}
+
+
+function mouseUp(event) {
+    //メインキャンバス上でクリックされると実行される関数。
+
+    if (SelectFlag == 0) {
+        //ピースが選択状態じゃないならなにもしない
+        return;
     }
 
+    if (countTurn == 1) {
+        //1ターン目（最初のターン）の処理
+        //↓各プレイヤーは盤面の角におかなきゃいけないからplayerNumで場合分け。ここでnearlineとか書かないで最初に定義するべきだろうけどとりあえずいいわ
+        RegionFlag = 0;
+        FirstFlag = 0;
 
-    function mouseMove(event) {
-        //メインキャンバス上でマウスが動かされると実行される
-        if (SelectFlag == 0) {
-            //ピースが選択状態にないときなにもしない
-            return;
+        if (playerNum == 1) {
+            nearline = 0; //左上
+            nearcolumn = 0;
+        } else if (playerNum == 2) {
+            nearline = 0; //右上
+            nearcolumn = 19;
+        } else if (playerNum == 3) {
+            nearline = 19; //右下
+            nearcolumn = 19;
+        } else if (playerNum == 4) {
+            nearline = 19; //左下
+            nearcolumn = 0;
         }
-        if (Math.floor(event.offsetX / squareSize) == x && Math.floor(event.offsetY / squareSize) == y) {
-            //マウスポインタがあるマスが前回と変わっていないなら処理なし
-            return;
-        }
-        //前回の半透明でcanvasBackに塗ったマスを透明に塗る
-        if (DrawFlag == 1) {
-            //DrawFlagが0の時は前回のマスで色塗りをしてないので白塗りの必要なし。
-            for (let i = 0; i < Pieces[selectNum].childline.length; i++) {
-                ctxBack.clearRect(x * squareSize + Pieces[selectNum].childcolumn[i] * squareSize, y * squareSize + Pieces[selectNum].childline[i] * squareSize, squareSize, squareSize);
+        for (let i = 0; i < Pieces[selectNum].childline.length; i++) {
+            if (Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] < 0 || Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] < 0 || Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] > 19 || Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] > 19) {
+                //盤面の外にピースがでないかの判定
+                RegionFlag = 1;
+                break;
+            }
+
+            if (Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] == nearline && Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] == nearcolumn) {
+                //角のマス目が埋まるかの判定
+                FirstFlag = 1;
             }
         }
-        x = Math.floor(event.offsetX / squareSize);
-        y = Math.floor(event.offsetY / squareSize);
+        if (RegionFlag) {
+            alert("盤面の外にピースがでちゃうように置かないで")
+        } else if (FirstFlag) {
+            for (let i = 0; i < Pieces[selectNum].childline.length; i++) {
+                Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i]][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i]] = playerNum;
+            }
+            Coloring();
+            Pieces[selectNum].useFlag = 1; //使用済みピースに変更
+            DeletePic();
+            SelectFlag = 0; //ピースを選択していない状態にする
+            selectNum = 21; //選択ピース番号を範囲外に変更
 
+            ctx4.fillStyle = "white"; //サブキャンバスを白塗り
+            ctx4.fillRect(0, 0, squareSize * 5, squareSize * 5);
+            console.log(Board);
+            countTurn += 1;
+        } else {
+            alert("盤面の角が埋まるように")
+        }
+
+    } else {
+        //2ターン目以降
+        PlaceFlag = 1; //新しく置く毎にフラグをデフォに設定する
+        CornerFlag = 0;
+        EdgeFlag = 1;
+        RegionFlag = 0;
+        errmsg = "";
 
         for (let i = 0; i < Pieces[selectNum].childline.length; i++) {
             if (Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] < 0 || Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] < 0 || Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] > 19 || Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] > 19) {
-                //盤面の外にピースがでないかの判定。でるなら色塗りをしないのでDrawFlagを0にして処理終了
-                DrawFlag = 0;
-                return;
+                //盤面の外にピースがでないかの判定
+                RegionFlag = 1;
+                break;
             }
-        }
-        //↓選択中のピースを裏キャンバスに半透明で描く
-        DrawFlag = 1;
-        ctxBack.globalAlpha = 0.3;
-        ctxBack.fillStyle = PlayerColor[playerNum - 1];
-        for (let i = 0; i < Pieces[selectNum].childline.length; i++) {
-            ctxBack.fillRect(x * squareSize + Pieces[selectNum].childcolumn[i] * squareSize, y * squareSize + Pieces[selectNum].childline[i] * squareSize, squareSize, squareSize);
-        }
-    }
 
-
-    function mouseLeave(event) {
-        //マウスポインタがメインcanvasの外にでたらmousemoveで塗られた半透明のマスがなくなるようにする
-        if (DrawFlag == 1) {
-            for (let i = 0; i < Pieces[selectNum].childline.length; i++) {
-                ctxBack.clearRect(x * squareSize + Pieces[selectNum].childcolumn[i] * squareSize, y * squareSize + +Pieces[selectNum].childline[i] * squareSize, squareSize, squareSize);
+            if (Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i]][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i]] != 0) {
+                //置く位置にピースが置いてないかの判定
+                PlaceFlag = 0;
             }
-        }
-        DrawFlag = 0;
-        x = 20;
-        y = 20;
-    }
 
-
-    function mouseDown(event) {
-        //サブCanvasの上でクリックされると実行される関数
-        if (selectNum == 21) {
-            //ピースが選ばれていないなら何もしない
-            SelectFlag = 0;
-        } else {
-            SelectFlag = 1;
-            //サブキャンバスを赤枠で囲む
-            ctx4.lineWidth = 1;
-            ctx4.beginPath();
-            ctx4.strokeStyle = "red";
-            ctx4.strokeRect(0, 0, squareSize * 5, squareSize * 5);
-            ctx4.stroke();
-        }
-    }
-
-
-    function mouseUp(event) {
-        //メインキャンバス上でクリックされると実行される関数。
-
-        if (SelectFlag == 0) {
-            //ピースが選択状態じゃないならなにもしない
-            return;
-        }
-
-        if (countTurn == 1) {
-            //1ターン目（最初のターン）の処理
-            //↓各プレイヤーは盤面の角におかなきゃいけないからplayerNumで場合分け。ここでnearlineとか書かないで最初に定義するべきだろうけどとりあえずいいわ
-            RegionFlag = 0;
-            FirstFlag = 0;
-
-            if (playerNum == 1) {
-                nearline = 0; //左上
-                nearcolumn = 0;
-            } else if (playerNum == 2) {
-                nearline = 0; //右上
-                nearcolumn = 19;
-            } else if (playerNum == 3) {
-                nearline = 19; //右下
-                nearcolumn = 19;
-            } else if (playerNum == 4) {
-                nearline = 19; //左下
-                nearcolumn = 0;
-            }
-            for (let i = 0; i < Pieces[selectNum].childline.length; i++) {
-                if (Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] < 0 || Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] < 0 || Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] > 19 || Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] > 19) {
-                    //盤面の外にピースがでないかの判定
-                    RegionFlag = 1;
-                    break;
-                }
-
-                if (Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] == nearline && Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] == nearcolumn) {
-                    //角のマス目が埋まるかの判定
-                    FirstFlag = 1;
-                }
-            }
-            if (RegionFlag) {
-                alert("盤面の外にピースがでちゃうように置かないで")
-            } else if (FirstFlag) {
-                for (let i = 0; i < Pieces[selectNum].childline.length; i++) {
-                    Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i]][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i]] = playerNum;
-                }
-                Coloring();
-                Pieces[selectNum].useFlag = 1; //使用済みピースに変更
-                DeletePic();
-                SelectFlag = 0; //ピースを選択していない状態にする
-                selectNum = 21; //選択ピース番号を範囲外に変更
-
-                ctx4.fillStyle = "white"; //サブキャンバスを白塗り
-                ctx4.fillRect(0, 0, squareSize * 5, squareSize * 5);
-                console.log(Board);
-                countTurn += 1;
+            //既に置いているピースの頂点にふれるかの判定
+            //Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i]が0の時は上は調べなくてOK。19のときは下は調べなくてOK。エラー出ちゃうからifでわけてみた
+            //Boardの配列てきにBoard[~][-~]は平気だけど、Board[-~][~]はエラー出ちゃう
+            if (Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] == 0) {
+                if (Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] + 1][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] - 1] == playerNum) { CornerFlag = 1 }
+                if (Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] + 1][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] + 1] == playerNum) { CornerFlag = 1 }
+            } else if (Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] == 19) {
+                if (Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] - 1][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] - 1] == playerNum) { CornerFlag = 1 }
+                if (Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] - 1][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] + 1] == playerNum) { CornerFlag = 1 }
             } else {
-                alert("盤面の角が埋まるように")
+                if (Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] - 1][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] - 1] == playerNum) { CornerFlag = 1 }
+                if (Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] - 1][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] + 1] == playerNum) { CornerFlag = 1 }
+                if (Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] + 1][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] - 1] == playerNum) { CornerFlag = 1 }
+                if (Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] + 1][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] + 1] == playerNum) { CornerFlag = 1 }
             }
 
-        } else {
-            //2ターン目以降
-            PlaceFlag = 1; //新しく置く毎にフラグをデフォに設定する
-            CornerFlag = 0;
-            EdgeFlag = 1;
-            RegionFlag = 0;
-            errmsg = "";
-
-            for (let i = 0; i < Pieces[selectNum].childline.length; i++) {
-                if (Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] < 0 || Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] < 0 || Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] > 19 || Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] > 19) {
-                    //盤面の外にピースがでないかの判定
-                    RegionFlag = 1;
-                    break;
-                }
-
-                if (Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i]][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i]] != 0) {
-                    //置く位置にピースが置いてないかの判定
-                    PlaceFlag = 0;
-                }
-
-                //既に置いているピースの頂点にふれるかの判定
-                //Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i]が0の時は上は調べなくてOK。19のときは下は調べなくてOK。エラー出ちゃうからifでわけてみた
-                //Boardの配列てきにBoard[~][-~]は平気だけど、Board[-~][~]はエラー出ちゃう
-                if (Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] == 0) {
-                    if (Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] + 1][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] - 1] == playerNum) { CornerFlag = 1 }
-                    if (Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] + 1][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] + 1] == playerNum) { CornerFlag = 1 }
-                } else if (Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] == 19) {
-                    if (Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] - 1][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] - 1] == playerNum) { CornerFlag = 1 }
-                    if (Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] - 1][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] + 1] == playerNum) { CornerFlag = 1 }
-                } else {
-                    if (Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] - 1][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] - 1] == playerNum) { CornerFlag = 1 }
-                    if (Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] - 1][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] + 1] == playerNum) { CornerFlag = 1 }
-                    if (Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] + 1][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] - 1] == playerNum) { CornerFlag = 1 }
-                    if (Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] + 1][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] + 1] == playerNum) { CornerFlag = 1 }
-                }
-
-                //既に配置してあるピースの辺に接するかの判定
-                //↑と同様にMath.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i]で場合分け
-                if (Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] == 0) {
-                    if (Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i]][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] - 1] == playerNum) { EdgeFlag = 0 }
-                    if (Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i]][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] + 1] == playerNum) { EdgeFlag = 0 }
-                    if (Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] + 1][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i]] == playerNum) { EdgeFlag = 0 }
-                } else if (Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] == 19) {
-                    if (Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i]][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] - 1] == playerNum) { EdgeFlag = 0 }
-                    if (Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i]][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] + 1] == playerNum) { EdgeFlag = 0 }
-                    if (Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] - 1][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i]] == playerNum) { EdgeFlag = 0 }
-                } else {
-                    if (Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i]][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] - 1] == playerNum) { EdgeFlag = 0 }
-                    if (Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i]][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] + 1] == playerNum) { EdgeFlag = 0 }
-                    if (Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] - 1][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i]] == playerNum) { EdgeFlag = 0 }
-                    if (Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] + 1][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i]] == playerNum) { EdgeFlag = 0 }
-                }
-            }
-            //console.log(PlaceFlag, CornerFlag, EdgeFlag);
-
-            if (RegionFlag) {
-                alert("盤面の外にピースがでちゃうように置かないで")
-            } else if (PlaceFlag && CornerFlag && EdgeFlag) {
-                for (let i = 0; i < Pieces[selectNum].childline.length; i++) {
-                    Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i]][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i]] = playerNum;
-                }
-                Coloring();
-                Pieces[selectNum].useFlag = 1; //使用済みピースに変更
-                DeletePic();
-                SelectFlag = 0; //ピースを選択していない状態にする
-                selectNum = 21; //選択ピース番号を範囲外に変更
-                countTurn += 1;
-
-                ctx4.fillStyle = "white"; //サブキャンバスを白塗り
-                ctx4.fillRect(0, 0, squareSize * 5, squareSize * 5);
-                console.log(Board);
+            //既に配置してあるピースの辺に接するかの判定
+            //↑と同様にMath.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i]で場合分け
+            if (Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] == 0) {
+                if (Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i]][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] - 1] == playerNum) { EdgeFlag = 0 }
+                if (Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i]][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] + 1] == playerNum) { EdgeFlag = 0 }
+                if (Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] + 1][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i]] == playerNum) { EdgeFlag = 0 }
+            } else if (Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] == 19) {
+                if (Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i]][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] - 1] == playerNum) { EdgeFlag = 0 }
+                if (Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i]][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] + 1] == playerNum) { EdgeFlag = 0 }
+                if (Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] - 1][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i]] == playerNum) { EdgeFlag = 0 }
             } else {
-                if (!CornerFlag) {
-                    errmsg += "既に配置してあるピースの頂点に触れるようにせい\n";
-                }
-                if (!PlaceFlag) {
-                    errmsg += "既にピースが置いてあります\n";
-                }
-                if (!EdgeFlag) {
-                    errmsg += "既に配置してあるピースの辺に接しちゃダメ\n";
-                }
-                alert(errmsg);
+                if (Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i]][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] - 1] == playerNum) { EdgeFlag = 0 }
+                if (Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i]][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i] + 1] == playerNum) { EdgeFlag = 0 }
+                if (Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] - 1][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i]] == playerNum) { EdgeFlag = 0 }
+                if (Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i] + 1][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i]] == playerNum) { EdgeFlag = 0 }
+            }
+        }
+        //console.log(PlaceFlag, CornerFlag, EdgeFlag);
+
+        if (RegionFlag) {
+            alert("盤面の外にピースがでちゃうように置かないで")
+        } else if (PlaceFlag && CornerFlag && EdgeFlag) {
+            for (let i = 0; i < Pieces[selectNum].childline.length; i++) {
+                Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i]][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i]] = playerNum;
+            }
+            Coloring();
+            Pieces[selectNum].useFlag = 1; //使用済みピースに変更
+            DeletePic();
+            SelectFlag = 0; //ピースを選択していない状態にする
+            selectNum = 21; //選択ピース番号を範囲外に変更
+            countTurn += 1;
+
+            ctx4.fillStyle = "white"; //サブキャンバスを白塗り
+            ctx4.fillRect(0, 0, squareSize * 5, squareSize * 5);
+            console.log(Board);
+        } else {
+            if (!CornerFlag) {
+                errmsg += "既に配置してあるピースの頂点に触れるようにせい\n";
+            }
+            if (!PlaceFlag) {
+                errmsg += "既にピースが置いてあります\n";
+            }
+            if (!EdgeFlag) {
+                errmsg += "既に配置してあるピースの辺に接しちゃダメ\n";
+            }
+            alert(errmsg);
+        }
+    }
+}
+
+
+function Coloring() {
+    //Boardの状態から色を塗る
+    for (let i = 0; i < 20; i++) {
+        for (let j = 0; j < 20; j++) {
+            if (Board[i][j] != 0) {
+                ctx.fillStyle = PlayerColor[Board[i][j] - 1];
+                ctx.fillRect(j * squareSize, i * squareSize, squareSize, squareSize);
             }
         }
     }
+}
 
 
-    function Coloring() {
-        //Boardの状態から色を塗る
-        for (let i = 0; i < 20; i++) {
-            for (let j = 0; j < 20; j++) {
-                if (Board[i][j] != 0) {
-                    ctx.fillStyle = PlayerColor[Board[i][j] - 1];
-                    ctx.fillRect(j * squareSize, i * squareSize, squareSize, squareSize);
-                }
-            }
-        }
-    }
-
-
-    function Coloring2() {
-        //メインじゃない方のボード(ctx4)に選択したピースを映し出す
-        //引数はピースの番号0~20 　21の時は白(ピースが選ばれていない状態)にする
-        ctx4.fillStyle = "white"; //白にして、前にあったやつを消す
-        ctx4.fillRect(0, 0, 5 * squareSize, 5 * squareSize);
-        for (let i = 0; i < 6; i++) {
-            //枠線を書く
-            ctx4.beginPath();
-            ctx4.lineWidth = 0.2;
-            ctx4.strokeStyle = "black";
-            ctx4.moveTo(0, squareSize * i);
-            ctx4.lineTo(5 * squareSize, squareSize * i);
-            ctx4.moveTo(squareSize * i, 0);
-            ctx4.lineTo(squareSize * i, 5 * squareSize);
-            ctx4.stroke();
-        }
-        ctx4.fillStyle = "black";
-        for (let i = 0; i < Pieces[selectNum].childline.length; i++) {
-            ctx4.fillRect(2 * squareSize + Pieces[selectNum].childcolumn[i] * squareSize, 2 * squareSize + Pieces[selectNum].childline[i] * squareSize, squareSize, squareSize)
-        }
-        //中心のマスに赤点を打つ
-        ctx4.fillStyle = "red";
+function Coloring2() {
+    //メインじゃない方のボード(ctx4)に選択したピースを映し出す
+    //引数はピースの番号0~20 　21の時は白(ピースが選ばれていない状態)にする
+    ctx4.fillStyle = "white"; //白にして、前にあったやつを消す
+    ctx4.fillRect(0, 0, 5 * squareSize, 5 * squareSize);
+    for (let i = 0; i < 6; i++) {
+        //枠線を書く
         ctx4.beginPath();
-        ctx4.arc(2.5 * squareSize, 2.5 * squareSize, 3, 0, Math.PI * 2, true);
-        ctx4.fill();
+        ctx4.lineWidth = 0.2;
+        ctx4.strokeStyle = "black";
+        ctx4.moveTo(0, squareSize * i);
+        ctx4.lineTo(5 * squareSize, squareSize * i);
+        ctx4.moveTo(squareSize * i, 0);
+        ctx4.lineTo(squareSize * i, 5 * squareSize);
+        ctx4.stroke();
     }
-
-
-    function loads(k) {
-        //ピース画像をタップされると実行される関数
-        SelectFlag = 0;
-        if (Pieces[k].useFlag == 0) {
-            //選ばれたピースが使用済みかどうかで場合分け
-            selectNum = k;
-            Coloring2();
-        } else {
-            selectNum = 21;
-            Coloring2();
-            alert("すでに使用済みのピースです");
-        }
+    ctx4.fillStyle = "black";
+    for (let i = 0; i < Pieces[selectNum].childline.length; i++) {
+        ctx4.fillRect(2 * squareSize + Pieces[selectNum].childcolumn[i] * squareSize, 2 * squareSize + Pieces[selectNum].childline[i] * squareSize, squareSize, squareSize)
     }
+    //中心のマスに赤点を打つ
+    ctx4.fillStyle = "red";
+    ctx4.beginPath();
+    ctx4.arc(2.5 * squareSize, 2.5 * squareSize, 3, 0, Math.PI * 2, true);
+    ctx4.fill();
+}
 
 
-    function Rotate() {
-        //x=x*cost-y*sint  y=x*sint-y*costみたいなやつをchildlineとchildcolumnで考えれば簡単に回転できる
-        //反時計回り
-        if (Pieces[selectNum].useFlag == 1) {
-            return;
-        }
-        for (let i = 0; i < Pieces[selectNum].childline.length; i++) {
-            tmp[i] = Pieces[selectNum].childline[i];
-            Pieces[selectNum].childline[i] = -1 * Pieces[selectNum].childcolumn[i];
-            Pieces[selectNum].childcolumn[i] = tmp[i];
-        }
+function loads(k) {
+    //ピース画像をタップされると実行される関数
+    SelectFlag = 0;
+    if (Pieces[k].useFlag == 0) {
+        //選ばれたピースが使用済みかどうかで場合分け
+        selectNum = k;
         Coloring2();
-        SelectFlag = 0;
-    }
-
-    function Reverse() {
-        //選択ピースを反転する
-        if (Pieces[selectNum].useFlag == 1) {
-            return;
-        }
-        for (let i = 0; i < Pieces[selectNum].childline.length; i++) {
-            Pieces[selectNum].childline[i] = -1 * Pieces[selectNum].childline[i];
-        }
+    } else {
+        selectNum = 21;
         Coloring2();
-        SelectFlag = 0;
+        alert("すでに使用済みのピースです");
     }
+}
 
-    function DeletePic() {
-        //使用したピースの画像をcssを使って非表示or半透明表示にする。
-        document.getElementById("changes" + selectNum).classList.add("addColor");
+
+function Rotate() {
+    //x=x*cost-y*sint  y=x*sint-y*costみたいなやつをchildlineとchildcolumnで考えれば簡単に回転できる
+    //反時計回り
+    if (Pieces[selectNum].useFlag == 1) {
+        return;
     }
+    for (let i = 0; i < Pieces[selectNum].childline.length; i++) {
+        tmp[i] = Pieces[selectNum].childline[i];
+        Pieces[selectNum].childline[i] = -1 * Pieces[selectNum].childcolumn[i];
+        Pieces[selectNum].childcolumn[i] = tmp[i];
+    }
+    Coloring2();
+    SelectFlag = 0;
+}
 
+function Reverse() {
+    //選択ピースを反転する
+    if (Pieces[selectNum].useFlag == 1) {
+        return;
+    }
+    for (let i = 0; i < Pieces[selectNum].childline.length; i++) {
+        Pieces[selectNum].childline[i] = -1 * Pieces[selectNum].childline[i];
+    }
+    Coloring2();
+    SelectFlag = 0;
+}
+
+function DeletePic() {
+    //使用したピースの画像をcssを使って非表示or半透明表示にする。
+    document.getElementById("changes" + selectNum).classList.add("addColor");
 }

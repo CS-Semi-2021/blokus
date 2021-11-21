@@ -291,19 +291,20 @@
 
         <!-- ゲーム画面 -->
         <div class="blokus" id="blokus" style="display:none;">
-            <h1>Blokus</h1>
+            <!-- <h1>Blokus</h1> -->
 
             <div class="mains">
-                <div class="canvaswrap">
-                    <canvas id="rectangle3" width="1000" height="1000"></canvas>
-                </div>
-                <canvas id="rectangleBack" width="1000" height="1000"></canvas>
-                <canvas id="rectangle4" width="250" height="250"></canvas>
+                <canvas id="rectangle3"  class="canvaswrap"></canvas>
+                <canvas id="rectangleBack"></canvas>
+                <canvas id="rectangle4"></canvas>
+                <!--<input class="button-in-blokus" id="button1" type="button" value="Rotate!" onclick="Rotate()">-->
+                <!--<input class="button-in-blokus" type="button" value="Reverse!" onclick="Reverse()"　id="button2">-->
+                <input id="button1" type="button" value="Rotate!" onclick="Rotate()">
+                <input id="button2" type="button" value="Reverse!" onclick="Reverse()">
+
+                <button id = "buttonout" class="button-in-blokus" onClick="Display('main-menu')">退出する</button>
+            
                 
-                <br>
-                <input class="button-in-blokus" type="button" value="Rotate!" onclick="Rotate()"　id="button1">
-                <input class="button-in-blokus" type="button" value="Reverse!" onclick="Reverse()"　id="button2">
-                <p></p>
                 
                 <img id = "changes0" src="images/image0.png" onclick="loads(0);">   
                 <img id = "changes1" src="images/image1.png" onclick="loads(1);">
@@ -328,7 +329,7 @@
                 <img id = "changes20" src="images/image20.png" onclick="loads(20);">
             </div>
 
-            <button class="button-in-blokus" onClick="Display('main-menu')">退出する</button>
+            <!--<button id = "outButton" class="button-in-blokus" onClick="Display('main-menu')">退出する</button>-->
         </div>
     </body>
 </html>

@@ -256,9 +256,9 @@ let Pieces = [piece0, piece1, piece2, piece3, piece4, piece5, piece6, piece7, pi
 // toたいせい onloadの中身をすべて外に出しました byえいき
 function draw3() {
     if (document.documentElement.clientWidth / 2 > document.documentElement.clientHeight) {
-        canvasSize = Math.floor(document.documentElement.clientHeight);
+        canvasSize = Math.floor(document.documentElement.clientHeight) * 0.9;
     } else {
-        canvasSize = Math.floor(document.documentElement.clientWidth / 2);
+        canvasSize = Math.floor(document.documentElement.clientWidth / 2) * 0.9;
     }
 
     //canvasSize = Math.floor(document.documentElement.clientWidth / 2);
@@ -287,15 +287,24 @@ function draw3() {
     //こっから↓はcssみたいなやつ
     let target4 = document.getElementById("rectangle4");
     target4.style.position = "absolute";
-    target4.style.top = squareSize * 13 + "px";
+    target4.style.top = squareSize * 12 + "px";
     target4.style.left = squareSize * 21 + "px";
 
     let targetRotate = document.getElementById("button1");
     targetRotate.style.position = "absolute";
-    targetRotate.style.top = squareSize * 18 + "px";
+    targetRotate.style.top = squareSize * 17.5 + "px";
     targetRotate.style.left = squareSize * 21 + "px";
     targetRotate.style.width = squareSize * 5 + "px";
     targetRotate.style.height = squareSize * 1 + "px";
+    targetRotate.style.fontSize = squareSize / 2 + "px";
+    targetRotate.style.textAlign = "center";
+    targetRotate.style.lineHeight = squareSize + "px";
+    targetRotate.style.fontWeight = squareSize + "px";
+    targetRotate.style.color = "#42cea9";
+    targetRotate.style.backgroundColor = "#ffffff";
+    targetRotate.style.border = "2px solid #58d2b2";
+    targetRotate.style.borderRadius = "2px";
+    targetRotate.style.cursor = "pointer";
 
     let targetReverse = document.getElementById("button2");
     targetReverse.style.position = "absolute";
@@ -303,6 +312,31 @@ function draw3() {
     targetReverse.style.left = squareSize * 21 + "px";
     targetReverse.style.width = squareSize * 5 + "px";
     targetReverse.style.height = squareSize * 1 + "px";
+    targetReverse.style.fontSize = squareSize / 2 + "px";
+    targetReverse.style.textAlign = "center";
+    targetReverse.style.lineHeight = squareSize + "px";
+    targetReverse.style.fontWeight = squareSize + "px";
+    targetReverse.style.color = "#42cea9";
+    targetReverse.style.backgroundColor = "#ffffff";
+    targetReverse.style.border = "2px solid #58d2b2";
+    targetReverse.style.borderRadius = "2px";
+    targetReverse.style.cursor = "pointer";
+
+    let targetOut = document.getElementById("buttonout");
+    targetOut.style.position = "absolute";
+    targetOut.style.top = squareSize * 18 + "px";
+    targetOut.style.left = squareSize * 32 + "px";
+    targetOut.style.width = squareSize * 5 + "px";
+    targetOut.style.height = squareSize * 2 + "px";
+    targetReverse.style.fontSize = squareSize / 2 + "px";
+    targetOut.style.textAlign = "center";
+    targetOut.style.lineHeight = squareSize + "px";
+    targetOut.style.fontWeight = squareSize + "px";
+    targetOut.style.color = "#42cea9";
+    targetOut.style.backgroundColor = "#ffffff";
+    targetOut.style.border = "2px solid #58d2b2";
+    targetOut.style.borderRadius = "2px";
+    targetOut.style.cursor = "pointer";
 
     let targetPic;
     for (let i = 0; i < 21; i++) {

@@ -13,7 +13,7 @@ body {
     margin: 0;
     background-color: #f6faff;
     color: #6c7686;
-    padding: 100px;
+    /* padding: 100px;  -> blokusで上を縮めるために毎回paddingを書く */
 }
 
 a,
@@ -45,6 +45,10 @@ h1 {
 
 
 /* index ================================ */
+
+.index {
+    padding: 100px;
+}
 
 .index-wrapper {
     max-width: 1200px;
@@ -114,6 +118,10 @@ kiyaku, policy については同じように文章だけの画面になるの�
 その他の画面は変更を加える可能性があるので内容が同じでもclass名を変更しいちいちcssを書いている 
 */
 
+.rule {
+    padding: 100px;
+}
+
 .rule-wrapper {
     max-width: 1200px;
     min-width: 920px;
@@ -170,7 +178,11 @@ kiyaku, policy については同じように文章だけの画面になるの�
 }
 
 
-/* main_menu ============================== */
+/* main-menu ============================== */
+
+.main-menu {
+    padding: 100px;
+}
 
 .main-menu-wrapper {
     max-width: 1200px;
@@ -245,6 +257,10 @@ kiyaku, policy については同じように文章だけの画面になるの�
 
 /* create-room ================================= */
 
+.create-room {
+    padding: 100px;
+}
+
 .create-room-wrapper {
     max-width: 1200px;
     min-width: 920px;
@@ -302,6 +318,10 @@ kiyaku, policy については同じように文章だけの画面になるの�
 
 
 /* blokus =================================== */
+
+.blokus {
+    padding: 5%;
+}
 
 .addColor {
     /*display: none; 画像削除*/

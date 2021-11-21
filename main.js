@@ -1,10 +1,5 @@
 //画面サイズにあわせるやつ
 
-// to たいせい
-// 1つのページにするためにonload()が読み込んでくれなくて中身を外に出したらうまく言ったんだけど
-// こいつだとそれがうまくいかねえ
-// by えーき
-
 let canvas;
 let ctx;
 let canvas4;
@@ -253,7 +248,6 @@ let Pieces = [piece0, piece1, piece2, piece3, piece4, piece5, piece6, piece7, pi
     piece11, piece12, piece13, piece14, piece15, piece16, piece17, piece18, piece19, piece20, piece21
 ]
 
-// toたいせい onloadの中身をすべて外に出しました byえいき
 function draw3() {
     if (document.documentElement.clientWidth / 2 > document.documentElement.clientHeight) {
         canvasSize = Math.floor(document.documentElement.clientHeight) * 0.9;

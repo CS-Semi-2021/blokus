@@ -37,7 +37,7 @@ let pass = 0; //pass回数
 let score = new Array();
 let io = socketio.listen(server);
 //connectionイベントを受信する
-io.sockets.on('connection', function(soket){
+io.sockets.on('connection', function(socket){
     //first_connectionイベントの受信
     socket.on('first_connection', function(data){
         name[number] = data.username;

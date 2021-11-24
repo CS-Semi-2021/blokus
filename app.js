@@ -9,6 +9,8 @@ let piece; //手持ちのコマ数
 let board2 = new Array(); //盤面の2次元目
 let board = new Array(board2); //盤面の配列
 
+
+
 //first_connectionイベント
 //自分自身の情報を入れる
 const IAM = {
@@ -24,12 +26,12 @@ const IAM = {
   // 正常に接続したら
   socket.on("connect", ()=>{
     // 表示を切り替える
-    $("#nowconnecting").style.display = "none";   // 「接続中」を非表示
   });
   
   // トークンを発行されたら
   socket.on("token", (data)=>{
     IAM.token = data.token;
+    console.log(add(10,5));
   });
   
 //game_startイベントの受信
@@ -46,13 +48,13 @@ socket.on('game_start', (data) => {
       });
     }else{
         //自分のターン出ないときの処理を関数で呼び出す
-        drawOnly();
+        //drawOnly();
         
     }
 });
 
 //ターンが終わったときの処理
-$('.finish_turn').on('click', function(){
+/*$('.finish_turn').on('click', function(){
     if(pass == false){
         //finish_turnイベントを送信
         socket.emit('finish_turn', {barray : board});
@@ -60,7 +62,7 @@ $('.finish_turn').on('click', function(){
         //passイベントの送信
         socket.emit('pass', {barray : board});
     }
-});
+});*/
 
 //go_nextイベントの受信
 socket.on('next_turn', function(data){

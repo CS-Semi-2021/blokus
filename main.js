@@ -366,7 +366,6 @@ function draw3() {
     canvas.addEventListener('mousemove', mouseMove);
     canvas.addEventListener('mouseleave', mouseLeave);
 
-
 }
 
 
@@ -594,6 +593,7 @@ function Coloring() {
             }
         }
     }
+    
 }
 
 
@@ -671,3 +671,6 @@ function DeletePic() {
     //使用したピースの画像をcssを使って非表示or半透明表示にする。
     document.getElementById("changes" + selectNum).classList.add("addColor");
 }
+
+
+

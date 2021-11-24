@@ -493,6 +493,7 @@ function mouseUp(event) {
             ctx4.fillRect(0, 0, squareSize * 5, squareSize * 5);
             console.log(Board);
             countTurn += 1;
+            finish_turn();
         } else {
             alert("盤面の角が埋まるように")
         }
@@ -671,3 +672,8 @@ function DeletePic() {
     //使用したピースの画像をcssを使って非表示or半透明表示にする。
     document.getElementById("changes" + selectNum).classList.add("addColor");
 }
+
+
+//---------------------------------------
+//   app.jsとのデータのやり取り
+//---------------------------------------

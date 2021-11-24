@@ -24,14 +24,6 @@ let MEMBER_COUNT = 1;
 
 const port = 3000;
 
-let Board = new Array(20);
-for (let x = 0; x < 20; x++) {
-    Board[x] = new Array(20);
-    for (let y = 0; y < 20; y++) {
-        Board[x][y] = 0;
-    }
-}
-
 // ルーティングの設定
 app.get("/", (req, res) =>{
   res.sendFile(`${__dirname}/flamingo.html`);
@@ -70,9 +62,16 @@ let count = 0;//ターン数
   //-------------------------------
 
 
-let board2 = new Array(); //盤面の2次元目
-let board = new Array(board2); //盤面の配列
-
+//盤面
+//Boardは行列表現！XY座標とはちがうから混同しないように！
+//Board[i][j]　iが↓成分　jが->成分
+let board = new Array(20);
+for (let x = 0; x < 20; x++) {
+    board[x] = new Array(20);
+    for (let y = 0; y < 20; y++) {
+        board[x][y] = 0;
+    }
+}
 let pass = 0; //pass回数
 let score = new Array();
 
@@ -88,7 +87,12 @@ io.on("connection", (socket)=>{
     const token = makeToken(socket.id);
     // ユーザーリストに追加　名前は入力フォームをが出来次第
 
-    MEMBER[socket.id] = {token: token, name:null, count:MEMBER_COUNT};
+    MEMBER[socket.id] = {
+      token: token, 
+      name:null, 
+      count:MEMBER_COUNT,
+      score:score
+    };
     MEMBER_COUNT++;
     // 本人にトークンを送付
     io.to(socket.id).emit('token', {token:token});
@@ -96,29 +100,46 @@ io.on("connection", (socket)=>{
     //console.log(MEMBER[socket.id]);
   })();
 
+  socket.on('board', (data)=>{
+    board = data.board_status;
+  });
+
 
     let count = 0;//ターン数
     //ゲームの開始合図
     if(MEMBER_COUNT == 4){
-      io.emit('game_start' ,{ order: MEMBER[socket.id].count, board_status : Board });
+      io.emit('game_start' ,{ 
+        order: MEMBER[socket.id].count, 
+        board_status : board, 
+        count: count 
+      });
     }
     socket.on('finish_turn', (status)=>{
-      Board = status.board_status;
+      board = status.board_status;
       nowturn = status.count + 1;
-      console.log(Board);
-      io.emit('next_turn', {borad_status: Board, order: MEMBER[socket.id].count});
+      console.log(board);
+      io.emit('next_turn', {
+        borad_status: board, 
+        count: count
+      });
     });
     //passイベントの受信
     socket.on('pass', function(data){
-        Board = data.barray;
+        board = data.barray;
         count++;
         pass++;
+        MEMBER[socket.id].score = scoreCal();
         if(pass < 4){
             //go_nextイベントの送信
-            soket.emit('go_next', {barray : board, turn : count});
+            soket.emit('next_turn', {
+              board_status : board, 
+              count : count
+            });
         }else{
             //game_setイベントの送信
-            socket.emit('game_set', {barray : board});
+            socket.emit('game_set', {
+              board_status : board
+            });
         }
     });
 
@@ -167,4 +188,8 @@ function rank(){ //スコアの低い順にソート
 function makeToken(id){
   const str = "aqwsedrftgyhujiko" + id;
   return( crypto.createHash("sha1").update(str).digest('hex') );
+}
+
+function scoreCal(){
+  return 0;
 }

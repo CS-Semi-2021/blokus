@@ -6,8 +6,7 @@ let mynumber; //自分の手番の順番
 let pass = false; //passした時のフラグ
 let piece; //手持ちのコマ数
 
-let board2 = new Array(); //盤面の2次元目
-let board = new Array(board2); //盤面の配列
+
 
 
 
@@ -26,31 +25,32 @@ const IAM = {
   // 正常に接続したら
   socket.on("connect", ()=>{
     // 表示を切り替える
+    //$("#nowconnecting").style.display = "none";   // 「接続中」を非表示
   });
   
   // トークンを発行されたら
   socket.on("token", (data)=>{
     IAM.token = data.token;
-    console.log(add(10,5));
+    socket.emit("board",{
+        board_status: Board
+    });
   });
   
 //game_startイベントの受信
 socket.on('game_start', (data) => {
-    board = data.board_status;
-    if(data.order == 1){
+    Board = data.board_status;
+    playerNum = data.order;
+    nowturn = data.count;
+    /*if(data.order == 1){
       //main.jsのdraw3()内にある
-      //anvas.addEventListener('mouseleave', mouseLeave);の制御をして
+      //canvas.addEventListener('mouseleave', mouseLeave);の制御をして
 　    //盤面に関与できる人とできない人を条件分けしたい
-      // Socket.ioサーバへ送信
-      socket.emit("finish_turn", {
-        board_status : board,
-        token: IAM.token
-      });
+      draw3();
     }else{
         //自分のターン出ないときの処理を関数で呼び出す
         //drawOnly();
-        
-    }
+        draw3();
+    }*/
 });
 
 //ターンが終わったときの処理
@@ -66,19 +66,24 @@ socket.on('game_start', (data) => {
 
 //go_nextイベントの受信
 socket.on('next_turn', function(data){
-    board = data.baraay;
+    Board = data.board_status;
     nowturn = data.count;
-    if(nowturn % 4 == mynumber){
+    /*if(nowturn % 4 == playerNum % 4){
         //自分のターンのときの処理を関数で呼び出す
+        draw3();
     }else{
         //自分のターン出ないときの処理を関数で呼び出す
-    }
+        draw3();
+    }*/
 });
 
 //game\setイベントの受信
 socket.on('game_set', function(data){
-    board = data.barray;
-    socket.emit('holding_point', {user : username, point : piece});
+    Board = data.board_status;
+    socket.emit('holding_point', {
+        user : IAM.token, 
+        point : piece
+    });
 });
 
 let resultn = new Array();
@@ -90,3 +95,18 @@ socket.on('winner', function(data){
     results = data.point;
     //試合結果の表示を処理する関数を呼び出す
 });
+
+
+//-------------------------------
+//  呼び出し用関数
+//-------------------------------
+
+
+function finish_turn(){
+    // Socket.ioサーバへ送信
+    socket.emit("finish_turn", {
+        board_status : Board,
+        token: IAM.token,
+        count: nowturn
+      });
+}

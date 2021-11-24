@@ -1,4 +1,3 @@
-let socket = io.connect(); //ソケットへの接続
 let isEnter = false;
 let username = ''; //ユーザーネーム
 let first = 0; //最初の接続フラグ
@@ -9,30 +8,42 @@ let piece; //手持ちのコマ数
 
 let board2 = new Array(); //盤面の2次元目
 let board = new Array(board2); //盤面の配列
-//import player from "flamingo.html";
-username = Math.floor(Math.random()*1000000000);
+
 //first_connectionイベント
-if(first == 0){
-    socket.emit("fist_connection",{user : username});
-}
-
-let player = new Array(); //手番順のプレイヤーの配列
-let nowturn; //現在のターン
-
+//自分自身の情報を入れる
+const IAM = {
+    token: null,  // トークン
+    name: null    // 名前
+  };
+  
+  //-------------------------------------
+  // STEP1. Socket.ioサーバへ接続
+  //-------------------------------------
+  const socket = io();
+  let nowturn = 1;
+  // 正常に接続したら
+  socket.on("connect", ()=>{
+    // 表示を切り替える
+    $("#nowconnecting").style.display = "none";   // 「接続中」を非表示
+  });
+  
+  // トークンを発行されたら
+  socket.on("token", (data)=>{
+    IAM.token = data.token;
+  });
+  
 //game_startイベントの受信
-socket.on('game_start', function(data){
-    player = data.name;
-    nowturn = data.turn;
-    for(let i = 0; i < 4; i++){
-        if(player[i] == username){
-            mynumber = i;
-        }
-    }
-    if(nowturn % 4 == mynumber){
-        //自分のターンのときの処理を関数で呼び出す
-        draw3();
-
-        socket.emit('finish_turn', {barray : board});
+socket.on('game_start', (data) => {
+    board = data.board_status;
+    if(data.order == 1){
+      //main.jsのdraw3()内にある
+      //anvas.addEventListener('mouseleave', mouseLeave);の制御をして
+　    //盤面に関与できる人とできない人を条件分けしたい
+      // Socket.ioサーバへ送信
+      socket.emit("finish_turn", {
+        board_status : board,
+        token: IAM.token
+      });
     }else{
         //自分のターン出ないときの処理を関数で呼び出す
         drawOnly();
@@ -52,7 +63,7 @@ $('.finish_turn').on('click', function(){
 });
 
 //go_nextイベントの受信
-socket.on('go_next', function(data){
+socket.on('next_turn', function(data){
     board = data.baraay;
     nowturn = data.count;
     if(nowturn % 4 == mynumber){

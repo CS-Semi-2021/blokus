@@ -92,6 +92,13 @@ function Display(operation) {
     }
 }
 
+// ゲームから退出するときの警告(あとでやる)
+function leaveAlert() {
+    if (window.confirm("本当に退出しますか？：")) {
+        Display("main-menu");
+    }
+}
+
 //盤面
 //Boardは行列表現！XY座標とはちがうから混同しないように！
 //Board[i][j]　iが↓成分　jが->成分

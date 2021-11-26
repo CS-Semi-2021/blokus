@@ -93,9 +93,14 @@ io.on("connection", (socket)=>{
       count:MEMBER_COUNT,
       score:score
     };
-    MEMBER_COUNT++;
+    if(MEMBER_COUNT < 4){
+      MEMBER_COUNT++;
+    }
     // 本人にトークンを送付
-    io.to(socket.id).emit('token', {token:token});
+    io.to(socket.id).emit('token', {
+      token:token,
+      order: MEMBER[socket.id].count
+    });
     console.log(MEMBER[socket.id].count);
     //console.log(MEMBER[socket.id]);
   })();
@@ -108,8 +113,7 @@ io.on("connection", (socket)=>{
     let count = 0;//ターン数
     //ゲームの開始合図
     if(MEMBER_COUNT == 4){
-      io.emit('game_start' ,{ 
-        order: MEMBER[socket.id].count, 
+      io.emit('game_start' ,{  
         board_status : board, 
         count: count 
       });

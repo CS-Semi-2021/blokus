@@ -31,6 +31,8 @@ const IAM = {
   // トークンを発行されたら
   socket.on("token", (data)=>{
     IAM.token = data.token;
+    playerNum = data.order;
+    console.log(playerNum);
     socket.emit("board",{
         board_status: Board
     });
@@ -39,7 +41,6 @@ const IAM = {
 //game_startイベントの受信
 socket.on('game_start', (data) => {
     Board = data.board_status;
-    playerNum = data.order;
     nowturn = data.count;
     /*if(data.order == 1){
       //main.jsのdraw3()内にある
@@ -68,6 +69,7 @@ socket.on('game_start', (data) => {
 socket.on('next_turn', function(data){
     Board = data.board_status;
     nowturn = data.count;
+    console.log('next_turn');
     /*if(nowturn % 4 == playerNum % 4){
         //自分のターンのときの処理を関数で呼び出す
         draw3();
@@ -103,6 +105,7 @@ socket.on('winner', function(data){
 
 
 function finish_turn(){
+    console.log('finish_turn');
     // Socket.ioサーバへ送信
     socket.emit("finish_turn", {
         board_status : Board,

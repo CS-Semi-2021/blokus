@@ -6,12 +6,10 @@
         <link rel="stylesheet" href="style.css">
     </head>
 
-
     <body>
         <script src="/socket.io/socket.io.js"></script>
-        <script src="./app.js"></script>
         <script src="./main.js"></script>
-        
+        <script src="./app.js"></script>
 
         <!--　タイトル画面 index -->
         <div class="index" id="index">
@@ -261,10 +259,13 @@
                     <h2 >メインメニュー</h2>
                     <button class="button-in-main-menu" onClick="Display('create-room')">ルーム作成</button>
                     <button class="button-in-main-menu" onClick="Display('index')">トップに戻る</button>
-                    <div class="rooms">
-                        <button class="room" id="room">[ルーム名]</button>
-                        <button class="room" onClick="Display('blokus')">テスト用：Blokus</button>
-                    </div>
+                </div>
+                <div>
+                    <h3>参加可能なルーム</h3>
+                        <div class="rooms">
+                            <button class="room" id="room">[ルーム名]</button>
+                            <button class="room" onClick="Display('blokus')">テスト用：Blokus</button>
+                        </div>
                 </div>
             </div>
         </div>
@@ -295,19 +296,34 @@
             </div>
         </div>
 
-        <!-- ゲーム画面 -->
+        <!-- 待機画面　waiting -->
+        <div class="waiting" id="waiting" style="display:none;">
+            <div class="waiting-wrapper">
+                <div class="waiting-room-detail">
+                    <h2 class="subtitle">みんなで楽しめるテリトリー戦略ゲーム</h2>
+                    <h1 class="title">Blokus</h1>
+                    <h2>待機中...</h2>
+                    <button class="button-in-create-room" onClick="Display('main-menu')">戻る</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ゲーム画面 blokus -->
         <div class="blokus" id="blokus" style="display:none;">
             <div class="mains">
                 <canvas id="rectangle3"  class="canvaswrap"></canvas>
                 <canvas id="rectangleBack"></canvas>
                 <canvas id="rectangle4"></canvas>
+                <!--
                 <input id="button1" type="button" value="Rotate!" onclick="Rotate()">
                 <input id="button2" type="button" value="Reverse!" onclick="Reverse()">
-
-                <button id = "buttonout" class="button-in-blokus" onClick="Display('main-menu')">退出する</button>
+                <input id="button3" type="button" value="Caluculate" onclick="halfway_caluculation()">
+                -->
+                <input id="button1" class="button-in-blokus" type="button" value="Rotate!" onclick="Rotate()">
+                <input id="button2" class="button-in-blokus" type="button" value="Reverse!" onclick="Reverse()">
+                <input id="button3" class="button-in-blokus" type="button" value="Caluculate" onclick="halfway_caluculation()">
+                <button id = "buttonout" class="button-in-blokus" onClick="leaveAlert()">退出する</button>
             
-                
-                
                 <img id = "changes0" src="images/image0.png" onclick="loads(0);">   
                 <img id = "changes1" src="images/image1.png" onclick="loads(1);">
                 <img id = "changes2" src="images/image2.png" onclick="loads(2);">
@@ -331,5 +347,19 @@
                 <img id = "changes20" src="images/image20.png" onclick="loads(20);">
             </div>
         </div>
+
+        <!-- 結果 result -->
+        <div class="result" id="result" style="display:none;">
+            <div class="result-wrapper">
+                <div class="result-detail">
+                    <h1>ゲーム終了！</h1>
+
+                </div>
+            </div>
+        </div>
+
+        <footer id="footer">
+            <p>© 2021 tmu.yokoyama.ac</p>
+        </footer>
     </body>
 </html>

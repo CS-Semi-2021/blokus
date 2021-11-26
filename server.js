@@ -1,76 +1,149 @@
-//モジュールの読み込み
-let http = require('http');
-let socketio = require('socket.io')(http);
+const crypto = require('crypto');
+const app  = require("express")();
+const http = require("http").createServer(app);
+const io   = require("socket.io")(http);
 let fs = require('fs');
-const { isObject } = require('util');
 
-//HTTPサーバの作成
 
-let server = http.createServer(function (req, res) {
-  //サーバー起動
 
-  let url = '.'+(req.url.endsWith("/") ? req.url + "flamingo.html" : req.url);
-  //URLの最後が/ならflamingo.htmlを表示し、それ以外はそのURLのファイル名を変数へ。
+const SECRET_TOKEN = "abcdefghijklmn12345";
 
-  console.log(url);
-  //htmlでリクエストされるコンテンツをコンソールに出力
+//-----------------------------------------------
+// グローバル変数
+//-----------------------------------------------
 
-  if (fs.existsSync(url)) {
-    //ファイルがあれば
-    fs.readFile(url, (err, data) => {
-      if (!err) {
-        //res.writeHead(200, {"Content-Type": "text/html"});  
-        res.writeHead(200, {"Content-Type": getType(url)});  //関数を用いてtext以外の拡張子にも対応
-        res.end(data);
-      }
-    });
-  }
-}).listen(3000);
+const MEMBER = {};
+  // ↑以下のような内容のデータが入る
+  // {
+  //   "socket.id": {token:"abcd", name:"foo", count:1},
+  //   "socket.id": {token:"efgh", name:"bar", count:2}
+  // }
 
-let name = new Array(); //ユーザーネーム
-let number = 0; //アクセス順
+// チャット延べ参加者数
+let MEMBER_COUNT = 1;
 
-let board2 = new Array(); //盤面の2次元目
-let board = new Array(board2); //盤面の配列
+const port = 3000;
 
+// ルーティングの設定
+app.get("/", (req, res) =>{
+  res.sendFile(`${__dirname}/flamingo.html`);
+  //console.log("/ へアクセスがありました");
+});
+app.get("/images/:file", (req, res) =>{
+  const file = req.params.file;
+
+  res.sendFile(`${__dirname}/images/${file}`);
+  //console.log(`/images/${file} へアクセスがありました`);
+});
+app.get("/main.js", (req, res) =>{
+  res.sendFile(`${__dirname}/main.js`);
+  //console.log("/main.js へアクセスがありました");
+});
+app.get("/app.js", (req, res) =>{
+  res.sendFile(`${__dirname}/app.js`);
+  //console.log("/app.js へアクセスがありました");
+});
+app.get("/style.css", (req, res) =>{
+  res.sendFile(`${__dirname}/style.css`);
+  //console.log("/style.css へアクセスがありました");
+});
+app.get("/util.js", (req, res) =>{
+  res.sendFile(`${__dirname}/util.js`);
+  //console.log("/util.js へアクセスがありました");
+});
+// HTTPサーバを起動する
+http.listen(port, () => {
+  console.log(`listening at http://localhost:${port}`);
+});
+let count = 0;//ターン数
+
+  //---------------------------------
+  // ゲーム開始からボードの状態を共有
+  //-------------------------------
+
+
+//盤面
+//Boardは行列表現！XY座標とはちがうから混同しないように！
+//Board[i][j]　iが↓成分　jが->成分
+let board = new Array(20);
+for (let x = 0; x < 20; x++) {
+    board[x] = new Array(20);
+    for (let y = 0; y < 20; y++) {
+        board[x][y] = 0;
+    }
+}
 let pass = 0; //pass回数
 let score = new Array();
-let io = socketio.listen(server);
+
 //connectionイベントを受信する
-io.sockets.on('connection', function(socket){
-    //first_connectionイベントの受信
-    socket.on('first_connection', function(data){
-        name[number] = data.username;
-        number++;
-        console.log(name[number-1]);
+io.on("connection", (socket)=>{
+  console.log("ユーザーが接続しました");
+
+  //---------------------------------
+  // ログイン
+  //---------------------------------
+  (()=>{
+    // トークンを作成
+    const token = makeToken(socket.id);
+    // ユーザーリストに追加　名前は入力フォームをが出来次第
+
+    MEMBER[socket.id] = {
+      token: token, 
+      name:null, 
+      count:MEMBER_COUNT,
+      score:score
+    };
+    if(MEMBER_COUNT < 4){
+      MEMBER_COUNT++;
+    }
+    // 本人にトークンを送付
+    io.to(socket.id).emit('token', {
+      token:token,
+      order: MEMBER[socket.id].count
     });
+    console.log(MEMBER[socket.id].count);
+    //console.log(MEMBER[socket.id]);
+  })();
+
+  socket.on('board', (data)=>{
+    board = data.board_status;
+  });
+
 
     let count = 0;//ターン数
     //ゲームの開始合図
-    if(number == 2){
-        //game_startイベントの送信
-        io.emit('game_start',{value : name, turn : count});
+    if(MEMBER_COUNT == 4){
+      io.emit('game_start' ,{  
+        board_status : board, 
+        count: count 
+      });
     }
-
-    //finish_turnイベントの受信
-    socket.on('finish_turn', function(data){
-        board = data.barray;
-        count++;
-        //go_nextイベントの送信
-        socket.emit('go_next', {barray : board, turn : count});
+    socket.on('finish_turn', (status)=>{
+      board = status.board_status;
+      nowturn = status.count + 1;
+      console.log(board);
+      io.emit('next_turn', {
+        borad_status: board, 
+        count: count
+      });
     });
-
     //passイベントの受信
     socket.on('pass', function(data){
         board = data.barray;
         count++;
         pass++;
+        MEMBER[socket.id].score = scoreCal();
         if(pass < 4){
             //go_nextイベントの送信
-            soket.emit('go_next', {barray : board, turn : count});
+            soket.emit('next_turn', {
+              board_status : board, 
+              count : count
+            });
         }else{
             //game_setイベントの送信
-            socket.emit('game_set', {barray : board});
+            socket.emit('game_set', {
+              board_status : board
+            });
         }
     });
 
@@ -92,24 +165,6 @@ io.sockets.on('connection', function(socket){
     });
 });
 
-function getType(_url) {
-  //拡張子をみて一致したらタイプを返す関数
-  var types = {
-    ".html": "text/html",
-    ".css": "text/css",
-    ".js": "text/javascript",
-    ".png": "image/png",
-    ".jpg": "image/jpeg",
-    ".gif": "image/gif",
-    ".svg": "svg+xml"
-  }
-  for (var key in types) {
-    if (_url.endsWith(key)) {
-      return types[key];
-    }
-  }
-  return "text/plain";
-}
 
 function rank(){ //スコアの低い順にソート
     let namef;
@@ -127,4 +182,18 @@ function rank(){ //スコアの低い順にソート
             }
         }
     }
+}
+/**
+ * トークンを作成する
+ *
+ * @param  {string} id - socket.id
+ * @return {string}
+ */
+function makeToken(id){
+  const str = "aqwsedrftgyhujiko" + id;
+  return( crypto.createHash("sha1").update(str).digest('hex') );
+}
+
+function scoreCal(){
+  return 0;
 }

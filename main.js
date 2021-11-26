@@ -301,12 +301,12 @@ function draw3() {
     //こっから↓はcssみたいなやつ
     let target4 = document.getElementById("rectangle4");
     target4.style.position = "absolute";
-    target4.style.top = squareSize * 12 + "px";
+    target4.style.top = squareSize * 10 + "px";
     target4.style.left = squareSize * 21 + "px";
-
+    
     let targetRotate = document.getElementById("button1");
     targetRotate.style.position = "absolute";
-    targetRotate.style.top = squareSize * 17.5 + "px";
+    targetRotate.style.top = squareSize * 15.5 + "px";
     targetRotate.style.left = squareSize * 21 + "px";
     targetRotate.style.width = squareSize * 5 + "px";
     targetRotate.style.height = squareSize * 1 + "px";
@@ -322,7 +322,7 @@ function draw3() {
 
     let targetReverse = document.getElementById("button2");
     targetReverse.style.position = "absolute";
-    targetReverse.style.top = squareSize * 19 + "px";
+    targetReverse.style.top = squareSize * 17 + "px";
     targetReverse.style.left = squareSize * 21 + "px";
     targetReverse.style.width = squareSize * 5 + "px";
     targetReverse.style.height = squareSize * 1 + "px";
@@ -338,7 +338,7 @@ function draw3() {
 
     let targetCaluculate = document.getElementById("button3");
     targetCaluculate.style.position = "absolute";
-    targetCaluculate.style.top = squareSize * 20.5 + "px";
+    targetCaluculate.style.top = squareSize * 19 + "px";
     targetCaluculate.style.left = squareSize * 21 + "px";
     targetCaluculate.style.width = squareSize * 5 + "px";
     targetCaluculate.style.height = squareSize * 1 + "px";

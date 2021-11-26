@@ -529,6 +529,7 @@ function mouseUp(event) {
             ctx4.fillRect(0, 0, squareSize * 5, squareSize * 5);
             console.log(Board);
             countTurn += 1;
+            finish_turn();
         } else {
             alert("盤面の角が埋まるように")
         }
@@ -604,6 +605,7 @@ function mouseUp(event) {
             ctx4.fillStyle = "white"; //サブキャンバスを白塗り
             ctx4.fillRect(0, 0, squareSize * 5, squareSize * 5);
             console.log(Board);
+            finish_turn();
         } else {
             if (!CornerFlag) {
                 errmsg += "既に配置してあるピースの頂点に触れるようにせい\n";

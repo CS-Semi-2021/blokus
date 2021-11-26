@@ -70,6 +70,7 @@ socket.on('next_turn', function(data){
     Board = data.board_status;
     nowturn = data.count;
     console.log('next_turn');
+
     /*if(nowturn % 4 == playerNum % 4){
         //自分のターンのときの処理を関数で呼び出す
         draw3();

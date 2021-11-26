@@ -338,6 +338,7 @@ function draw3() {
 
     let targetCaluculate = document.getElementById("button3");
     targetCaluculate.style.position = "absolute";
+
     targetCaluculate.style.top = squareSize * 19 + "px";
     targetCaluculate.style.left = squareSize * 21 + "px";
     targetCaluculate.style.width = squareSize * 5 + "px";

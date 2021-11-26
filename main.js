@@ -71,6 +71,7 @@ function Display(operation) {
         document.getElementById("main-menu").style.display = "block";
         document.getElementById("create-room").style.display = "none";
         document.getElementById("blokus").style.display = "none";
+        document.getElementById("footer").style.display = "flex";
     } else if (operation == "create-room") {
         document.getElementById("index").style.display = "none";
         document.getElementById("kiyaku").style.display = "none";
@@ -87,12 +88,13 @@ function Display(operation) {
         document.getElementById("main-menu").style.display = "none";
         document.getElementById("create-room").style.display = "none";
         document.getElementById("blokus").style.display = "block";
+        document.getElementById("footer").style.display = "none";
         //onload();
         draw3();
     }
 }
 
-// ゲームから退出するときの警告(あとでやる)
+// ゲームから退出するときの警告
 function leaveAlert() {
     if (window.confirm("本当に退出しますか？：")) {
         Display("main-menu");

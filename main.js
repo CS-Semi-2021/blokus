@@ -627,6 +627,7 @@ function Coloring() {
     //Boardの状態から色を塗る
     for (let i = 0; i < 20; i++) {
         for (let j = 0; j < 20; j++) {
+            console.log(Board);
             if (Board[i][j] != 0) {
                 ctx.fillStyle = PlayerColor[Board[i][j] - 1];
                 ctx.fillRect(j * squareSize, i * squareSize, squareSize, squareSize);

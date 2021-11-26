@@ -68,6 +68,7 @@ socket.on('game_start', (data) => {
 //go_nextイベントの受信
 socket.on('next_turn', function(data){
     Board = data.board_status;
+    console.log(data.board_status);
     nowturn = data.count;
     console.log('next_turn');
     Coloring();

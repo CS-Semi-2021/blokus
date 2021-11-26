@@ -123,7 +123,7 @@ io.on("connection", (socket)=>{
       nowturn = status.count + 1;
       console.log(board);
       io.emit('next_turn', {
-        borad_status: board, 
+        board_status: board, 
         count: count
       });
     });

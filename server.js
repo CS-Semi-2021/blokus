@@ -129,16 +129,17 @@ io.on("connection", (socket)=>{
     });
     //passイベントの受信
     socket.on('PassTurn', function(data){
-        board = data.barray;
+        board = data.board_status;
         nowturn = data.count + 1;
+        console.log("iiiiii");
         count++;
         pass++;
         MEMBER[socket.id].score = scoreCal();
         if(pass < 4){
             //go_nextイベントの送信
-            soket.emit('next_turn', {
+            io.emit('next_turn', {
               board_status : board, 
-              count : count
+              count : nowturn
             });
         }else{
             //game_setイベントの送信

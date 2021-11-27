@@ -124,12 +124,13 @@ io.on("connection", (socket)=>{
       console.log(board);
       io.emit('next_turn', {
         board_status: board, 
-        count: count
+        count: nowturn
       });
     });
     //passイベントの受信
-    socket.on('pass', function(data){
+    socket.on('PassTurn', function(data){
         board = data.barray;
+        nowturn = data.count + 1;
         count++;
         pass++;
         MEMBER[socket.id].score = scoreCal();

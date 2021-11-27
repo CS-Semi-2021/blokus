@@ -17,6 +17,7 @@ let EdgeFlag = 0; //既に置いている自分のピースの辺に、新しく
 let RegionFlag = 0; //ピースが20×20の盤面の外にでる部分があれば0、なければ1
 let SelectFlag = 0; //Canvas4にピースが描画されており、それを選択したとき1になる。ピースをメインキャンバスに置くと０になる
 let FirstFlag = 0; //1ターン目のみつかう。自分から近い角にピースがおかれるなら1、おかれないなら0
+let MyTurnFlag = 0; //自分のターンなら1
 
 let selectNum = 21; //今選んでいるピースの番号が格納される。21は未選択状態
 let errmsg; //メインキャンバスにピースをおくときに、ルール上置けない場合に表示するエラーメッセージ
@@ -109,6 +110,16 @@ function Display(operation) {
 function leaveAlert() {
     if (window.confirm("本当に退出しますか？：")) {
         Display("main-menu");
+    }
+}
+
+function doPass() {
+    if (MyTurnFlag == 0){
+        alert("あなたのターンじゃないよ");
+        return;
+    }
+    if (window.confirm("本当にパスしますか？：")) {
+        PassTurn();
     }
 }
 
@@ -338,7 +349,6 @@ function draw3() {
 
     let targetCaluculate = document.getElementById("button3");
     targetCaluculate.style.position = "absolute";
-
     targetCaluculate.style.top = squareSize * 19 + "px";
     targetCaluculate.style.left = squareSize * 21 + "px";
     targetCaluculate.style.width = squareSize * 5 + "px";
@@ -353,10 +363,26 @@ function draw3() {
     targetCaluculate.style.borderRadius = "2px";
     targetCaluculate.style.cursor = "pointer";
 
+    let targetPass = document.getElementById("buttonpass");
+    targetPass.style.position = "absolute";
+    targetPass.style.top = squareSize * 19 + "px";
+    targetPass.style.left = squareSize * 26.5 + "px";
+    targetPass.style.width = squareSize * 5 + "px";
+    targetPass.style.height = squareSize * 1 + "px";
+    targetPass.style.fontSize = squareSize / 2 + "px";
+    targetPass.style.textAlign = "center";
+    targetPass.style.lineHeight = squareSize + "px";
+    targetPass.style.fontWeight = squareSize + "px";
+    targetPass.style.color = "#42cea9";
+    targetPass.style.backgroundColor = "#ffffff";
+    targetPass.style.border = "2px solid #58d2b2";
+    targetPass.style.borderRadius = "2px";
+    targetPass.style.cursor = "pointer";
+
     let targetOut = document.getElementById("buttonout");
     targetOut.style.position = "absolute";
     targetOut.style.top = squareSize * 18 + "px";
-    targetOut.style.left = squareSize * 32 + "px";
+    targetOut.style.left = squareSize * 34 + "px";
     targetOut.style.width = squareSize * 5 + "px";
     targetOut.style.height = squareSize * 2 + "px";
     targetReverse.style.fontSize = squareSize / 2 + "px";
@@ -398,6 +424,7 @@ function draw3() {
 
     Coloring();
 
+
     canvas4.addEventListener('mousedown', mouseDown);
     canvas.addEventListener('mousedown', mouseUp);
     canvas.addEventListener('mousemove', mouseMove);
@@ -409,6 +436,10 @@ function draw3() {
 
 function mouseMove(event) {
     //メインキャンバス上でマウスが動かされると実行される
+    if (MyTurnFlag == 0) {
+        //自分のターンじゃないならなにもしない
+        return;
+    }
     if (SelectFlag == 0) {
         //ピースが選択状態にないときなにもしない
         return;
@@ -477,7 +508,12 @@ function mouseDown(event) {
 
 function mouseUp(event) {
     //メインキャンバス上でクリックされると実行される関数。
-
+    console.log(nowturn);
+    if (MyTurnFlag == 0) {
+        //自分のターンじゃないならなにもしない
+        alert("プレイヤー"+ nowplayer + "のターンよ")
+        return;
+    }
     if (SelectFlag == 0) {
         //ピースが選択状態じゃないならなにもしない
         return;
@@ -526,8 +562,7 @@ function mouseUp(event) {
             SelectFlag = 0; //ピースを選択していない状態にする
             selectNum = 21; //選択ピース番号を範囲外に変更
 
-            ctx4.fillStyle = "white"; //サブキャンバスを白塗り
-            ctx4.fillRect(0, 0, squareSize * 5, squareSize * 5);
+            Coloring2();
             console.log(Board);
             countTurn += 1;
             finish_turn();
@@ -603,8 +638,7 @@ function mouseUp(event) {
             selectNum = 21; //選択ピース番号を範囲外に変更
             countTurn += 1;
 
-            ctx4.fillStyle = "white"; //サブキャンバスを白塗り
-            ctx4.fillRect(0, 0, squareSize * 5, squareSize * 5);
+            Coloring2();
             console.log(Board);
             finish_turn();
         } else {
@@ -627,7 +661,7 @@ function Coloring() {
     //Boardの状態から色を塗る
     for (let i = 0; i < 20; i++) {
         for (let j = 0; j < 20; j++) {
-            console.log(Board);
+            //console.log(Board);
             if (Board[i][j] != 0) {
                 ctx.fillStyle = PlayerColor[Board[i][j] - 1];
                 ctx.fillRect(j * squareSize, i * squareSize, squareSize, squareSize);
@@ -640,8 +674,11 @@ function Coloring() {
 function Coloring2() {
     //メインじゃない方のボード(ctx4)に選択したピースを映し出す
     //引数はピースの番号0~20 　21の時は白(ピースが選ばれていない状態)にする
-    ctx4.fillStyle = "white"; //白にして、前にあったやつを消す
+    ctx4.clearRect(0, 0, 5 * squareSize, 5 * squareSize);
+    ctx4.globalAlpha = 0.2;
+    ctx4.fillStyle = PlayerColor[playerNum - 1]; //白にして、前にあったやつを消す
     ctx4.fillRect(0, 0, 5 * squareSize, 5 * squareSize);
+    ctx4.globalAlpha = 1;
     for (let i = 0; i < 6; i++) {
         //枠線を書く
         ctx4.beginPath();
@@ -711,6 +748,7 @@ function DeletePic() {
     //使用したピースの画像をcssを使って非表示or半透明表示にする。
     document.getElementById("changes" + selectNum).classList.add("addColor");
 }
+
 
 function halfway_caluculation(){  //終了判定もらって最終結果を表示する関数も作りたい
     for(let i = 0 ;i < 4; i++){

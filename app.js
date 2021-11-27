@@ -3,7 +3,7 @@ let username = ''; //ユーザーネーム
 let first = 0; //最初の接続フラグ
 let nowplayer; //現在手番のプレイヤー
 let mynumber; //自分の手番の順番
-let pass = false; //passした時のフラグ
+let PassFlag = false; //passした時のフラグ
 let piece; //手持ちのコマ数
 
 
@@ -42,6 +42,9 @@ const IAM = {
 socket.on('game_start', (data) => {
     Board = data.board_status;
     nowturn = data.count;
+    if (playerNum == 1 && nowturn == 0){
+        MyTurnFlag = 1;
+    }
     /*if(data.order == 1){
       //main.jsのdraw3()内にある
       //canvas.addEventListener('mouseleave', mouseLeave);の制御をして
@@ -72,13 +75,19 @@ socket.on('next_turn', function(data){
     nowturn = data.count;
     console.log('next_turn');
     Coloring();
-    /*if(nowturn % 4 == playerNum % 4){
+    nowplayer = (nowturn + 1) % 4;
+    if (nowplayer == 0){
+        nowplayer = 4;
+    }
+    if(nowplayer == playerNum){
         //自分のターンのときの処理を関数で呼び出す
-        draw3();
+        //draw3();
+        MyTurnFlag = 1;
     }else{
         //自分のターン出ないときの処理を関数で呼び出す
-        draw3();
-    }*/
+        //draw3();
+        MyTurnFlag = 0;
+    }
 });
 
 //game\setイベントの受信
@@ -114,4 +123,15 @@ function finish_turn(){
         token: IAM.token,
         count: nowturn
       });
+}
+
+function PassTurn(){
+    //パスボタン押下∧自分のターン　のとき実行される
+    console.log('pass');
+    PassFlag = true;
+    socket.emit("PassTurn", {
+        board_status : Board,
+        token: IAM.token,
+        count: nowturn
+    })
 }

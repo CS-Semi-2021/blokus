@@ -112,7 +112,7 @@ io.on("connection", (socket)=>{
   });
 
 
-    let count = 0;//ターン数
+    let count = 1;//ターン数
     //ゲームの開始合図
     if(MEMBER_COUNT == 4){
       io.emit('game_start' ,{  

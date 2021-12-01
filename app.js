@@ -42,7 +42,8 @@ const IAM = {
 socket.on('game_start', (data) => {
     Board = data.board_status;
     nowturn = data.count;
-    if (playerNum == 1 && nowturn == 0){
+    nowplayer = nowturn % 4;
+    if (playerNum == 1){
         MyTurnFlag = 1;
     }
     /*if(data.order == 1){
@@ -75,10 +76,17 @@ socket.on('next_turn', function(data){
     nowturn = data.count;
     console.log('next_turn');
     Coloring();
-    nowplayer = (nowturn + 1) % 4;
+    nowplayer = nowturn % 4;
     if (nowplayer == 0){
         nowplayer = 4;
     }
+    //↓誰のターンかわかるように赤丸を書く（とりあえず）
+    ctxTurn.clearRect(0, squareSize, squareSize * 5, squareSize);
+    ctxTurn.fillStyle = "red";
+    ctxTurn.beginPath();
+    ctxTurn.arc((1.25 * nowplayer - 0.75) * squareSize, 1.2 * squareSize, 0.1 * squareSize, 0, Math.PI * 2, true);
+    ctxTurn.fill();
+    
     if(nowplayer == playerNum){
         //自分のターンのときの処理を関数で呼び出す
         //draw3();

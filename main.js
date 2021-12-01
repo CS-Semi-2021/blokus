@@ -292,12 +292,14 @@ function draw3() {
     canvasBack = document.getElementById("rectangleBack"); //メインキャンバスの裏にあるキャンバス。メインキャンバス上にマウスポインタがある際、ポインタの位置に半透明のピースを描くだけ
     canvas = document.getElementById("rectangle3"); //メインキャンバス、配列Boardの情報に基づく
     canvas4 = document.getElementById("rectangle4"); //サブキャンバス、選んでいるピースを描く。ピース選択状態（メインキャンバスにおける状態）になると赤線で囲まれる
+    canvasTurn = document.getElementById("rectangleTurn"); //誰がターンか分かるようにとりあえず作ってみた
     if (!canvas || !canvas.getContext || !canvasBack || !canvasBack.getContext || !canvas4 || !canvas4.getContext) {
         return false;
     }
     ctxBack = canvasBack.getContext('2d');
     ctx = canvas.getContext('2d');
     ctx4 = canvas4.getContext('2d');
+    ctxTurn = canvasTurn.getContext('2d');
 
 
 
@@ -308,12 +310,29 @@ function draw3() {
     canvas4.height = squareSize * 5;
     canvasBack.width = squareSize * 20;
     canvasBack.height = squareSize * 20;
+    canvasTurn.width = squareSize * 5;
+    canvasTurn.height = squareSize * 2;
     //document.getElementById("rectangle4").classList.add("subcan");
     //こっから↓はcssみたいなやつ
     let target4 = document.getElementById("rectangle4");
     target4.style.position = "absolute";
     target4.style.top = squareSize * 10 + "px";
     target4.style.left = squareSize * 21 + "px";
+
+    let targetTurn = document.getElementById("rectangleTurn");
+    targetTurn.style.position = "absolute";
+    targetTurn.style.top = squareSize * 1 + "px";
+    targetTurn.style.left = squareSize * 21 + "px";
+    for (let i = 0; i < 4; i++){
+        ctxTurn.beginPath();
+        ctxTurn.fillStyle = PlayerColor[i];
+        ctxTurn.arc((0.5 + 1.25 * i) * squareSize, 0.5 * squareSize, 0.5 * squareSize, 0, 2 * Math.PI, true);
+        ctxTurn.fill();
+    }
+    ctxTurn.fillStyle = "red";
+    ctxTurn.beginPath();
+    ctxTurn.arc(0.5 * squareSize, 1.2 * squareSize, 0.1 * squareSize, 0, Math.PI * 2, true);
+    ctxTurn.fill();
     
     let targetRotate = document.getElementById("button1");
     targetRotate.style.position = "absolute";
@@ -404,17 +423,45 @@ function draw3() {
         targetPic.style.width = squareSize * 3 + "px";
     }
 
-
-
     // bannmenのdraw3の中身
     for (let i = 0; i < 20; i++) {
+        ctx.lineWidth = 0.05 * squareSize;
         for (let j = 0; j < 20; j++) {
             ctx.strokeRect(j * squareSize, i * squareSize, squareSize, squareSize);
         }
     }
-    //枠線を書く
+
+    //盤面の周りをプレイヤーカラーに
     ctx.beginPath();
-    ctx.lineWidth = 3;
+    ctx.lineWidth = 0.2 * squareSize;
+    ctx.strokeStyle = PlayerColor[0];
+    ctx.moveTo(0, 10 * squareSize);
+    ctx.lineTo(0, 0);
+    ctx.lineTo(10 * squareSize, 0);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.strokeStyle = PlayerColor[1];
+    ctx.moveTo(10 * squareSize, 0);
+    ctx.lineTo(20 * squareSize, 0);
+    ctx.lineTo(20 * squareSize, 10 * squareSize);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.strokeStyle = PlayerColor[2];
+    ctx.moveTo(20 * squareSize, 10 * squareSize);
+    ctx.lineTo(20 * squareSize, 20 * squareSize);
+    ctx.lineTo(10 * squareSize, 20 * squareSize);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.strokeStyle = PlayerColor[3];
+    ctx.moveTo(10 * squareSize, 20 * squareSize);
+    ctx.lineTo(0, 20 * squareSize);
+    ctx.lineTo(0, 10 * squareSize);
+    ctx.stroke();
+
+    //枠線の中心線を書く
+    ctx.beginPath();
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 0.11 * squareSize;
     ctx.moveTo(10 * squareSize, 0);
     ctx.lineTo(10 * squareSize, 20 * squareSize);
     ctx.moveTo(0, 10 * squareSize);
@@ -565,6 +612,7 @@ function mouseUp(event) {
             Coloring2();
             console.log(Board);
             countTurn += 1;
+            MyTurnFlag = 0;
             finish_turn();
         } else {
             alert("盤面の角が埋まるように")
@@ -640,6 +688,7 @@ function mouseUp(event) {
 
             Coloring2();
             console.log(Board);
+            MyTurnFlag = 0;
             finish_turn();
         } else {
             if (!CornerFlag) {

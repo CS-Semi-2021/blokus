@@ -92,6 +92,7 @@ socket.on('next_turn', function(data){
 
 //game\setイベントの受信
 socket.on('game_set', function(data){
+    console.log("game_set");
     Board = data.board_status;
     socket.emit('holding_point', {
         user : IAM.token, 
@@ -104,9 +105,13 @@ let results = new Array();
 
 //winnerイベントの受信
 socket.on('winner', function(data){
+    console.log("winner");
     resultn = data.user;
     results = data.point;
+    console.log(resultn);
+    console.log(results);
     //試合結果の表示を処理する関数を呼び出す
+    window.confirm("結果発表\n  １位：Player" + resultn[0] + " " + results[0] + "ポイント");
 });
 
 

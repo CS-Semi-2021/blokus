@@ -74,6 +74,8 @@ for (let x = 0; x < 20; x++) {
 }
 let pass = 0; //pass回数
 let score = new Array();
+let name = new Array();
+let access_point = 0; //スコアの送られた回数
 
 //connectionイベントを受信する
 io.on("connection", (socket)=>{
@@ -119,6 +121,7 @@ io.on("connection", (socket)=>{
       });
     }
     socket.on('finish_turn', (status)=>{
+      //access_point = 0;
       board = status.board_status;
       nowturn = status.count + 1;
       console.log(board);
@@ -143,26 +146,31 @@ io.on("connection", (socket)=>{
             });
         }else{
             //game_setイベントの送信
-            socket.emit('game_set', {
+            io.emit('game_set', {
               board_status : board
             });
         }
     });
 
-    let access_point = 0; //スコアの送られた回数
+    
     //holding_pointイベントの受信
     socket.on('holding_point', function(data){
+        console.log("holding_point");
         access_point++;
+        console.log(access_point);
         let username = data.user;
-        for(let i = 0; i < 4; i++){
-            if(username == name[i]){
-                score[i] = data.point;
-            }
+        if(username == MEMBER[socket.id].token){
+            MEMBER[socket.id].score = data.point;
+            name[MEMBER[socket.id].count-1] = MEMBER[socket.id].count;
+            score[MEMBER[socket.id].count-1] = data.point;
         }
         if(access_point == 4){ //全員がスコアを送り終えた後の処理
             rank();
+            console.log("winner");
             //winnerイベントの送信
-            socket.emit('winner', {user : name, point : score});
+            console.log(name);
+            console.log(score);
+            io.emit('winner', {user : name, point : score});
         }
     });
 });

@@ -74,6 +74,7 @@ for (let x = 0; x < 20; x++) {
 }
 let pass = 0; //pass回数
 let score = new Array();
+score = [0,0,0,0]; //Playerの点数
 let name = new Array();
 let access_point = 0; //スコアの送られた回数
 
@@ -137,7 +138,7 @@ io.on("connection", (socket)=>{
         console.log("iiiiii");
         count++;
         pass++;
-        MEMBER[socket.id].score = scoreCal();
+        //MEMBER[socket.id].score = scoreCal();
         if(pass < 4){
             //go_nextイベントの送信
             io.emit('next_turn', {
@@ -162,9 +163,10 @@ io.on("connection", (socket)=>{
         if(username == MEMBER[socket.id].token){
             MEMBER[socket.id].score = data.point;
             name[MEMBER[socket.id].count-1] = MEMBER[socket.id].count;
-            score[MEMBER[socket.id].count-1] = data.point;
+            //score[MEMBER[socket.id].count-1] = data.point;
         }
         if(access_point == 4){ //全員がスコアを送り終えた後の処理
+            scoreCal();
             rank();
             console.log("winner");
             //winnerイベントの送信
@@ -175,20 +177,19 @@ io.on("connection", (socket)=>{
     });
 });
 
-
 function rank(){ //スコアの低い順にソート
     let namef;
     let scoref;
     for(let i = 0; i < score.length - 1; i++){
         for(let j = score.length - 1; j > i; j--){
-            if(score[j-1] > score[j]){
-                scoref = score[i];
-                score[i] = score[j];
-                score[j] = scoref;
+            if(score[j-1] < score[j]){
+                scoref = score[j];
+                score[j] = score[j-1];
+                score[j-1] = scoref;
 
-                namef = name[i];
-                name[i] = name[j];
-                name[j] = namef;
+                namef = name[j];
+                name[j] = name[j-1];
+                name[j-1] = namef;
             }
         }
     }
@@ -204,6 +205,18 @@ function makeToken(id){
   return( crypto.createHash("sha1").update(str).digest('hex') );
 }
 
-function scoreCal(){
-  return 0;
+function scoreCal(){ //Playerのスコアの計算
+  for(var i = 0; i < 20; i++){
+    for(var j = 0; j < 20; j++){
+      if(board[i][j] == 1){
+        score[0] += 1;
+      }else if(board[i][j] == 2){
+        score[1] += 1;
+      }else if(board[i][j] == 3){
+        score[2] += 1;
+      }else if(board[i][j] == 4){
+        score[3] += 1;
+      }
+    }
+  }
 }

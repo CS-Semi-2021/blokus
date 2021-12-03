@@ -122,7 +122,10 @@ io.on("connection", (socket)=>{
       });
     }
     socket.on('finish_turn', (status)=>{
-      //access_point = 0;
+      access_point = 0;
+      pass = 0;
+      console.log(access_point);
+      console.log(pass);
       board = status.board_status;
       nowturn = status.count + 1;
       console.log(board);

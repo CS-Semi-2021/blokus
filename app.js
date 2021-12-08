@@ -20,17 +20,16 @@ const IAM = {
   //-------------------------------------
   // STEP1. Socket.ioサーバへ接続
   //-------------------------------------
-  const blokus = io('http://localhos:3000/blokus');
-  const chat = io('http://localhost:3000/chat');
+  const socket = io();
   let nowturn = 1;
   // 正常に接続したら
-  blokus.on("connect", ()=>{
+  socket.on("connect", ()=>{
     // 表示を切り替える
     //$("#nowconnecting").style.display = "none";   // 「接続中」を非表示
   });
   
   // トークンを発行されたら
-  blokus.on("token", (data)=>{
+  socket.on("token", (data)=>{
     IAM.token = data.token;
     playerNum = data.order;
     board = data.board_status;
@@ -41,17 +40,38 @@ const IAM = {
   });
   
 //game_startイベントの受信
-blokus.on('game_start', (data) => {
+socket.on('game_start', (data) => {
     Board = data.board_status;
     nowturn = data.count;
     nowplayer = nowturn % 4;
     if (playerNum == 1){
         MyTurnFlag = 1;
     }
+    /*if(data.order == 1){
+      //main.jsのdraw3()内にある
+      //canvas.addEventListener('mouseleave', mouseLeave);の制御をして
+　    //盤面に関与できる人とできない人を条件分けしたい
+      draw3();
+    }else{
+        //自分のターン出ないときの処理を関数で呼び出す
+        //drawOnly();
+        draw3();
+    }*/
 });
 
+//ターンが終わったときの処理
+/*$('.finish_turn').on('click', function(){
+    if(pass == false){
+        //finish_turnイベントを送信
+        socket.emit('finish_turn', {barray : board});
+    }else{
+        //passイベントの送信
+        socket.emit('pass', {barray : board});
+    }
+});*/
+
 //go_nextイベントの受信
-blokus.on('next_turn', function(data){
+socket.on('next_turn', function(data){
     Board = data.board_status;
     console.log(data.board_status);
     nowturn = data.count;
@@ -80,10 +100,10 @@ blokus.on('next_turn', function(data){
 });
 
 //game\setイベントの受信
-blokus.on('game_set', function(data){
+socket.on('game_set', function(data){
     console.log("game_set");
     Board = data.board_status;
-    blokus.emit('holding_point', {
+    socket.emit('holding_point', {
         user : IAM.token, 
         point : piece
     });
@@ -93,7 +113,7 @@ let resultn = new Array();
 let results = new Array();
 
 //winnerイベントの受信
-blokus.on('winner', function(data){
+socket.on('winner', function(data){
     console.log("winner");
     resultn = data.user;
     results = data.point;
@@ -112,7 +132,7 @@ blokus.on('winner', function(data){
 function finish_turn(){
     console.log('finish_turn');
     // Socket.ioサーバへ送信
-    blokus.emit("finish_turn", {
+    socket.emit("finish_turn", {
         board_status : Board,
         token: IAM.token,
         count: nowturn
@@ -123,7 +143,7 @@ function PassTurn(){
     //パスボタン押下∧自分のターン　のとき実行される
     console.log('pass');
     PassFlag = true;
-    blokus.emit("PassTurn", {
+    socket.emit("PassTurn", {
         board_status : Board,
         token: IAM.token,
         count: nowturn

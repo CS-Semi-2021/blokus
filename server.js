@@ -154,7 +154,7 @@ io.on("connection", (socket)=>{
       });
     });
     //passイベントの受信
-    socket.on('PassTurn', (data)=>{
+    socket.on('PassTurn', function(data){
         ROOM[room].board = data.board_status;
         ROOM[room].count = data.count + 1;
         console.log("iiiiii");
@@ -219,71 +219,6 @@ io.on("connection", (socket)=>{
   }
 });
 
-//チャットのnamespace
-io.of('/chat').on("connection", (socket)=>{
-  let room = '';
-
-
-  //---------------------------------
-  // ログイン
-  //---------------------------------
-  (()=>{
-    // トークンを作成
-    const token = makeToken(socket.id);
-    // ユーザーリストに追加　名前は入力フォームをが出来次第
-    room = ~~(room_num/4)+1;
-    room_num++;
-
-    MEMBER[socket.id] = {
-      token: token, 
-      name:null, 
-      count:MEMBER_COUNT
-    };
-    if(MEMBER_COUNT < 4){
-      MEMBER_COUNT++;
-    }else{
-      MEMBER_COUNT = 1;
-    }
-    // 本人にトークンを送付
-    io.to(socket.id).emit('token', {
-      token:token,
-      order: MEMBER[socket.id].count,
-    });
-    console.log(MEMBER[socket.id].count);
-    socket.join(room);
-    console.log(room);
-    //console.log(MEMBER[socket.id]);
-  })();
-
-  ROOM[room] = {
-    board:board, //盤面
-    count:count, //ターン数
-    pass:pass, //pass回数
-    score:score,
-    name:name,
-    access_point:access_point //スコアの送られた回数
-  };
-
-  // client_to_serverイベント・データを受信する
-  socket.on('client_to_server', (data)=>{
-    // server_to_clientイベント・データを送信する
-    io.to(room).emit('server_to_client', {value : data.value});
-  });
-  // client_to_server_broadcastイベント・データを受信し、送信元以外に送信する
-  socket.on('client_to_server_broadcast', (data)=>{
-      socket.broadcast.to(room).emit('server_to_client', {value : data.value});
-  });
-  // dicconnectイベントを受信し、退出メッセージを送信する
-  socket.on('disconnect', ()=>{
-      if (name == '') {
-          console.log("未入室のまま、どこかへ去っていきました。");
-      } else {
-          var endMessage = "プレイヤー" + ROOM[room].count + "さんが退出しました。"
-          io.to(room).emit('server_to_client', {value : endMessage});
-      }
-  });
-
-});
 
 /**
  * トークンを作成する

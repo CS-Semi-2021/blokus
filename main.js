@@ -135,9 +135,9 @@ for (let x = 0; x < 20; x++) {
 }
 
 //Board[0][3] = 1; Board[0][4]=1; Board[0][5]= 1; Board[1][4]=1;
-/*Board[0][12] = 2;
+Board[0][12] = 2;
 Board[11][11] = 3;
-Board[11][9] = 4;*/
+Board[11][9] = 4;
 
 
 //https://upload.wikimedia.org/wikipedia/commons/0/0a/BlokusTiles.svg

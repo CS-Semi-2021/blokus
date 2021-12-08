@@ -32,10 +32,11 @@ const IAM = {
   socket.on("token", (data)=>{
     IAM.token = data.token;
     playerNum = data.order;
+    board = data.board_status;
     console.log(playerNum);
-    socket.emit("board",{
+    /*socket.emit("board",{
         board_status: Board
-    });
+    });*/
   });
   
 //game_startイベントの受信

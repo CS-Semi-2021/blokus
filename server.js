@@ -79,8 +79,7 @@ let name = new Array();
 let access_point = 0; //スコアの送られた回数
 
 //connectionイベントを受信する
-//ブロックスのnamespace
-io.of('/blokus').on("connection", (socket)=>{
+io.on("connection", (socket)=>{
   console.log("ユーザーが接続しました");
 
   //---------------------------------

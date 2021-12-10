@@ -62,17 +62,6 @@ socket.on('game_start', (data) => {
     }*/
 });
 
-//ターンが終わったときの処理
-/*$('.finish_turn').on('click', function(){
-    if(pass == false){
-        //finish_turnイベントを送信
-        socket.emit('finish_turn', {barray : board});
-    }else{
-        //passイベントの送信
-        socket.emit('pass', {barray : board});
-    }
-});*/
-
 //go_nextイベントの受信
 socket.on('next_turn', function(data){
     Board = data.board_status;
@@ -103,6 +92,7 @@ socket.on('next_turn', function(data){
     now = new Date();
     gTimeStart = now.getTime();
     gTid = setInterval('TimeDisplay()', 1000);
+
 });
 
 //game\setイベントの受信

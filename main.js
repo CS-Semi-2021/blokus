@@ -51,6 +51,8 @@ function Display(operation) {
         document.getElementById("create-room").style.display = "none";
         document.getElementById("blokus").style.display = "none";
     } else if (operation == "kiyaku") {
+        $('#kiyaku').addClass('appear');
+
         document.getElementById("index").style.display = "none";
         document.getElementById("kiyaku").style.display = "block";
         document.getElementById("policy").style.display = "none";
@@ -59,6 +61,8 @@ function Display(operation) {
         document.getElementById("create-room").style.display = "none";
         document.getElementById("blokus").style.display = "none";
     } else if (operation == "policy") {
+        $('#policy').addClass('appear');
+
         document.getElementById("index").style.display = "none";
         document.getElementById("kiyaku").style.display = "none";
         document.getElementById("policy").style.display = "block";
@@ -67,6 +71,8 @@ function Display(operation) {
         document.getElementById("create-room").style.display = "none";
         document.getElementById("blokus").style.display = "none";
     } else if (operation == "rule") {
+        $('#rule').addClass('appear');
+
         document.getElementById("index").style.display = "none";
         document.getElementById("kiyaku").style.display = "none";
         document.getElementById("policy").style.display = "none";
@@ -75,6 +81,11 @@ function Display(operation) {
         document.getElementById("create-room").style.display = "none";
         document.getElementById("blokus").style.display = "none";
     } else if (operation == "main-menu") {
+        $('#main-menu').addClass('appear');
+        //$("#index").delay(1000).fadeOut('slow', function() {
+        //    $('#main-menu').addClass('appear');
+        //});
+
         document.getElementById("index").style.display = "none";
         document.getElementById("kiyaku").style.display = "none";
         document.getElementById("policy").style.display = "none";
@@ -84,6 +95,7 @@ function Display(operation) {
         document.getElementById("blokus").style.display = "none";
         document.getElementById("footer").style.display = "flex";
     } else if (operation == "create-room") {
+        $('#create-room').addClass('appear');
         document.getElementById("index").style.display = "none";
         document.getElementById("kiyaku").style.display = "none";
         document.getElementById("policy").style.display = "none";

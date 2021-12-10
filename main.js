@@ -926,7 +926,6 @@ let gTid;          // タイマー用
 gTimeLimit = 1 * 60 * 1000; //1分をミリ秒に変換
 dd = new Date();
 gTimeStart = dd.getTime();
-gTid = setInterval('TimeDisplay()', 1000); //タイマーセット
 
 function TimeDisplay() {
     now = new Date();

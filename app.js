@@ -47,6 +47,9 @@ socket.on('game_start', (data) => {
     if (playerNum == 1){
         MyTurnFlag = 1;
     }
+    now = new Date();
+    gTimeStart = now.getTime();
+    gTid = setInterval('TimeDisplay()', 1000);
     /*if(data.order == 1){
       //main.jsのdraw3()内にある
       //canvas.addEventListener('mouseleave', mouseLeave);の制御をして
@@ -97,6 +100,9 @@ socket.on('next_turn', function(data){
         //draw3();
         MyTurnFlag = 0;
     }
+    now = new Date();
+    gTimeStart = now.getTime();
+    gTid = setInterval('TimeDisplay()', 1000);
 });
 
 //game\setイベントの受信

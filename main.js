@@ -905,3 +905,40 @@ function halfway_caluculation(){  //終了判定もらって最終結果を表�
         [0, 0, 0 ,0, 0]
        ]  
 }
+
+
+//時間制限
+let gTimeLimit;    // 制限時間用
+let gTimeStart;    // 開始時間用
+let gTid;          // タイマー用
+gTimeLimit = 1 * 60 * 1000; //1分をミリ秒に変換
+dd = new Date();
+gTimeStart = dd.getTime();
+gTid = setInterval('TimeDisplay()', 1000); //タイマーセット
+
+function TimeDisplay() {
+    now = new Date();
+    
+    dt = now.getTime() - gTimeStart; //経過時間計算
+    
+    now.setTime(dt + now.getTimezoneOffset() * 60 * 1000);    // ※1 経過時間設定
+    dt1 = "0" + now.getHours();    // ※2
+    dt1 = dt1.substring(dt1.length - 2, dt1.length);
+    dt2 = "0" + now.getMinutes();
+    dt2 = dt2.substring(dt2.length - 2, dt2.length);
+    dt3 = "0" + now.getSeconds();
+    dt3 = dt3.substring(dt3.length - 2, dt3.length);
+    TL.TLIMIT.value = dt1 + ":" + dt2 + ":" + dt3;
+    if (MyTurnFlag == 1) {
+        if(dt > gTimeLimit) {    //経過時間dtと制限時間の設定
+            clearTimeout(gTid);    // タイマー解除
+            PassTurn();
+            console.log("時間制限的にPassになったで")
+        }
+    }
+    else {
+        if(dt > gTimeLimit) {    //経過時間dtと制限時間の設定
+            clearTimeout(gTid);    // タイマー解除
+        }
+    }
+}

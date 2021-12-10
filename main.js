@@ -414,6 +414,18 @@ function draw3() {
     targetOut.style.borderRadius = "2px";
     targetOut.style.cursor = "pointer";
 
+    let targetTimeLimit = document.getElementById("timelimit");
+    targetTimeLimit.style.position = "absolute";
+    targetTimeLimit.style.top = squareSize * 8 + "px";
+    targetTimeLimit.style.left = squareSize * 21 + "px";
+    targetTimeLimit.style.width = squareSize * 5 + "px";
+    targetTimeLimit.style.height = squareSize * 1 + "px";
+    targetTimeLimit.style.fontSize = squareSize / 2 + "px";
+    targetTimeLimit.style.textAlign = "center";
+    targetTimeLimit.style.lineHeight = squareSize + "px";
+    targetTimeLimit.style.fontWeight = squareSize + "px";
+    
+
     let targetPic;
     for (let i = 0; i < 21; i++) {
         targetPic = document.getElementById("changes" + i);

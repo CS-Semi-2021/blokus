@@ -47,28 +47,7 @@ socket.on('game_start', (data) => {
     if (playerNum == 1){
         MyTurnFlag = 1;
     }
-    /*if(data.order == 1){
-      //main.jsのdraw3()内にある
-      //canvas.addEventListener('mouseleave', mouseLeave);の制御をして
-　    //盤面に関与できる人とできない人を条件分けしたい
-      draw3();
-    }else{
-        //自分のターン出ないときの処理を関数で呼び出す
-        //drawOnly();
-        draw3();
-    }*/
 });
-
-//ターンが終わったときの処理
-/*$('.finish_turn').on('click', function(){
-    if(pass == false){
-        //finish_turnイベントを送信
-        socket.emit('finish_turn', {barray : board});
-    }else{
-        //passイベントの送信
-        socket.emit('pass', {barray : board});
-    }
-});*/
 
 //go_nextイベントの受信
 socket.on('next_turn', function(data){
@@ -88,15 +67,6 @@ socket.on('next_turn', function(data){
     ctxTurn.arc((1.25 * nowplayer - 0.75) * squareSize, 1.2 * squareSize, 0.1 * squareSize, 0, Math.PI * 2, true);
     ctxTurn.fill();
     
-    if(nowplayer == playerNum){
-        //自分のターンのときの処理を関数で呼び出す
-        //draw3();
-        MyTurnFlag = 1;
-    }else{
-        //自分のターン出ないときの処理を関数で呼び出す
-        //draw3();
-        MyTurnFlag = 0;
-    }
 });
 
 //game\setイベントの受信

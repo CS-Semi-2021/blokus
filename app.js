@@ -32,10 +32,11 @@ const IAM = {
   socket.on("token", (data)=>{
     IAM.token = data.token;
     playerNum = data.order;
+    board = data.board_status;
     console.log(playerNum);
-    socket.emit("board",{
+    /*socket.emit("board",{
         board_status: Board
-    });
+    });*/
   });
   
 //game_startイベントの受信
@@ -46,6 +47,9 @@ socket.on('game_start', (data) => {
     if (playerNum == 1){
         MyTurnFlag = 1;
     }
+    now = new Date();
+    gTimeStart = now.getTime();
+    gTid = setInterval('TimeDisplay()', 1000);
     /*if(data.order == 1){
       //main.jsのdraw3()内にある
       //canvas.addEventListener('mouseleave', mouseLeave);の制御をして
@@ -57,17 +61,6 @@ socket.on('game_start', (data) => {
         draw3();
     }*/
 });
-
-//ターンが終わったときの処理
-/*$('.finish_turn').on('click', function(){
-    if(pass == false){
-        //finish_turnイベントを送信
-        socket.emit('finish_turn', {barray : board});
-    }else{
-        //passイベントの送信
-        socket.emit('pass', {barray : board});
-    }
-});*/
 
 //go_nextイベントの受信
 socket.on('next_turn', function(data){
@@ -96,6 +89,10 @@ socket.on('next_turn', function(data){
         //draw3();
         MyTurnFlag = 0;
     }
+    now = new Date();
+    gTimeStart = now.getTime();
+    gTid = setInterval('TimeDisplay()', 1000);
+
 });
 
 //game\setイベントの受信

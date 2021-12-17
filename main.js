@@ -424,6 +424,13 @@ function draw3() {
     targetTimeLimit.style.textAlign = "center";
     targetTimeLimit.style.lineHeight = squareSize + "px";
     targetTimeLimit.style.fontWeight = squareSize + "px";
+
+    let targetTimeLimit2 = document.getElementById("timelimit2");
+    targetTimeLimit2.style.textAlign = "center";
+    targetTimeLimit2.style.color = "#cea942";
+    targetTimeLimit2.style.backgroundColor = "#ffffff";
+    targetTimeLimit2.style.border = "2px solid #58d2b2";
+    targetTimeLimit2.style.borderRadius = "2px";
     
 
     let targetPic;
@@ -942,14 +949,14 @@ function TimeDisplay() {
     TL.TLIMIT.value = dt1 + ":" + dt2 + ":" + dt3;
     if (MyTurnFlag == 1) {
         if(dt > gTimeLimit) {    //経過時間dtと制限時間の設定
-            clearTimeout(gTid);    // タイマー解除
+            clearInterval(gTid);    // タイマー解除
             PassTurn();
             console.log("時間制限的にPassになったで")
         }
     }
     else {
         if(dt > gTimeLimit) {    //経過時間dtと制限時間の設定
-            clearTimeout(gTid);    // タイマー解除
+            clearInterval(gTid);    // タイマー解除
         }
     }
 }

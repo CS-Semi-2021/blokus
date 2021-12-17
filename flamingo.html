@@ -335,6 +335,7 @@
                 <input id="button1" class="button-in-blokus" type="button" value="Rotate!" onclick="Rotate()">
                 <input id="button2" class="button-in-blokus" type="button" value="Reverse!" onclick="Reverse()">
                 <input id="button3" class="button-in-blokus" type="button" value="Caluculate" onclick="halfway_caluculation()">
+                <input id="buttonpass" class="button-in-blokus" type="button" value="Pass" onclick="doPass()">
                 <button id = "buttonout" class="button-in-blokus" onClick="leaveAlert()">退出する</button>
 
                 <nav id="nav">
@@ -366,8 +367,13 @@
                 <img id = "changes18" src="images/image18.png" onclick="loads(18);">
                 <img id = "changes19" src="images/image19.png" onclick="loads(19);">
                 <img id = "changes20" src="images/image20.png" onclick="loads(20);">
+                <FORM id = "timelimit" name="TL">制限時間（1分）：
+                    <p></p>
+                    <INPUT size="15" type="text" readonly name="TLIMIT" value="00:00:00">
+                </FORM>
             </div>
         </div>
+        
 
         <!-- 結果 result -->
         <div class="result" id="result" style="display:none;">

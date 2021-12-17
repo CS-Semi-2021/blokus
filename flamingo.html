@@ -212,6 +212,10 @@
                 <div class="rule-detail">
                     <h2 class="subtitle">みんなで楽しめるテリトリー戦略ゲーム</h2>
                     <h1 class="title">Blokus</h1>
+                    <h2>遊び方</h2>
+                    <p class="explain">
+                        置きたいピースをクリックするとxxxにピースが表示されます。reverseボタンやroundボタンでピースの向きを変えることができます。
+                    </p>
                     <h2>ルール</h2>
                     <p class="explain">
                         プレイヤーは決められた色のピースをボードにできるだけ多く配置していきます。 <br>最終的に配置したピースのマス目が、最も多いプレイヤーが勝ちとなります。 スコアは手元に残ったピースのマス目を数えます。
@@ -281,12 +285,14 @@
                         <form method="POST" action="/room_create">
                             <h3>
                                 ルーム名：<input type="text" name="name" required maxlength="20" size="20">
+                                <!--
                                 <br>人数：
                                 <input type="radio" id="num4" name="num" value="4" checked><label for="4">4</label>
                                 <input type="radio" id="num3" name="num" value="3"><label for="3">3</label>
                                 <input type="radio" id="num2" name="num" value="2"><label for="2">2</label><br>
                                 <input type="radio" id="public" name="state" value="public" checked><label for="public">public</label>
                                 <input type="radio" id="private" name="state" value="private"><label for="private">private</label>
+                                -->
                             </h3>
                             <input class="button-in-create-room" type="submit" value="ルームを作成">
                         </form>
@@ -310,21 +316,35 @@
 
         <!-- ゲーム画面 blokus -->
         <div class="blokus" id="blokus" style="display:none;">
+            <header >
+                ルーム名ルーム名ルーム名ルーム名ルーム名ルーム名
+                <div id="hamburger">
+                    <!-- 1番上の線 -->
+                    <span class="inner_line" id="line1"></span>
+                    <!-- 真ん中の線 -->
+                    <span class="inner_line" id="line2"></span>
+                    <!-- 1番下の線 -->
+                    <span class="inner_line" id="line3"></span>
+                </div>
+            </header>
             <div class="mains">
                 <canvas id="rectangle3"  class="canvaswrap"></canvas>
                 <canvas id="rectangleBack"></canvas>
                 <canvas id="rectangle4"></canvas>
-                <canvas id="rectangleTurn"></canvas>
-                <!--
-                <input id="button1" type="button" value="Rotate!" onclick="Rotate()">
-                <input id="button2" type="button" value="Reverse!" onclick="Reverse()">
-                <input id="button3" type="button" value="Caluculate" onclick="halfway_caluculation()">
-                -->
+
                 <input id="button1" class="button-in-blokus" type="button" value="Rotate!" onclick="Rotate()">
                 <input id="button2" class="button-in-blokus" type="button" value="Reverse!" onclick="Reverse()">
                 <input id="button3" class="button-in-blokus" type="button" value="Caluculate" onclick="halfway_caluculation()">
                 <input id="buttonpass" class="button-in-blokus" type="button" value="Pass" onclick="doPass()">
                 <button id = "buttonout" class="button-in-blokus" onClick="leaveAlert()">退出する</button>
+
+                <nav id="nav">
+                    <ul>
+                        <li>遊び方遊び方遊び方遊び方遊び方遊び方遊び方遊び方遊び方遊び方遊び方遊び方</li>
+                        <li>遊び方遊び方遊び方遊び方遊び方遊び方遊び方遊び方遊び方遊び方遊び方遊び方</li>
+                        <li>遊び方遊び方遊び方遊び方遊び方遊び方遊び方遊び方遊び方遊び方遊び方</li>
+                    </ul>
+                </nav>
             
                 <img id = "changes0" src="images/image0.png" onclick="loads(0);">   
                 <img id = "changes1" src="images/image1.png" onclick="loads(1);">
@@ -368,5 +388,8 @@
         <footer id="footer">
             <p>© 2021 tmu.yokoyama.ac</p>
         </footer>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="anime.js"></script>
     </body>
 </html>

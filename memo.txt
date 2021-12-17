@@ -1,0 +1,7 @@
+・ハンバーガーボタン
+・利用規約とかが出てこない
+・フェードインじゃなくする
+https://projects.lukehaas.me/css-loaders/
+
+【CSSのみ】横方向に流れ続ける無限スライドショーの作り方
+https://crestadesign.org/horizontal-slideshow/

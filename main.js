@@ -27,19 +27,30 @@ let y = 20;
 let nearline; //自分から一番近い角のマス目,0か19
 let nearcolumn;
 
-let player_Sum = {          //プレイヤーの手持ちピース計算用
-    total:[0, 0, 0 ,0],    //各プレイヤーの総合計
-    piece:[                //各プレイヤーの保持しているピースの種類
-           [0, 0, 0 ,0, 0],
-           [0, 0, 0 ,0, 0],
-           [0, 0, 0 ,0, 0],
-           [0, 0, 0 ,0, 0]
-          ]  
+let player_Sum = { //プレイヤーの手持ちピース計算用
+    total: [0, 0, 0, 0], //各プレイヤーの総合計
+    piece: [ //各プレイヤーの保持しているピースの種類
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0]
+    ]
 }
 
 
 let PlayerColor = ["green", "pink", "blue", "orange"]; //プレイヤーのピースカラー
 let playerNum = 1; //プレイヤーナンバー1~4
+
+//ハンバーガーボタン
+function hamburger() {
+    document.getElementById('line1').classList.toggle('line_1');
+    document.getElementById('line2').classList.toggle('line_2');
+    document.getElementById('line3').classList.toggle('line_3');
+    document.getElementById('nav').classList.toggle('in');
+}
+document.getElementById('hamburger').addEventListener('click', function() {
+    hamburger();
+});
 
 // 画面表示切り替え
 function Display(operation) {
@@ -52,6 +63,8 @@ function Display(operation) {
         document.getElementById("create-room").style.display = "none";
         document.getElementById("blokus").style.display = "none";
     } else if (operation == "kiyaku") {
+        $('#kiyaku').addClass('appear');
+
         document.getElementById("index").style.display = "none";
         document.getElementById("kiyaku").style.display = "block";
         document.getElementById("policy").style.display = "none";
@@ -60,6 +73,8 @@ function Display(operation) {
         document.getElementById("create-room").style.display = "none";
         document.getElementById("blokus").style.display = "none";
     } else if (operation == "policy") {
+        $('#policy').addClass('appear');
+
         document.getElementById("index").style.display = "none";
         document.getElementById("kiyaku").style.display = "none";
         document.getElementById("policy").style.display = "block";
@@ -68,6 +83,8 @@ function Display(operation) {
         document.getElementById("create-room").style.display = "none";
         document.getElementById("blokus").style.display = "none";
     } else if (operation == "rule") {
+        $('#rule').addClass('appear');
+
         document.getElementById("index").style.display = "none";
         document.getElementById("kiyaku").style.display = "none";
         document.getElementById("policy").style.display = "none";
@@ -76,6 +93,11 @@ function Display(operation) {
         document.getElementById("create-room").style.display = "none";
         document.getElementById("blokus").style.display = "none";
     } else if (operation == "main-menu") {
+        $('#main-menu').addClass('appear');
+        //$("#index").delay(1000).fadeOut('slow', function() {
+        //    $('#main-menu').addClass('appear');
+        //});
+
         document.getElementById("index").style.display = "none";
         document.getElementById("kiyaku").style.display = "none";
         document.getElementById("policy").style.display = "none";
@@ -85,6 +107,7 @@ function Display(operation) {
         document.getElementById("blokus").style.display = "none";
         document.getElementById("footer").style.display = "flex";
     } else if (operation == "create-room") {
+        $('#create-room').addClass('appear');
         document.getElementById("index").style.display = "none";
         document.getElementById("kiyaku").style.display = "none";
         document.getElementById("policy").style.display = "none";
@@ -101,7 +124,6 @@ function Display(operation) {
         document.getElementById("create-room").style.display = "none";
         document.getElementById("blokus").style.display = "block";
         document.getElementById("footer").style.display = "none";
-        //onload();
         draw3();
     }
 }
@@ -319,6 +341,8 @@ function draw3() {
     target4.style.top = squareSize * 10 + "px";
     target4.style.left = squareSize * 21 + "px";
 
+  
+    /*
     let targetTurn = document.getElementById("rectangleTurn");
     targetTurn.style.position = "absolute";
     targetTurn.style.top = squareSize * 1 + "px";
@@ -333,7 +357,9 @@ function draw3() {
     ctxTurn.beginPath();
     ctxTurn.arc(0.5 * squareSize, 1.2 * squareSize, 0.1 * squareSize, 0, Math.PI * 2, true);
     ctxTurn.fill();
+    */
     
+
     let targetRotate = document.getElementById("button1");
     targetRotate.style.position = "absolute";
     targetRotate.style.top = squareSize * 15.5 + "px";
@@ -811,6 +837,15 @@ function DeletePic() {
 }
 
 
+/*
+function halfway_caluculation() { //終了判定もらって最終結果を表示する関数も作りたい
+    for (let i = 0; i < 4; i++) {
+        if (piece0.useFlag == 0) {
+            player_Sum.total[i] += 1;
+            player_Sum.piece[i][0] += 1;
+*/
+
+
 function halfway_caluculation(){  //終了判定もらって最終結果を表示する関数も作りたい
     for(let i = 0 ;i < 4; i++){
         if(piece0.useFlag == 0) {
@@ -818,97 +853,97 @@ function halfway_caluculation(){  //終了判定もらって最終結果を表�
            player_Sum.piece[i][0] += 1;
         }
 
-        if(piece1.useFlag == 0){
-           player_Sum.total[i] += 2 ; //ここから2マスのピース
-           player_Sum.piece[i][1] += 1;
+        if (piece1.useFlag == 0) {
+            player_Sum.total[i] += 2; //ここから2マスのピース
+            player_Sum.piece[i][1] += 1;
         }
 
-        if(piece2.useFlag == 0) {
-            player_Sum.total[i] += 3 ; //ここから3マスのピース
+        if (piece2.useFlag == 0) {
+            player_Sum.total[i] += 3; //ここから3マスのピース
             player_Sum.piece[i][2] += 1;
         }
-        if(piece3.useFlag == 0) {
-            player_Sum.total[i] += 3 ;
+        if (piece3.useFlag == 0) {
+            player_Sum.total[i] += 3;
             player_Sum.piece[i][2] += 1;
         }
 
-        if(piece4.useFlag == 0){
-            player_Sum.total[i] += 4 ; //ここから4マスのピース
+        if (piece4.useFlag == 0) {
+            player_Sum.total[i] += 4; //ここから4マスのピース
             player_Sum.piece[i][3] += 1;
         }
-        if(piece5.useFlag == 0) {
-            player_Sum.total[i] += 4 ;
+        if (piece5.useFlag == 0) {
+            player_Sum.total[i] += 4;
             player_Sum.piece[i][3] += 1;
         }
-        if(piece6.useFlag == 0) {
-            player_Sum.total[i] += 4 ;
+        if (piece6.useFlag == 0) {
+            player_Sum.total[i] += 4;
             player_Sum.piece[i][3] += 1;
         }
-        if(piece7.useFlag == 0) {
-            player_Sum.total[i] += 4 ;
+        if (piece7.useFlag == 0) {
+            player_Sum.total[i] += 4;
             player_Sum.piece[i][3] += 1;
         }
-        if(piece8.useFlag == 0) {
-            player_Sum.total[i] += 4 ;
+        if (piece8.useFlag == 0) {
+            player_Sum.total[i] += 4;
             player_Sum.piece[i][3] += 1;
         }
 
-        if(piece9.useFlag == 0) {
-            player_Sum.total[i] += 5 ; //ここから5マスのピース
+        if (piece9.useFlag == 0) {
+            player_Sum.total[i] += 5; //ここから5マスのピース
             player_Sum.piece[i][4] += 1;
         }
-        if(piece10.useFlag == 0) {
-            player_Sum.total[i] += 5 ;  
-            player_Sum.piece[i][4] += 1;
-        }
-        if(piece11.useFlag == 0) {
-            player_Sum.total[i] += 5 ;
-            player_Sum.piece[i][4] += 1;
-        }
-        if(piece12.useFlag == 0) {
+        if (piece10.useFlag == 0) {
             player_Sum.total[i] += 5;
             player_Sum.piece[i][4] += 1;
         }
-        if(piece13.useFlag == 0) {
-            player_Sum.total[i] += 5 ;
+        if (piece11.useFlag == 0) {
+            player_Sum.total[i] += 5;
             player_Sum.piece[i][4] += 1;
         }
-        if(piece14.useFlag == 0) {
-            player_Sum.total[i] += 5 ;
+        if (piece12.useFlag == 0) {
+            player_Sum.total[i] += 5;
             player_Sum.piece[i][4] += 1;
         }
-        if(piece15.useFlag == 0) {
-            player_Sum.total[i] += 5 ;
+        if (piece13.useFlag == 0) {
+            player_Sum.total[i] += 5;
             player_Sum.piece[i][4] += 1;
         }
-        if(piece16.useFlag == 0) {
-            player_Sum.total[i] += 5 ;
+        if (piece14.useFlag == 0) {
+            player_Sum.total[i] += 5;
             player_Sum.piece[i][4] += 1;
         }
-        if(piece17.useFlag == 0) {
-            player_Sum.total[i] += 5 ;
+        if (piece15.useFlag == 0) {
+            player_Sum.total[i] += 5;
             player_Sum.piece[i][4] += 1;
         }
-        if(piece18.useFlag == 0) {
-            player_Sum.total[i] += 5 ;
+        if (piece16.useFlag == 0) {
+            player_Sum.total[i] += 5;
             player_Sum.piece[i][4] += 1;
         }
-        if(piece19.useFlag == 0) {
-            player_Sum.total[i] += 5 ;
+        if (piece17.useFlag == 0) {
+            player_Sum.total[i] += 5;
             player_Sum.piece[i][4] += 1;
         }
-        if(piece20.useFlag == 0) {
-            player_Sum.total[i] += 5 ;
+        if (piece18.useFlag == 0) {
+            player_Sum.total[i] += 5;
+            player_Sum.piece[i][4] += 1;
+        }
+        if (piece19.useFlag == 0) {
+            player_Sum.total[i] += 5;
+            player_Sum.piece[i][4] += 1;
+        }
+        if (piece20.useFlag == 0) {
+            player_Sum.total[i] += 5;
             player_Sum.piece[i][4] += 1;
         }
     }
-    alert('残ってるピースの総合計は' + player_Sum.total[0] + '\n' 
-          + '1マスのピースの数は' + player_Sum.piece[0][0] + '個' 
-          + '\n' + '2マスのピースの数は' + player_Sum.piece[0][1] + '個'
-          + '\n' + '3マスのピースの数は' + player_Sum.piece[0][2] + '個'
-          + '\n' + '4マスのピースの数は' + player_Sum.piece[0][3] + '個'
-          + '\n' + '5マスのピースの数は' + player_Sum.piece[0][4] + '個'
-          );
+    alert('残ってるピースの総合計は' + player_Sum.total[0] + '\n' +
+        '1マスのピースの数は' + player_Sum.piece[0][0] + '個' +
+        '\n' + '2マスのピースの数は' + player_Sum.piece[0][1] + '個' +
+        '\n' + '3マスのピースの数は' + player_Sum.piece[0][2] + '個' +
+        '\n' + '4マスのピースの数は' + player_Sum.piece[0][3] + '個' +
+        '\n' + '5マスのピースの数は' + player_Sum.piece[0][4] + '個'
+    );
     player_Sum.total[0] = 0;
     player_Sum.piece = [   
         [0, 0, 0 ,0, 0],

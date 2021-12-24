@@ -24,7 +24,7 @@ const ROOM = {};
 let MEMBER_COUNT = 1;
 
 const port = 50022;
-const hostname = "ws://tokyo.vldb2020.org/home/nishimura-yusuke/blokus/blokus";
+const hostname = "ws://tokyo.vldb2020.org";
 
 // ルーティングの設定
 app.get("/", (req, res) =>{

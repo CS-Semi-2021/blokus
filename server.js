@@ -23,7 +23,7 @@ const ROOM = {};
 // チャット延べ参加者数
 let MEMBER_COUNT = 1;
 
-const port = 3000;
+const port = 50022;
 
 // ルーティングの設定
 app.get("/", (req, res) =>{
@@ -54,7 +54,7 @@ app.get("/util.js", (req, res) =>{
 });
 // HTTPサーバを起動する
 http.listen(port, () => {
-  console.log(`listening at http://localhost:${port}`);
+  console.log(`listening at ws://tokyo.vldb2020.org:${port}`);
 });
 let count = 1;//ターン数
 

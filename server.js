@@ -24,7 +24,7 @@ const ROOM = {};
 let MEMBER_COUNT = 1;
 
 const port = 50022;
-const hostname = "ws://tokyo.vldb2020.org";
+const hostname = "tokyo.vldb2020.org";
 
 // ルーティングの設定
 app.get("/", (req, res) =>{
@@ -55,7 +55,7 @@ app.get("/util.js", (req, res) =>{
 });
 // HTTPサーバを起動する
 http.listen(port, hostname, () => {
-  console.log(`listening at ws://tokyo.vldb2020.org:${port}`);
+  console.log(`listening at ws://${hostname}:${port}/`);
 });
 let count = 1;//ターン数
 

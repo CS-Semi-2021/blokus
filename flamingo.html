@@ -19,7 +19,7 @@
                     <h1 class="title">Blokus</h1>
 
                     <button class="button-in-index" type="button" onClick="Display('rule')">ルール・遊び方</button>
-                    <button class="button-in-index" type="button" onClick="Display('main-menu')">メインメニュー</button>
+                    <button class="button-in-index" type="button" onClick="Display('blokus')">ゲームに参加</button>
                     <button class="button-in-index" type="button" onClick="Display('kiyaku')">利用規約</button>
                     <button class="button-in-index" type="button" onClick="Display('policy')">プライバシーポリシー</button>
                 </div>
@@ -297,7 +297,7 @@
                             <input class="button-in-create-room" type="submit" value="ルームを作成">
                         </form>
                     </div>
-                    <button class="button-in-create-room" onClick="Display('main-menu')">戻る</button>
+                    <button class="button-in-create-room" onClick="Display('index')">戻る</button>
                 </div>
             </div>
         </div>
@@ -309,25 +309,31 @@
                     <h2 class="subtitle">みんなで楽しめるテリトリー戦略ゲーム</h2>
                     <h1 class="title">Blokus</h1>
                     <h2>待機中...</h2>
-                    <button class="button-in-create-room" onClick="Display('main-menu')">戻る</button>
+                    <button class="button-in-create-room" onClick="Display('index')">戻る</button>
                 </div>
             </div>
         </div>
 
         <!-- ゲーム画面 blokus -->
         <div class="blokus" id="blokus" style="display:none;">
-            <header >
-                ルーム名ルーム名ルーム名ルーム名ルーム名ルーム名
+            <header>
                 <div id="hamburger">
-                    <!-- 1番上の線 -->
                     <span class="inner_line" id="line1"></span>
-                    <!-- 真ん中の線 -->
                     <span class="inner_line" id="line2"></span>
-                    <!-- 1番下の線 -->
                     <span class="inner_line" id="line3"></span>
                 </div>
             </header>
+            <nav id="nav">
+                <ul>
+                    <li>ピースをクリックすると、クリックしたピースの背景に色がつきます。その色があなたの使用するピースの色です。 </li>
+                    <li>ピースをクリックした後、Rotate!ボタンを押すとピースが回転し、Reverseボタンを押すとピースが反転します。</li>
+                    <li>置きたいピースをクリックしてカーソルを盤面の上に動かすと、そのピースを置いた位置が表示されます。自分の置きたい位置に合わせてクリックするとピースを置けます。</li>
+                    <li>制限時間は1分で1分が経過すると自動的にパスされます。Passボタンでパスをすることもできます。</li>
+                    <li>Caluculateボタンを押すと残っているピースの総数とピースごとの本数が表示されます。</li>
+                </ul>
+            </nav>
             <div class="mains">
+                
                 <canvas id="rectangle3"  class="canvaswrap"></canvas>
                 <canvas id="rectangleBack"></canvas>
                 <canvas id="rectangle4"></canvas>
@@ -337,16 +343,6 @@
                 <input id="button3" class="button-in-blokus" type="button" value="Caluculate" onclick="halfway_caluculation()">
                 <input id="buttonpass" class="button-in-blokus" type="button" value="Pass" onclick="doPass()">
                 <button id = "buttonout" class="button-in-blokus" onClick="leaveAlert()">退出する</button>
-
-                <nav id="nav">
-                    <ul>
-                        <li>ピースをクリックすると、クリックしたピースの背景に色がつきます。その色があなたの使用するピースの色です。 </li>
-                        <li>ピースをクリックした後、Rotate!ボタンを押すとピースが回転し、Reverseボタンを押すとピースが反転します。</li>
-                        <li>置きたいピースをクリックしてカーソルを盤面の上に動かすと、そのピースを置いた位置が表示されます。自分の置きたい位置に合わせてクリックするとピースを置けます。</li>
-                        <li>制限時間は1分で1分が経過すると自動的にパスされます。Passボタンでパスをすることもできます。</li>
-                        <li>Caluculateボタンを押すと残っているピースの総数とピースごとの本数が表示されます。</li>
-                    </ul>
-                </nav>
             
                 <img id = "changes0" src="images/image0.png" onclick="loads(0);">   
                 <img id = "changes1" src="images/image1.png" onclick="loads(1);">

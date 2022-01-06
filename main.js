@@ -93,11 +93,6 @@ function Display(operation) {
         document.getElementById("create-room").style.display = "none";
         document.getElementById("blokus").style.display = "none";
     } else if (operation == "main-menu") {
-        $('#main-menu').addClass('appear');
-        //$("#index").delay(1000).fadeOut('slow', function() {
-        //    $('#main-menu').addClass('appear');
-        //});
-
         document.getElementById("index").style.display = "none";
         document.getElementById("kiyaku").style.display = "none";
         document.getElementById("policy").style.display = "none";
@@ -116,6 +111,9 @@ function Display(operation) {
         document.getElementById("create-room").style.display = "block";
         document.getElementById("blokus").style.display = "none";
     } else if (operation == "blokus") {
+        console.log("いけた１");
+        draw3();
+        console.log("いけた2");
         document.getElementById("index").style.display = "none";
         document.getElementById("kiyaku").style.display = "none";
         document.getElementById("policy").style.display = "none";
@@ -124,19 +122,18 @@ function Display(operation) {
         document.getElementById("create-room").style.display = "none";
         document.getElementById("blokus").style.display = "block";
         document.getElementById("footer").style.display = "none";
-        draw3();
     }
 }
 
 // ゲームから退出するときの警告
 function leaveAlert() {
     if (window.confirm("本当に退出しますか？：")) {
-        Display("main-menu");
+        Display("index");
     }
 }
 
 function doPass() {
-    if (MyTurnFlag == 0){
+    if (MyTurnFlag == 0) {
         alert("あなたのターンじゃないよ");
         return;
     }
@@ -341,7 +338,7 @@ function draw3() {
     target4.style.top = squareSize * 10 + "px";
     target4.style.left = squareSize * 21 + "px";
 
-  
+
     /*
     let targetTurn = document.getElementById("rectangleTurn");
     targetTurn.style.position = "absolute";
@@ -358,7 +355,7 @@ function draw3() {
     ctxTurn.arc(0.5 * squareSize, 1.2 * squareSize, 0.1 * squareSize, 0, Math.PI * 2, true);
     ctxTurn.fill();
     */
-    
+
 
     let targetRotate = document.getElementById("button1");
     targetRotate.style.position = "absolute";
@@ -450,7 +447,7 @@ function draw3() {
     targetTimeLimit.style.textAlign = "center";
     targetTimeLimit.style.lineHeight = squareSize + "px";
     targetTimeLimit.style.fontWeight = squareSize + "px";
-    
+
 
     let targetPic;
     for (let i = 0; i < 21; i++) {
@@ -596,7 +593,7 @@ function mouseUp(event) {
     console.log(nowturn);
     if (MyTurnFlag == 0) {
         //自分のターンじゃないならなにもしない
-        alert("プレイヤー"+ nowplayer + "のターンよ")
+        alert("プレイヤー" + nowplayer + "のターンよ")
         return;
     }
     if (SelectFlag == 0) {
@@ -846,11 +843,11 @@ function halfway_caluculation() { //終了判定もらって最終結果を表�
 */
 
 
-function halfway_caluculation(){  //終了判定もらって最終結果を表示する関数も作りたい
-    for(let i = 0 ;i < 4; i++){
-        if(piece0.useFlag == 0) {
-           player_Sum.total[i] += 1;
-           player_Sum.piece[i][0] += 1;
+function halfway_caluculation() { //終了判定もらって最終結果を表示する関数も作りたい
+    for (let i = 0; i < 4; i++) {
+        if (piece0.useFlag == 0) {
+            player_Sum.total[i] += 1;
+            player_Sum.piece[i][0] += 1;
         }
 
         if (piece1.useFlag == 0) {
@@ -945,30 +942,30 @@ function halfway_caluculation(){  //終了判定もらって最終結果を表�
         '\n' + '5マスのピースの数は' + player_Sum.piece[0][4] + '個'
     );
     player_Sum.total[0] = 0;
-    player_Sum.piece = [   
-        [0, 0, 0 ,0, 0],
-        [0, 0, 0 ,0, 0],
-        [0, 0, 0 ,0, 0],
-        [0, 0, 0 ,0, 0]
-       ]  
+    player_Sum.piece = [
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0]
+    ]
 }
 
 
 //時間制限
-let gTimeLimit;    // 制限時間用
-let gTimeStart;    // 開始時間用
-let gTid;          // タイマー用
+let gTimeLimit; // 制限時間用
+let gTimeStart; // 開始時間用
+let gTid; // タイマー用
 gTimeLimit = 1 * 60 * 1000; //1分をミリ秒に変換
 dd = new Date();
 gTimeStart = dd.getTime();
 
 function TimeDisplay() {
     now = new Date();
-    
+
     dt = now.getTime() - gTimeStart; //経過時間計算
-    
-    now.setTime(dt + now.getTimezoneOffset() * 60 * 1000);    // ※1 経過時間設定
-    dt1 = "0" + now.getHours();    // ※2
+
+    now.setTime(dt + now.getTimezoneOffset() * 60 * 1000); // ※1 経過時間設定
+    dt1 = "0" + now.getHours(); // ※2
     dt1 = dt1.substring(dt1.length - 2, dt1.length);
     dt2 = "0" + now.getMinutes();
     dt2 = dt2.substring(dt2.length - 2, dt2.length);
@@ -976,15 +973,14 @@ function TimeDisplay() {
     dt3 = dt3.substring(dt3.length - 2, dt3.length);
     TL.TLIMIT.value = dt1 + ":" + dt2 + ":" + dt3;
     if (MyTurnFlag == 1) {
-        if(dt > gTimeLimit) {    //経過時間dtと制限時間の設定
-            clearTimeout(gTid);    // タイマー解除
+        if (dt > gTimeLimit) { //経過時間dtと制限時間の設定
+            clearTimeout(gTid); // タイマー解除
             PassTurn();
             console.log("時間制限的にPassになったで")
         }
-    }
-    else {
-        if(dt > gTimeLimit) {    //経過時間dtと制限時間の設定
-            clearTimeout(gTid);    // タイマー解除
+    } else {
+        if (dt > gTimeLimit) { //経過時間dtと制限時間の設定
+            clearTimeout(gTid); // タイマー解除
         }
     }
-}
+};

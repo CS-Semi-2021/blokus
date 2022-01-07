@@ -104,39 +104,18 @@ function Display(operation) {
 
 // ゲームから退出するときの警告
 function leaveAlert() {
-    var options = {
-        text: '本当に退出しますか？：',
-        buttons: {
-            cancel: 'いいえ',
-            ok: 'はい'
-        }
-    };
-    swal(options).then(function(value) {
-        if (value) {
-            Display("index");
-        }
-    });
+    if (window.confirm("本当に退出しますか？：")) {
+        Display("index");
+    }
 }
 
 function doPass() {
     if (MyTurnFlag == 0) {
-        swal("あなたのターンじゃないよ");
+        alert("あなたのターンじゃないよ");
         return;
-    } else {
-        var options = {
-            text: '本当にパスしますか？：', //\nでテキストの改行が出来ます
-            buttons: {
-                cancel: 'いいえ',
-                ok: 'はい'
-            }
-        };
-        swal(options).then(function(value) {
-            if (value) {
-                //表示するを選んだ場合の処理
-                //swal('アラートを表示！');
-                PassTurn();
-            }
-        });
+    }
+    if (window.confirm("本当にパスしますか？：")) {
+        PassTurn();
     }
 }
 
@@ -317,7 +296,6 @@ function draw3() {
     ctx = canvas.getContext('2d');
     ctx4 = canvas4.getContext('2d');
     ctxTurn = canvasTurn.getContext('2d');
-    // canvasのgetContext("2d")って何 -> https://qiita.com/manten120/items/86c087b937708697acec
 
 
 
@@ -592,7 +570,7 @@ function mouseUp(event) {
     console.log(nowturn);
     if (MyTurnFlag == 0) {
         //自分のターンじゃないならなにもしない
-        swal("プレイヤー" + nowplayer + "のターンよ")
+        alert("プレイヤー" + nowplayer + "のターンよ")
         return;
     }
     if (SelectFlag == 0) {
@@ -632,7 +610,7 @@ function mouseUp(event) {
             }
         }
         if (RegionFlag) {
-            swal("盤面の外にピースがでちゃうように置かないで")
+            alert("盤面の外にピースがでちゃうように置かないで")
         } else if (FirstFlag) {
             for (let i = 0; i < Pieces[selectNum].childline.length; i++) {
                 Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i]][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i]] = playerNum;
@@ -649,7 +627,7 @@ function mouseUp(event) {
             MyTurnFlag = 0;
             finish_turn();
         } else {
-            swal("盤面の角が埋まるように")
+            alert("盤面の角が埋まるように")
         }
 
     } else {
@@ -708,7 +686,7 @@ function mouseUp(event) {
         //console.log(PlaceFlag, CornerFlag, EdgeFlag);
 
         if (RegionFlag) {
-            swal("盤面の外にピースがでちゃうように置かないで")
+            alert("盤面の外にピースがでちゃうように置かないで")
         } else if (PlaceFlag && CornerFlag && EdgeFlag) {
             for (let i = 0; i < Pieces[selectNum].childline.length; i++) {
                 Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i]][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i]] = playerNum;
@@ -734,7 +712,7 @@ function mouseUp(event) {
             if (!EdgeFlag) {
                 errmsg += "既に配置してあるピースの辺に接しちゃダメ\n";
             }
-            swal(errmsg);
+            alert(errmsg);
         }
     }
 };
@@ -795,7 +773,7 @@ function loads(k) {
     } else {
         selectNum = 21;
         Coloring2();
-        swal("すでに使用済みのピースです");
+        alert("すでに使用済みのピースです");
     }
 };
 
@@ -933,7 +911,7 @@ function halfway_caluculation() { //終了判定もらって最終結果を表�
             player_Sum.piece[i][4] += 1;
         }
     }
-    swal('残ってるピースの総合計は' + player_Sum.total[0] + '\n' +
+    alert('残ってるピースの総合計は' + player_Sum.total[0] + '\n' +
         '1マスのピースの数は' + player_Sum.piece[0][0] + '個' +
         '\n' + '2マスのピースの数は' + player_Sum.piece[0][1] + '個' +
         '\n' + '3マスのピースの数は' + player_Sum.piece[0][2] + '個' +

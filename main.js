@@ -593,7 +593,7 @@ function mouseUp(event) {
     console.log(nowturn);
     if (MyTurnFlag == 0) {
         //自分のターンじゃないならなにもしない
-        swal("プレイヤー" + nowplayer + "のターンよ")
+        swal("プレイヤー" + nowplayer + "のターンです。")
         return;
     }
     if (SelectFlag == 0) {
@@ -633,7 +633,7 @@ function mouseUp(event) {
             }
         }
         if (RegionFlag) {
-            swal("盤面の外にピースがでちゃうように置かないで")
+            swal("盤面の外にピースが出ないように置いてください。")
         } else if (FirstFlag) {
             for (let i = 0; i < Pieces[selectNum].childline.length; i++) {
                 Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i]][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i]] = playerNum;
@@ -650,7 +650,7 @@ function mouseUp(event) {
             MyTurnFlag = 0;
             finish_turn();
         } else {
-            swal("盤面の角が埋まるように")
+            swal("盤面の角が埋まるように置いてください。")
         }
 
     } else {
@@ -709,7 +709,7 @@ function mouseUp(event) {
         //console.log(PlaceFlag, CornerFlag, EdgeFlag);
 
         if (RegionFlag) {
-            swal("盤面の外にピースがでちゃうように置かないで")
+            swal("盤面の外にピースが出ないように置いてください。")
         } else if (PlaceFlag && CornerFlag && EdgeFlag) {
             for (let i = 0; i < Pieces[selectNum].childline.length; i++) {
                 Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i]][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i]] = playerNum;
@@ -727,13 +727,13 @@ function mouseUp(event) {
             finish_turn();
         } else {
             if (!CornerFlag) {
-                errmsg += "既に配置してあるピースの頂点に触れるようにせい\n";
+                errmsg += "既に配置してあるピースの頂点に触れるように置いてください。";
             }
             if (!PlaceFlag) {
-                errmsg += "既にピースが置いてあります\n";
+                errmsg += "既にピースが置いてあります。";
             }
             if (!EdgeFlag) {
-                errmsg += "既に配置してあるピースの辺に接しちゃダメ\n";
+                errmsg += "既に配置してあるピースの辺に接してはいけません。";
             }
             swal(errmsg);
         }
@@ -796,7 +796,7 @@ function loads(k) {
     } else {
         selectNum = 21;
         Coloring2();
-        swal("すでに使用済みのピースです");
+        swal("すでに使用済みのピースです。");
     }
 };
 
@@ -935,11 +935,11 @@ function halfway_caluculation() { //終了判定もらって最終結果を表�
         }
     }
     swal('残ってるピースの総合計は' + player_Sum.total[0] + '\n' +
-        '1マスのピースの数は' + player_Sum.piece[0][0] + '個' +
-        '\n' + '2マスのピースの数は' + player_Sum.piece[0][1] + '個' +
-        '\n' + '3マスのピースの数は' + player_Sum.piece[0][2] + '個' +
-        '\n' + '4マスのピースの数は' + player_Sum.piece[0][3] + '個' +
-        '\n' + '5マスのピースの数は' + player_Sum.piece[0][4] + '個'
+        '1マスのピースの数は' + player_Sum.piece[0][0] + '個、' +
+        '\n' + '2マスのピースの数は' + player_Sum.piece[0][1] + '個、' +
+        '\n' + '3マスのピースの数は' + player_Sum.piece[0][2] + '個、' +
+        '\n' + '4マスのピースの数は' + player_Sum.piece[0][3] + '個、' +
+        '\n' + '5マスのピースの数は' + player_Sum.piece[0][4] + '個です。'
     );
     player_Sum.total[0] = 0;
     player_Sum.piece = [
@@ -976,7 +976,7 @@ function TimeDisplay() {
         if (dt > gTimeLimit) { //経過時間dtと制限時間の設定
             clearTimeout(gTid); // タイマー解除
             PassTurn();
-            console.log("時間制限的にPassになったで")
+            swal("時間制限を過ぎました。\n次のプレイヤーのターンになります");
         }
     } else {
         if (dt > gTimeLimit) { //経過時間dtと制限時間の設定

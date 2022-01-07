@@ -22,7 +22,7 @@ const ROOM = {};
 
 // チャット延べ参加者数
 let MEMBER_COUNT = 0;
-
+let game_page_count = 0; //ゲームページにいる人数
 const port = 3000;
 
 // ルーティングの設定
@@ -125,7 +125,8 @@ io.on("connection", (socket) => {
         pass: pass, //pass回数
         score: score,
         name: name,
-        access_point: access_point //スコアの送られた回数
+        access_point: access_point, //スコアの送られた回数
+        game_page_count: game_page_count
     };
 
 
@@ -133,14 +134,27 @@ io.on("connection", (socket) => {
       ROOM[room].board = data.board_status;
     });*/
 
+    socket.on('OpenGamePage', (status) => {
+        ROOM[room].game_page_count++;
+        game_page_count++;
+        game_page_count = game_page_count % 4;
+        if (ROOM[room].game_page_count == 4 && MEMBER_COUNT == 4) {
+            io.to(room).emit('game_start', {
+                board_status: ROOM[room].board,
+                count: ROOM[room].count
+            });
+        }
+    });
 
     //ゲームの開始合図
+    /*
     if (MEMBER_COUNT == 4) {
         io.to(room).emit('game_start', {
             board_status: ROOM[room].board,
             count: ROOM[room].count
         });
     }
+    */
     socket.on('finish_turn', (status) => {
         ROOM[room].access_point = 0;
         ROOM[room].pass = 0;

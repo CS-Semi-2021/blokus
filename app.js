@@ -5,7 +5,8 @@ let nowplayer; //現在手番のプレイヤー
 let mynumber; //自分の手番の順番
 let PassFlag = false; //passした時のフラグ
 let piece; //手持ちのコマ数
-
+let gamepageCount = 0;
+let GamePageFlag = False;
 
 
 

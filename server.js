@@ -21,8 +21,9 @@ const MEMBER = {};
 const ROOM = {};
 
 // チャット延べ参加者数
-let MEMBER_COUNT = 0;
+let MEMBER_COUNT = 1;
 
+let game_page_count = 0;//ゲームページにいる人数
 const port = 51234;
 const hostname = "tokyo.vldb2020.org";
 
@@ -97,19 +98,17 @@ io.on("connection", (socket) => {
         room = ~~(room_num / 4) + 1;
         room_num++;
 
-        if (MEMBER_COUNT < 4) {
-            MEMBER_COUNT++;
-        } else {
-            MEMBER_COUNT = 1;
-        }
-
         MEMBER[socket.id] = {
             token: token,
             name: null,
             count: MEMBER_COUNT,
             score: score
         };
-        
+        if (MEMBER_COUNT < 4) {
+            MEMBER_COUNT++;
+        } else {
+            MEMBER_COUNT = 1;
+        }
         // 本人にトークンを送付
         io.to(socket.id).emit('token', {
             token: token,
@@ -127,7 +126,8 @@ io.on("connection", (socket) => {
         pass: pass, //pass回数
         score: score,
         name: name,
-        access_point: access_point //スコアの送られた回数
+        access_point: access_point, //スコアの送られた回数
+        game_page_count: game_page_count
     };
 
 
@@ -135,14 +135,24 @@ io.on("connection", (socket) => {
       ROOM[room].board = data.board_status;
     });*/
 
-
+    socket.on('OpenGamePage', function(data) {
+        ROOM[room].game_page_count++;
+        game_page_count++
+        game_page_count = game_page_count % 4;
+        if (ROOM[room].game_page_count == 4 && MEMBER_COUNT == 4) {
+            io.to(room).emit('game_start', {
+                board_status: ROOM[room].board,
+                count: ROOM[room].count
+            });
+        }
+     });
     //ゲームの開始合図
-    if (MEMBER_COUNT == 4) {
+    /*if (MEMBER_COUNT == 4) {
         io.to(room).emit('game_start', {
             board_status: ROOM[room].board,
             count: ROOM[room].count
         });
-    }
+    }*/
     socket.on('finish_turn', (status) => {
         ROOM[room].access_point = 0;
         ROOM[room].pass = 0;
@@ -156,6 +166,7 @@ io.on("connection", (socket) => {
             count: ROOM[room].count
         });
     });
+
     //passイベントの受信
     socket.on('PassTurn', function(data) {
         ROOM[room].board = data.board_status;

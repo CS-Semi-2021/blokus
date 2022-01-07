@@ -348,10 +348,12 @@ function draw3() {
         ctxTurn.arc((0.5 + 1.25 * i) * squareSize, 0.5 * squareSize, 0.5 * squareSize, 0, 2 * Math.PI, true);
         ctxTurn.fill();
     }
+    /*
     ctxTurn.fillStyle = "red";
     ctxTurn.beginPath();
     ctxTurn.arc(0.5 * squareSize, 1.2 * squareSize, 0.1 * squareSize, 0, Math.PI * 2, true);
     ctxTurn.fill();
+    */
 
 
 

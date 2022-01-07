@@ -47,6 +47,10 @@ socket.on('game_start', (data) => {
     if (playerNum == 1){
         MyTurnFlag = 1;
     }
+    ctxTurn.fillStyle = "red";
+    ctxTurn.beginPath();
+    ctxTurn.arc(0.5 * squareSize, 1.2 * squareSize, 0.1 * squareSize, 0, Math.PI * 2, true);
+    ctxTurn.fill();
     now = new Date();
     gTimeStart = now.getTime();
     gTid = setInterval('TimeDisplay()', 1000);

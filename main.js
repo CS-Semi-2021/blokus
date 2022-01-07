@@ -316,7 +316,7 @@ function draw3() {
     target4.style.left = squareSize * 21 + "px";
 
 
-    /*
+    
     let targetTurn = document.getElementById("rectangleTurn");
     targetTurn.style.position = "absolute";
     targetTurn.style.top = squareSize * 1 + "px";
@@ -331,7 +331,7 @@ function draw3() {
     ctxTurn.beginPath();
     ctxTurn.arc(0.5 * squareSize, 1.2 * squareSize, 0.1 * squareSize, 0, Math.PI * 2, true);
     ctxTurn.fill();
-    */
+    
 
 
     let targetRotate = document.getElementById("button1");

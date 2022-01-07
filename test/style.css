@@ -1,0 +1,686 @@
+@charset "utf-8";
+* {
+    box-sizing: border-box;
+}
+
+canvas {
+    background-color: #d258cc;
+}
+
+html {
+    font-size: 100%;
+    font-family: 'Hiragino Sans', sans-serif;
+    line-height: 1.7;
+    letter-spacing: 1px;
+}
+
+body {
+    margin: 0;
+    background-color: #f6faff;
+    color: #6c7686;
+    /* padding: 100px;  -> blokusで上を縮めるために毎回paddingを書く */
+}
+
+a,
+button {
+    display: block;
+    text-decoration: none;
+    color: #2d3133;
+    font-size: 14px;
+}
+
+a:hover,
+button:hover {
+    transition: all 0.3s ease;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin: 0;
+}
+
+h1 {
+    font-weight: 600;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+}
+
+
+/* index ================================ */
+
+.index {
+    padding: 100px;
+}
+
+.index-wrapper {
+    max-width: 1200px;
+    min-width: 920px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    padding: 60px;
+}
+
+.index-detail {
+    width: 36%;
+    min-width: 320px;
+    margin-top: -40px;
+}
+
+.index-detail .subtitle {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.index-detail .title {
+    font-size: 54px;
+    line-height: 66px;
+    letter-spacing: 2px;
+    margin-bottom: 24px;
+}
+
+.index-detail .button-in-index {
+    width: 184px;
+    height: 48px;
+    text-align: center;
+    line-height: 45px;
+    font-weight: 600;
+    color: #42cea9;
+    ;
+    background-color: #ffffff;
+    border: 2px solid #58d2b2;
+    border-radius: 2px;
+}
+
+.index-detail .button-in-index:hover {
+    color: #ffffff;
+    background-color: #58d2b2;
+}
+
+.button-in-index {
+    cursor: pointer;
+    margin-bottom: 24px;
+}
+
+.index .index-image {
+    width: 64%;
+    text-align: center;
+    overflow: hidden;
+}
+
+.index .index-image img {
+    width: 88%;
+}
+
+
+/* rule =================================== 
+kiyaku, policy については同じように文章だけの画面になるので,CSSを使い回す. 
+その他の画面は変更を加える可能性があるので内容が同じでもclass名を変更しいちいちcssを書いている 
+*/
+
+.rule {
+    padding: 100px;
+}
+
+#rule,
+#kiyaku,
+#polucy {
+    display: none;
+}
+
+
+/* 仮のもの */
+
+#rule .appear,
+#kiyaku .appear,
+#polucy .appear {
+    display: block;
+    position: fixed;
+    z-index: 999;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    transform: scaleX(0);
+    background-color: #42cea9;
+    animation-name: PageAnime;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+@keyframes PageAnime {
+    0% {
+        transform-origin: right;
+        transform: scaleX(0);
+    }
+    50% {
+        transform-origin: right;
+        transform: scaleX(1);
+    }
+    50.001% {
+        transform-origin: left;
+    }
+    100% {
+        transform-origin: left;
+        transform: scaleX(0);
+    }
+}
+
+
+/*画面遷移の後現れるコンテンツ設定*/
+
+.rule-wrapper {
+    opacity: 0;
+    /*はじめは透過0に*/
+}
+
+
+/*bodyにappearクラスがついたら出現*/
+
+#rule.appear .rule-wrapper,
+#kiyaku.appear .rule-wrapper,
+#policy.appear .rule-wrapper {
+    animation-name: PageAnimeAppear;
+    animation-duration: 0.5s;
+    animation-delay: 0.4s;
+    animation-fill-mode: forwards;
+    opacity: 0;
+}
+
+@keyframes PageAnimeAppear {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.rule-wrapper {
+    max-width: 1200px;
+    min-width: 920px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    padding: 60px;
+}
+
+.rule-detail {
+    width: 75%;
+    min-width: 320px;
+    margin-top: -40px;
+}
+
+.rule-detail .subtitle {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.rule-detail .title {
+    font-size: 54px;
+    line-height: 66px;
+    letter-spacing: 2px;
+    margin-bottom: 24px;
+}
+
+.rule-detail .explain {
+    padding-bottom: 20px;
+}
+
+.rule-detail .button-in-rule {
+    width: 184px;
+    height: 48px;
+    text-align: center;
+    line-height: 45px;
+    font-weight: 600;
+    color: #42cea9;
+    background-color: #ffffff;
+    border: 2px solid #58d2b2;
+    border-radius: 2px;
+}
+
+.rule-detail .button-in-rule:hover {
+    color: #ffffff;
+    background-color: #58d2b2;
+}
+
+.button-in-rule {
+    cursor: pointer;
+    margin-bottom: 24px;
+}
+
+
+/* main-menu ============================== */
+
+.main-menu {
+    padding: 100px;
+}
+
+#main-menu {
+    display: none;
+}
+
+
+/* 仮のもの */
+
+#main-menu .appear {
+    display: block;
+    position: fixed;
+    z-index: 999;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    transform: scaleX(0);
+    background-color: #42cea9;
+    animation-name: PageAnime;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+@keyframes PageAnime {
+    0% {
+        transform-origin: right;
+        transform: scaleX(0);
+    }
+    50% {
+        transform-origin: right;
+        transform: scaleX(1);
+    }
+    50.001% {
+        transform-origin: left;
+    }
+    100% {
+        transform-origin: left;
+        transform: scaleX(0);
+    }
+}
+
+
+/*画面遷移の後現れるコンテンツ設定*/
+
+.main-menu-wrapper {
+    opacity: 0;
+    /*はじめは透過0に*/
+}
+
+
+/*bodyにappearクラスがついたら出現*/
+
+#main-menu.appear .main-menu-wrapper {
+    animation-name: PageAnimeAppear;
+    animation-duration: 0.5s;
+    animation-delay: 0.4s;
+    animation-fill-mode: forwards;
+    opacity: 0;
+}
+
+@keyframes PageAnimeAppear {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+
+/* 仮のものここまで */
+
+.main-menu-wrapper {
+    max-width: 1200px;
+    min-width: 920px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    padding: 60px;
+}
+
+.main-menu-detail {
+    width: 75%;
+    min-width: 320px;
+    margin-top: -40px;
+    /* background-color: #d258cc; デバッグ用 */
+}
+
+.main-menu-detail .subtitle {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.main-menu-detail .title {
+    font-size: 54px;
+    line-height: 66px;
+    letter-spacing: 2px;
+    margin-bottom: 24px;
+}
+
+.main-menu-detail .button-in-main-menu {
+    width: 184px;
+    height: 48px;
+    text-align: center;
+    line-height: 45px;
+    font-weight: 600;
+    color: #42cea9;
+    background-color: #ffffff;
+    border: 2px solid #58d2b2;
+    border-radius: 2px;
+}
+
+.main-menu-detail .button-in-main-menu:hover {
+    color: #ffffff;
+    background-color: #58d2b2;
+}
+
+.button-in-main-menu {
+    cursor: pointer;
+    margin-bottom: 24px;
+}
+
+.room {
+    width: 184px;
+    height: 48px;
+    text-align: center;
+    line-height: 45px;
+    font-weight: 600;
+    color: #d46bcf;
+    ;
+    background-color: #ffffff;
+    border: 2px solid #d258cc;
+    border-radius: 2px;
+    margin-top: 15px;
+}
+
+.room:hover {
+    color: #ffffff;
+    background-color: #d258cc;
+}
+
+
+/* create-room ================================= */
+
+.create-room {
+    padding: 100px;
+}
+
+#create-room {
+    display: none;
+}
+
+
+/* 仮のもの */
+
+#create-room .appear {
+    display: block;
+    position: fixed;
+    z-index: 999;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    transform: scaleX(0);
+    background-color: #42cea9;
+    animation-name: PageAnime;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+@keyframes PageAnime {
+    0% {
+        transform-origin: right;
+        transform: scaleX(0);
+    }
+    50% {
+        transform-origin: right;
+        transform: scaleX(1);
+    }
+    50.001% {
+        transform-origin: left;
+    }
+    100% {
+        transform-origin: left;
+        transform: scaleX(0);
+    }
+}
+
+
+/*画面遷移の後現れるコンテンツ設定*/
+
+.create-room-wrapper {
+    opacity: 0;
+    /*はじめは透過0に*/
+}
+
+
+/*bodyにappearクラスがついたら出現*/
+
+#create-room.appear .create-room-wrapper {
+    animation-name: PageAnimeAppear;
+    animation-duration: 0.5s;
+    animation-delay: 0.4s;
+    animation-fill-mode: forwards;
+    opacity: 0;
+}
+
+@keyframes PageAnimeAppear {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.create-room-wrapper {
+    max-width: 1200px;
+    min-width: 920px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    padding: 60px;
+}
+
+.create-room-detail {
+    width: 75%;
+    min-width: 320px;
+    margin-top: -40px;
+}
+
+.create-room-detail .subtitle {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.create-room-detail .title {
+    font-size: 54px;
+    line-height: 66px;
+    letter-spacing: 2px;
+    margin-bottom: 24px;
+}
+
+.create-room-detail .button-in-create-room {
+    width: 184px;
+    height: 48px;
+    text-align: center;
+    line-height: 45px;
+    font-weight: 600;
+    color: #42cea9;
+    background-color: #ffffff;
+    border: 2px solid #58d2b2;
+    border-radius: 2px;
+}
+
+.create-room-detail .button-in-create-room:hover {
+    color: #ffffff;
+    background-color: #58d2b2;
+}
+
+.button-in-create-room {
+    cursor: pointer;
+    margin-bottom: 24px;
+}
+
+.room-create {
+    padding-bottom: 20px;
+}
+
+
+/* blokus =================================== */
+
+.blokus {
+    padding: 3% 5% 0% 5%;
+}
+
+header {
+    height: 35px;
+    background-color: #f6faff;
+    margin-bottom: 1%;
+}
+
+#nav {
+    position: absolute;
+    top: 0;
+    /*ナビメニューを左に隠した状態になる*/
+    left: -50%;
+    width: 50%;
+    height: 100vh;
+    background: #f6faff;
+    /*０.7秒かけてナビメニューがスライドする*/
+    transition: .7s;
+    /*background-color: bisque;*/
+    z-index: 1000;
+}
+
+#nav ul {
+    width: 80%;
+    padding-top: 80px;
+}
+
+#nav ul li {
+    list-style-type: none;
+    font-size: 20px;
+}
+
+#hamburger {
+    display: block;
+    position: absolute;
+    top: 5%;
+    right: 5%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    transition: 1s;
+    /* background-color: #d258cc; */
+}
+
+.inner_line {
+    display: block;
+    position: absolute;
+    right: 0;
+    width: 50px;
+    height: 3px;
+    background-color: #58d2b2;
+    transition: 1s;
+    border-radius: 4px;
+}
+
+#line1 {
+    top: 0;
+}
+
+#line2 {
+    top: 14px;
+}
+
+#line3 {
+    bottom: 0px;
+}
+
+.in {
+    transform: translateX(100%);
+}
+
+.line_1,
+.line_2,
+.line_3 {
+    background: #000000;
+}
+
+.line_1 {
+    /*-45度回転させる*/
+    transform: rotate(-45deg);
+    top: 0;
+}
+
+.line_2 {
+    opacity: 0;
+}
+
+.line_3 {
+    /*45度回転させる*/
+    transform: rotate(45deg);
+    bottom: 0;
+}
+
+
+/* ハンバーガーボタン関連 https://breezegroup.co.jp/202007/js-hamburger-menu/ */
+
+.addColor {
+    /*display: none; 画像削除*/
+    opacity: 0.2;
+    display: inline-block;
+}
+
+.canvaswrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.mains {
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+.button-in-blokus {
+    width: 184px;
+    height: 48px;
+    text-align: center;
+    line-height: 45px;
+    font-weight: 600;
+    color: #42cea9;
+    background-color: #ffffff;
+    border: 2px solid #58d2b2;
+    border-radius: 2px;
+}
+
+.button-in-blokus:hover {
+    color: #ffffff;
+    background-color: #58d2b2;
+}
+
+.button-in-blokus {
+    cursor: pointer;
+    margin-bottom: 24px;
+}

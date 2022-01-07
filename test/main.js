@@ -55,6 +55,7 @@ document.getElementById('hamburger').addEventListener('click', function() {
 // 画面表示切り替え
 function Display(operation) {
     if (operation == "index") {
+        console.log("index");
         document.getElementById("index").style.display = "block";
         document.getElementById("kiyaku").style.display = "none";
         document.getElementById("policy").style.display = "none";
@@ -111,9 +112,6 @@ function Display(operation) {
         document.getElementById("create-room").style.display = "block";
         document.getElementById("blokus").style.display = "none";
     } else if (operation == "blokus") {
-        console.log("いけた１");
-        draw3();
-        console.log("いけた2");
         document.getElementById("index").style.display = "none";
         document.getElementById("kiyaku").style.display = "none";
         document.getElementById("policy").style.display = "none";
@@ -122,6 +120,7 @@ function Display(operation) {
         document.getElementById("create-room").style.display = "none";
         document.getElementById("blokus").style.display = "block";
         document.getElementById("footer").style.display = "none";
+        draw3();
     }
 }
 

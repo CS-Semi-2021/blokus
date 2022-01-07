@@ -21,7 +21,7 @@ const MEMBER = {};
 const ROOM = {};
 
 // チャット延べ参加者数
-let MEMBER_COUNT = 1;
+let MEMBER_COUNT = 0;
 
 const port = 51234;
 const hostname = "tokyo.vldb2020.org";
@@ -97,17 +97,19 @@ io.on("connection", (socket) => {
         room = ~~(room_num / 4) + 1;
         room_num++;
 
+        if (MEMBER_COUNT < 4) {
+            MEMBER_COUNT++;
+        } else {
+            MEMBER_COUNT = 1;
+        }
+
         MEMBER[socket.id] = {
             token: token,
             name: null,
             count: MEMBER_COUNT,
             score: score
         };
-        if (MEMBER_COUNT < 4) {
-            MEMBER_COUNT++;
-        } else {
-            MEMBER_COUNT = 1;
-        }
+        
         // 本人にトークンを送付
         io.to(socket.id).emit('token', {
             token: token,

@@ -102,7 +102,9 @@ socket.on('next_turn', function(data){
 //game\setイベントの受信
 socket.on('game_set', function(data){
     console.log("game_set");
+    clearInterval(gTid);
     Board = data.board_status;
+    MyTurnFlag = 0;
     socket.emit('holding_point', {
         user : IAM.token, 
         point : piece

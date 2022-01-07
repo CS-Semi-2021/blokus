@@ -55,13 +55,10 @@ document.getElementById('hamburger').addEventListener('click', function() {
 // 画面表示切り替え
 function Display(operation) {
     if (operation == "index") {
-        console.log("index");
         document.getElementById("index").style.display = "block";
         document.getElementById("kiyaku").style.display = "none";
         document.getElementById("policy").style.display = "none";
         document.getElementById("rule").style.display = "none";
-        document.getElementById("main-menu").style.display = "none";
-        document.getElementById("create-room").style.display = "none";
         document.getElementById("blokus").style.display = "none";
     } else if (operation == "kiyaku") {
         $('#kiyaku').addClass('appear');
@@ -70,8 +67,6 @@ function Display(operation) {
         document.getElementById("kiyaku").style.display = "block";
         document.getElementById("policy").style.display = "none";
         document.getElementById("rule").style.display = "none";
-        document.getElementById("main-menu").style.display = "none";
-        document.getElementById("create-room").style.display = "none";
         document.getElementById("blokus").style.display = "none";
     } else if (operation == "policy") {
         $('#policy').addClass('appear');
@@ -80,8 +75,6 @@ function Display(operation) {
         document.getElementById("kiyaku").style.display = "none";
         document.getElementById("policy").style.display = "block";
         document.getElementById("rule").style.display = "none";
-        document.getElementById("main-menu").style.display = "none";
-        document.getElementById("create-room").style.display = "none";
         document.getElementById("blokus").style.display = "none";
     } else if (operation == "rule") {
         $('#rule').addClass('appear');
@@ -90,37 +83,24 @@ function Display(operation) {
         document.getElementById("kiyaku").style.display = "none";
         document.getElementById("policy").style.display = "none";
         document.getElementById("rule").style.display = "block";
-        document.getElementById("main-menu").style.display = "none";
-        document.getElementById("create-room").style.display = "none";
         document.getElementById("blokus").style.display = "none";
-    } else if (operation == "main-menu") {
-        document.getElementById("index").style.display = "none";
-        document.getElementById("kiyaku").style.display = "none";
-        document.getElementById("policy").style.display = "none";
-        document.getElementById("rule").style.display = "none";
-        document.getElementById("main-menu").style.display = "block";
-        document.getElementById("create-room").style.display = "none";
-        document.getElementById("blokus").style.display = "none";
-        document.getElementById("footer").style.display = "flex";
     } else if (operation == "create-room") {
         $('#create-room').addClass('appear');
         document.getElementById("index").style.display = "none";
         document.getElementById("kiyaku").style.display = "none";
         document.getElementById("policy").style.display = "none";
         document.getElementById("rule").style.display = "none";
-        document.getElementById("main-menu").style.display = "none";
-        document.getElementById("create-room").style.display = "block";
         document.getElementById("blokus").style.display = "none";
     } else if (operation == "blokus") {
+        console.log("いけた１");
+        draw3();
+        console.log("いけた2");
         document.getElementById("index").style.display = "none";
         document.getElementById("kiyaku").style.display = "none";
         document.getElementById("policy").style.display = "none";
         document.getElementById("rule").style.display = "none";
-        document.getElementById("main-menu").style.display = "none";
-        document.getElementById("create-room").style.display = "none";
         document.getElementById("blokus").style.display = "block";
         document.getElementById("footer").style.display = "none";
-        draw3();
     }
 }
 

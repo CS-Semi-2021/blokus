@@ -27,7 +27,7 @@ const port = 3000;
 
 // ルーティングの設定
 app.get("/", (req, res) => {
-    res.sendFile(`${__dirname}/flamingo.html`);
+    res.sendFile(`${__dirname}/index.html`);
     console.log("/ へアクセスがありました");
 });
 app.get("/images/:file", (req, res) => {

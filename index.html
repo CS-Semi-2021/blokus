@@ -254,46 +254,6 @@
             </div>
         </div>
 
-        <!-- ルーム作成 create-room -->
-        <div class="create-room" id="create-room" style="display:none;">
-            <div class="create-room-wrapper">
-                <div class="create-room-detail">
-                    <h2 class="subtitle">みんなで楽しめるテリトリー戦略ゲーム</h2>
-                    <h1 class="title">Blokus</h1>
-                    <div class="room-create">
-                        <h2>ルーム作成</h2>
-                        <form method="POST" action="/room_create">
-                            <h3>
-                                ルーム名：<input type="text" name="name" required maxlength="20" size="20">
-                                <!--
-                                <br>人数：
-                                <input type="radio" id="num4" name="num" value="4" checked><label for="4">4</label>
-                                <input type="radio" id="num3" name="num" value="3"><label for="3">3</label>
-                                <input type="radio" id="num2" name="num" value="2"><label for="2">2</label><br>
-                                <input type="radio" id="public" name="state" value="public" checked><label for="public">public</label>
-                                <input type="radio" id="private" name="state" value="private"><label for="private">private</label>
-                                -->
-                            </h3>
-                            <input class="button-in-create-room" type="submit" value="ルームを作成">
-                        </form>
-                    </div>
-                    <button class="button-in-create-room" onClick="Display('index')">戻る</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 待機画面　waiting -->
-        <div class="waiting" id="waiting" style="display:none;">
-            <div class="waiting-wrapper">
-                <div class="waiting-room-detail">
-                    <h2 class="subtitle">みんなで楽しめるテリトリー戦略ゲーム</h2>
-                    <h1 class="title">Blokus</h1>
-                    <h2>待機中...</h2>
-                    <button class="button-in-create-room" onClick="Display('index')">戻る</button>
-                </div>
-            </div>
-        </div>
-
         <!-- ゲーム画面 blokus -->
         <div class="blokus" id="blokus" style="display:none;">
             <header>
@@ -345,10 +305,10 @@
                 <img id = "changes18" src="images/image18.png" onclick="loads(18);">
                 <img id = "changes19" src="images/image19.png" onclick="loads(19);">
                 <img id = "changes20" src="images/image20.png" onclick="loads(20);">
-                <FORM id = "timelimit" name="TL">制限時間（1分）：
+                <form id = "timelimit" name="TL">制限時間（1分）：
                     <p></p>
-                    <INPUT size="15" type="text" readonly name="TLIMIT" value="00:00:00">
-                </FORM>
+                    <input size="15" type="text" readonly name="TLIMIT" value="00:00:00">
+                </form>
             </div>
         </div>
         

@@ -24,7 +24,7 @@
                     <button class="button-in-index" type="button" onClick="Display('policy')">プライバシーポリシー</button>
                 </div>
                 <div class="index-image">
-                    <img src="/images/shape_polyomino.png">
+                    <img src="../images/shape_polyomino.png">
                 </div>
             </div>
         </div>
@@ -254,53 +254,6 @@
             </div>
         </div>
 
-        <!-- メインメニュー main-menu -->
-        <div class="main-menu" id="main-menu" style="display:none;">
-            <div class="main-menu-wrapper">
-                <div class="main-menu-detail">
-                    <h2 class="subtitle">みんなで楽しめるテリトリー戦略ゲーム</h2>
-                    <h1 class="title">Blokus</h1>
-                    <h2 >メインメニュー</h2>
-                    <button class="button-in-main-menu" onClick="Display('create-room')">ルーム作成</button>
-                    <button class="button-in-main-menu" onClick="Display('index')">トップに戻る</button>
-                </div>
-                <div>
-                    <h3>参加可能なルーム</h3>
-                        <div class="rooms">
-                            <button class="room" id="room">[ルーム名]</button>
-                            <button class="room" onClick="Display('blokus')">テスト用：Blokus</button>
-                        </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ルーム作成 create-room -->
-        <div class="create-room" id="create-room" style="display:none;">
-            <div class="create-room-wrapper">
-                <div class="create-room-detail">
-                    <h2 class="subtitle">みんなで楽しめるテリトリー戦略ゲーム</h2>
-                    <h1 class="title">Blokus</h1>
-                    <div class="room-create">
-                        <h2>ルーム作成</h2>
-                        <form method="POST" action="/room_create">
-                            <h3>
-                                ルーム名：<input type="text" name="name" required maxlength="20" size="20">
-                                <!--
-                                <br>人数：
-                                <input type="radio" id="num4" name="num" value="4" checked><label for="4">4</label>
-                                <input type="radio" id="num3" name="num" value="3"><label for="3">3</label>
-                                <input type="radio" id="num2" name="num" value="2"><label for="2">2</label><br>
-                                <input type="radio" id="public" name="state" value="public" checked><label for="public">public</label>
-                                <input type="radio" id="private" name="state" value="private"><label for="private">private</label>
-                                -->
-                            </h3>
-                            <input class="button-in-create-room" type="submit" value="ルームを作成">
-                        </form>
-                    </div>
-                    <button class="button-in-create-room" onClick="Display('index')">戻る</button>
-                </div>
-            </div>
-        </div>
 
         <!-- 待機画面　waiting -->
         <div class="waiting" id="waiting" style="display:none;">
@@ -365,10 +318,10 @@
                 <img id = "changes18" src="../images/image18.png" onclick="loads(18);">
                 <img id = "changes19" src="../images/image19.png" onclick="loads(19);">
                 <img id = "changes20" src="../images/image20.png" onclick="loads(20);">
-                <FORM id = "timelimit" name="TL">制限時間（1分）：
+                <form id = "timelimit" name="TL">制限時間（1分）：
                     <p></p>
-                    <INPUT size="15" type="text" readonly name="TLIMIT" value="00:00:00">
-                </FORM>
+                    <input size="15" type="text" readonly name="TLIMIT" value="00:00:00">
+                </form>
             </div>
         </div>
         

@@ -24,7 +24,7 @@
                     <button class="button-in-index" type="button" onClick="Display('policy')">プライバシーポリシー</button>
                 </div>
                 <div class="index-image">
-                    <img src="../images/shape_polyomino.png">
+                    <img src="/images/shape_polyomino.png">
                 </div>
             </div>
         </div>
@@ -254,19 +254,6 @@
             </div>
         </div>
 
-
-        <!-- 待機画面　waiting -->
-        <div class="waiting" id="waiting" style="display:none;">
-            <div class="waiting-wrapper">
-                <div class="waiting-room-detail">
-                    <h2 class="subtitle">みんなで楽しめるテリトリー戦略ゲーム</h2>
-                    <h1 class="title">Blokus</h1>
-                    <h2>待機中...</h2>
-                    <button class="button-in-create-room" onClick="Display('index')">戻る</button>
-                </div>
-            </div>
-        </div>
-
         <!-- ゲーム画面 blokus -->
         <div class="blokus" id="blokus" style="display:none;">
             <header>
@@ -286,7 +273,6 @@
                 </ul>
             </nav>
             <div class="mains">
-                
                 <canvas id="rectangle3"  class="canvaswrap"></canvas>
                 <canvas id="rectangleBack"></canvas>
                 <canvas id="rectangle4"></canvas>
@@ -298,42 +284,31 @@
                 <input id="buttonpass" class="button-in-blokus" type="button" value="Pass" onclick="doPass()">
                 <button id = "buttonout" class="button-in-blokus" onClick="leaveAlert()">退出する</button>
             
-                <img id = "changes0" src="../images/image0.png" onclick="loads(0);">   
-                <img id = "changes1" src="../images/image1.png" onclick="loads(1);">
-                <img id = "changes2" src="../images/image2.png" onclick="loads(2);">
-                <img id = "changes3" src="../images/image3.png" onclick="loads(3);">
-                <img id = "changes4" src="../images/image4.png" onclick="loads(4);">
-                <img id = "changes5" src="../images/image5.png" onclick="loads(5);">
-                <img id = "changes6" src="../images/image6.png" onclick="loads(6);">
-                <img id = "changes7" src="../images/image7.png" onclick="loads(7);">
-                <img id = "changes8" src="../images/image8.png" onclick="loads(8);">
-                <img id = "changes9" src="../images/image9.png" onclick="loads(9);">
-                <img id = "changes10" src="../images/image10.png" onclick="loads(10);">
-                <img id = "changes11" src="../images/image11.png" onclick="loads(11);">
-                <img id = "changes12" src="../images/image12.png" onclick="loads(12);">
-                <img id = "changes13" src="../images/image13.png" onclick="loads(13);">
-                <img id = "changes14" src="../images/image14.png" onclick="loads(14);">
-                <img id = "changes15" src="../images/image15.png" onclick="loads(15);">
-                <img id = "changes16" src="../images/image16.png" onclick="loads(16);">
-                <img id = "changes17" src="../images/image17.png" onclick="loads(17);">
-                <img id = "changes18" src="../images/image18.png" onclick="loads(18);">
-                <img id = "changes19" src="../images/image19.png" onclick="loads(19);">
-                <img id = "changes20" src="../images/image20.png" onclick="loads(20);">
+                <img id = "changes0" src="images/image0.png" onclick="loads(0);">   
+                <img id = "changes1" src="images/image1.png" onclick="loads(1);">
+                <img id = "changes2" src="images/image2.png" onclick="loads(2);">
+                <img id = "changes3" src="images/image3.png" onclick="loads(3);">
+                <img id = "changes4" src="images/image4.png" onclick="loads(4);">
+                <img id = "changes5" src="images/image5.png" onclick="loads(5);">
+                <img id = "changes6" src="images/image6.png" onclick="loads(6);">
+                <img id = "changes7" src="images/image7.png" onclick="loads(7);">
+                <img id = "changes8" src="images/image8.png" onclick="loads(8);">
+                <img id = "changes9" src="images/image9.png" onclick="loads(9);">
+                <img id = "changes10" src="images/image10.png" onclick="loads(10);">
+                <img id = "changes11" src="images/image11.png" onclick="loads(11);">
+                <img id = "changes12" src="images/image12.png" onclick="loads(12);">
+                <img id = "changes13" src="images/image13.png" onclick="loads(13);">
+                <img id = "changes14" src="images/image14.png" onclick="loads(14);">
+                <img id = "changes15" src="images/image15.png" onclick="loads(15);">
+                <img id = "changes16" src="images/image16.png" onclick="loads(16);">
+                <img id = "changes17" src="images/image17.png" onclick="loads(17);">
+                <img id = "changes18" src="images/image18.png" onclick="loads(18);">
+                <img id = "changes19" src="images/image19.png" onclick="loads(19);">
+                <img id = "changes20" src="images/image20.png" onclick="loads(20);">
                 <form id = "timelimit" name="TL">制限時間（1分）：
                     <p></p>
                     <input size="15" type="text" readonly name="TLIMIT" value="00:00:00">
                 </form>
-            </div>
-        </div>
-        
-
-        <!-- 結果 result -->
-        <div class="result" id="result" style="display:none;">
-            <div class="result-wrapper">
-                <div class="result-detail">
-                    <h1>ゲーム終了！</h1>
-
-                </div>
             </div>
         </div>
 
@@ -342,6 +317,6 @@
         </footer>
 
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-        <script src="anime.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     </body>
 </html>

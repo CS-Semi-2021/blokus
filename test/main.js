@@ -92,32 +92,51 @@ function Display(operation) {
         document.getElementById("rule").style.display = "none";
         document.getElementById("blokus").style.display = "none";
     } else if (operation == "blokus") {
-        console.log("いけた１");
-        draw3();
-        console.log("いけた2");
         document.getElementById("index").style.display = "none";
         document.getElementById("kiyaku").style.display = "none";
         document.getElementById("policy").style.display = "none";
         document.getElementById("rule").style.display = "none";
         document.getElementById("blokus").style.display = "block";
         document.getElementById("footer").style.display = "none";
+        draw3();
     }
 }
 
 // ゲームから退出するときの警告
 function leaveAlert() {
-    if (window.confirm("本当に退出しますか？：")) {
-        Display("index");
-    }
+    var options = {
+        text: '本当に退出しますか？：',
+        buttons: {
+            cancel: 'いいえ',
+            ok: 'はい'
+        }
+    };
+    swal(options).then(function(value) {
+        if (value) {
+            Display("index");
+        }
+    });
 }
 
 function doPass() {
     if (MyTurnFlag == 0) {
-        alert("あなたのターンじゃないよ");
+        swal("あなたのターンじゃないよ");
         return;
-    }
-    if (window.confirm("本当にパスしますか？：")) {
-        PassTurn();
+    } else {
+        var options = {
+            text: '本当にパスしますか？：', //\nでテキストの改行が出来ます
+            buttons: {
+                cancel: 'いいえ',
+                ok: 'はい'
+            }
+        };
+        swal(options).then(function(value) {
+            if (value) {
+                //表示するを選んだ場合の処理
+                //swal('アラートを表示！');
+                PassTurn();
+            }
+        });
     }
 }
 
@@ -318,12 +337,12 @@ function draw3() {
     target4.style.left = squareSize * 21 + "px";
 
 
-    
+
     let targetTurn = document.getElementById("rectangleTurn");
     targetTurn.style.position = "absolute";
     targetTurn.style.top = squareSize * 1 + "px";
     targetTurn.style.left = squareSize * 21 + "px";
-    for (let i = 0; i < 4; i++){
+    for (let i = 0; i < 4; i++) {
         ctxTurn.beginPath();
         ctxTurn.fillStyle = PlayerColor[i];
         ctxTurn.arc((0.5 + 1.25 * i) * squareSize, 0.5 * squareSize, 0.5 * squareSize, 0, 2 * Math.PI, true);
@@ -333,7 +352,7 @@ function draw3() {
     ctxTurn.beginPath();
     ctxTurn.arc(0.5 * squareSize, 1.2 * squareSize, 0.1 * squareSize, 0, Math.PI * 2, true);
     ctxTurn.fill();
-    
+
 
 
     let targetRotate = document.getElementById("button1");
@@ -484,6 +503,7 @@ function draw3() {
     ctx.lineWidth = 1;
 
     Coloring();
+    Coloring2();
 
 
     canvas4.addEventListener('mousedown', mouseDown);
@@ -572,7 +592,7 @@ function mouseUp(event) {
     console.log(nowturn);
     if (MyTurnFlag == 0) {
         //自分のターンじゃないならなにもしない
-        alert("プレイヤー" + nowplayer + "のターンよ")
+        swal("プレイヤー" + nowplayer + "のターンよ")
         return;
     }
     if (SelectFlag == 0) {
@@ -612,7 +632,7 @@ function mouseUp(event) {
             }
         }
         if (RegionFlag) {
-            alert("盤面の外にピースがでちゃうように置かないで")
+            swal("盤面の外にピースがでちゃうように置かないで")
         } else if (FirstFlag) {
             for (let i = 0; i < Pieces[selectNum].childline.length; i++) {
                 Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i]][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i]] = playerNum;
@@ -629,7 +649,7 @@ function mouseUp(event) {
             MyTurnFlag = 0;
             finish_turn();
         } else {
-            alert("盤面の角が埋まるように")
+            swal("盤面の角が埋まるように")
         }
 
     } else {
@@ -688,7 +708,7 @@ function mouseUp(event) {
         //console.log(PlaceFlag, CornerFlag, EdgeFlag);
 
         if (RegionFlag) {
-            alert("盤面の外にピースがでちゃうように置かないで")
+            swal("盤面の外にピースがでちゃうように置かないで")
         } else if (PlaceFlag && CornerFlag && EdgeFlag) {
             for (let i = 0; i < Pieces[selectNum].childline.length; i++) {
                 Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i]][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i]] = playerNum;
@@ -714,7 +734,7 @@ function mouseUp(event) {
             if (!EdgeFlag) {
                 errmsg += "既に配置してあるピースの辺に接しちゃダメ\n";
             }
-            alert(errmsg);
+            swal(errmsg);
         }
     }
 };
@@ -775,7 +795,7 @@ function loads(k) {
     } else {
         selectNum = 21;
         Coloring2();
-        alert("すでに使用済みのピースです");
+        swal("すでに使用済みのピースです");
     }
 };
 
@@ -913,7 +933,7 @@ function halfway_caluculation() { //終了判定もらって最終結果を表�
             player_Sum.piece[i][4] += 1;
         }
     }
-    alert('残ってるピースの総合計は' + player_Sum.total[0] + '\n' +
+    swal('残ってるピースの総合計は' + player_Sum.total[0] + '\n' +
         '1マスのピースの数は' + player_Sum.piece[0][0] + '個' +
         '\n' + '2マスのピースの数は' + player_Sum.piece[0][1] + '個' +
         '\n' + '3マスのピースの数は' + player_Sum.piece[0][2] + '個' +
@@ -962,4 +982,4 @@ function TimeDisplay() {
             clearTimeout(gTid); // タイマー解除
         }
     }
-};
+}

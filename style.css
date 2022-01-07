@@ -273,6 +273,7 @@ header {
 }
 
 #nav {
+    box-shadow: 0 10px 25px 0 rgba(0, 0, 0, .5);
     position: absolute;
     top: 0;
     /*ナビメニューを左に隠した状態になる*/

@@ -23,7 +23,7 @@ const ROOM = {};
 // チャット延べ参加者数
 let MEMBER_COUNT = 1;
 
-const port = 50022;
+const port = 51234;
 const hostname = "tokyo.vldb2020.org";
 
 // ルーティングの設定

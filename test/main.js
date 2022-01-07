@@ -92,32 +92,56 @@ function Display(operation) {
         document.getElementById("rule").style.display = "none";
         document.getElementById("blokus").style.display = "none";
     } else if (operation == "blokus") {
-        console.log("いけた１");
-        draw3();
-        console.log("いけた2");
         document.getElementById("index").style.display = "none";
         document.getElementById("kiyaku").style.display = "none";
         document.getElementById("policy").style.display = "none";
         document.getElementById("rule").style.display = "none";
         document.getElementById("blokus").style.display = "block";
         document.getElementById("footer").style.display = "none";
+        draw3();
     }
 }
 
 // ゲームから退出するときの警告
 function leaveAlert() {
-    if (window.confirm("本当に退出しますか？：")) {
-        Display("index");
-    }
+    //if (window.confirm("本当に退出しますか？：")) {
+    //    Display("index");
+    //}
+    var options = {
+        text: '本当に退出しますか？：', //\nでテキストの改行が出来ます
+        buttons: {
+            cancel: 'いいえ',
+            ok: 'はい'
+        }
+    };
+    swal(options).then(function(value) {
+        if (value) {
+            //表示するを選んだ場合の処理
+            //swal('アラートを表示！');
+            Display("index");
+        }
+    });
 }
 
 function doPass() {
     if (MyTurnFlag == 0) {
-        alert("あなたのターンじゃないよ");
+        swal("あなたのターンじゃないよ");
         return;
-    }
-    if (window.confirm("本当にパスしますか？：")) {
-        PassTurn();
+    } else {
+        var options = {
+            text: '本当にパスしますか？：', //\nでテキストの改行が出来ます
+            buttons: {
+                cancel: 'いいえ',
+                ok: 'はい'
+            }
+        };
+        swal(options).then(function(value) {
+            if (value) {
+                //表示するを選んだ場合の処理
+                //swal('アラートを表示！');
+                PassTurn();
+            }
+        });
     }
 }
 
@@ -290,14 +314,18 @@ function draw3() {
     canvasBack = document.getElementById("rectangleBack"); //メインキャンバスの裏にあるキャンバス。メインキャンバス上にマウスポインタがある際、ポインタの位置に半透明のピースを描くだけ
     canvas = document.getElementById("rectangle3"); //メインキャンバス、配列Boardの情報に基づく
     canvas4 = document.getElementById("rectangle4"); //サブキャンバス、選んでいるピースを描く。ピース選択状態（メインキャンバスにおける状態）になると赤線で囲まれる
-    canvasTurn = document.getElementById("rectangleTurn"); //誰がターンか分かるようにとりあえず作ってみた
+    //canvasTurn = document.getElementById("rectangleTurn"); //誰がターンか分かるようにとりあえず作ってみた
     if (!canvas || !canvas.getContext || !canvasBack || !canvasBack.getContext || !canvas4 || !canvas4.getContext) {
         return false;
     }
-    ctxBack = canvasBack.getContext('2d');
-    ctx = canvas.getContext('2d');
-    ctx4 = canvas4.getContext('2d');
-    ctxTurn = canvasTurn.getContext('2d');
+    //ctxBack = canvasBack.getContext('2d');
+    //ctx = canvas.getContext('2d');
+    //ctx4 = canvas4.getContext('2d');
+    //ctxTurn = canvasTurn.getContext('2d');
+    ctxBack = canvasBack.getContext("2d");
+    ctx = canvas.getContext("2d");
+    ctx4 = canvas4.getContext("2d");
+    //ctxTurn = canvasTurn.getContext("2d");
 
 
 
@@ -308,8 +336,8 @@ function draw3() {
     canvas4.height = squareSize * 5;
     canvasBack.width = squareSize * 20;
     canvasBack.height = squareSize * 20;
-    canvasTurn.width = squareSize * 5;
-    canvasTurn.height = squareSize * 2;
+    //canvasTurn.width = squareSize * 5;
+    //canvasTurn.height = squareSize * 2;
     //document.getElementById("rectangle4").classList.add("subcan");
     //こっから↓はcssみたいなやつ
     let target4 = document.getElementById("rectangle4");
@@ -572,7 +600,7 @@ function mouseUp(event) {
     console.log(nowturn);
     if (MyTurnFlag == 0) {
         //自分のターンじゃないならなにもしない
-        alert("プレイヤー" + nowplayer + "のターンよ")
+        swal("プレイヤー" + nowplayer + "のターンよ")
         return;
     }
     if (SelectFlag == 0) {
@@ -612,7 +640,7 @@ function mouseUp(event) {
             }
         }
         if (RegionFlag) {
-            alert("盤面の外にピースがでちゃうように置かないで")
+            swal("盤面の外にピースがでちゃうように置かないで")
         } else if (FirstFlag) {
             for (let i = 0; i < Pieces[selectNum].childline.length; i++) {
                 Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i]][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i]] = playerNum;
@@ -629,7 +657,7 @@ function mouseUp(event) {
             MyTurnFlag = 0;
             finish_turn();
         } else {
-            alert("盤面の角が埋まるように")
+            swal("盤面の角が埋まるように")
         }
 
     } else {
@@ -688,7 +716,7 @@ function mouseUp(event) {
         //console.log(PlaceFlag, CornerFlag, EdgeFlag);
 
         if (RegionFlag) {
-            alert("盤面の外にピースがでちゃうように置かないで")
+            swal("盤面の外にピースがでちゃうように置かないで")
         } else if (PlaceFlag && CornerFlag && EdgeFlag) {
             for (let i = 0; i < Pieces[selectNum].childline.length; i++) {
                 Board[Math.floor(event.offsetY / squareSize) + Pieces[selectNum].childline[i]][Math.floor(event.offsetX / squareSize) + Pieces[selectNum].childcolumn[i]] = playerNum;
@@ -714,7 +742,7 @@ function mouseUp(event) {
             if (!EdgeFlag) {
                 errmsg += "既に配置してあるピースの辺に接しちゃダメ\n";
             }
-            alert(errmsg);
+            swal(errmsg);
         }
     }
 };
@@ -913,7 +941,7 @@ function halfway_caluculation() { //終了判定もらって最終結果を表�
             player_Sum.piece[i][4] += 1;
         }
     }
-    alert('残ってるピースの総合計は' + player_Sum.total[0] + '\n' +
+    swal('残ってるピースの総合計は' + player_Sum.total[0] + '\n' +
         '1マスのピースの数は' + player_Sum.piece[0][0] + '個' +
         '\n' + '2マスのピースの数は' + player_Sum.piece[0][1] + '個' +
         '\n' + '3マスのピースの数は' + player_Sum.piece[0][2] + '個' +

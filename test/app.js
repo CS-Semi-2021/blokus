@@ -107,6 +107,7 @@ socket.on('game_set', function(data) {
     clearInterval(gTid);
     Board = data.board_status;
     MyTurnFlag = 0;
+    ctxTurn.clearRect(0, squareSize, squareSize * 5, squareSize);
     socket.emit('holding_point', {
         user: IAM.token,
         point: piece

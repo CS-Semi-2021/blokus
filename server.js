@@ -22,8 +22,8 @@ const ROOM = {};
 
 // チャット延べ参加者数
 let MEMBER_COUNT = 1;
+let game_page_countlist = new Array(); //game_page_countlist[i]：ルームiのプレイやーでゲームページにいる人数
 
-let game_page_count = 0;//ゲームページにいる人数
 const port = 51234;
 const hostname = "tokyo.vldb2020.org";
 
@@ -109,6 +109,9 @@ io.on("connection", (socket) => {
         } else {
             MEMBER_COUNT = 1;
         }
+        if (MEMBER_COUNT == 1) {
+            game_page_countlist[room] = 0;
+        }
         // 本人にトークンを送付
         io.to(socket.id).emit('token', {
             token: token,
@@ -126,8 +129,7 @@ io.on("connection", (socket) => {
         pass: pass, //pass回数
         score: score,
         name: name,
-        access_point: access_point, //スコアの送られた回数
-        game_page_count: game_page_count
+        access_point: access_point //スコアの送られた回数
     };
 
 
@@ -136,15 +138,13 @@ io.on("connection", (socket) => {
     });*/
 
     socket.on('OpenGamePage', function(data) {
-        ROOM[room].game_page_count++;
-        game_page_count++
-        game_page_count = game_page_count % 4;
-        if (ROOM[room].game_page_count == 4 && MEMBER_COUNT == 4) {
-            io.to(room).emit('game_start', {
-                board_status: ROOM[room].board,
-                count: ROOM[room].count
-            });
-        }
+        game_page_countlist[room]++;
+        if (game_page_countlist[room] == 4) {
+        io.to(room).emit('game_start', {
+            board_status: ROOM[room].board,
+            count: ROOM[room].count
+        });
+       }
      });
     //ゲームの開始合図
     /*if (MEMBER_COUNT == 4) {

@@ -22,7 +22,7 @@ const ROOM = {};
 
 // チャット延べ参加者数
 let MEMBER_COUNT = 0;
-let game_page_count = 0; //ゲームページにいる人数
+let game_page_countlist = new Array(); //game_page_countlist[i]：ルームiのプレイやーでゲームページにいる人数
 const port = 3000;
 
 // ルーティングの設定
@@ -102,6 +102,10 @@ io.on("connection", (socket) => {
             MEMBER_COUNT = 1;
         }
 
+        if (MEMBER_COUNT == 1) {
+            game_page_countlist[room] = 0;
+        }
+
         MEMBER[socket.id] = {
             token: token,
             name: null,
@@ -117,6 +121,7 @@ io.on("connection", (socket) => {
         socket.join(room);
         console.log(room);
         //console.log(MEMBER[socket.id]);
+
     })();
 
     ROOM[room] = {
@@ -125,8 +130,7 @@ io.on("connection", (socket) => {
         pass: pass, //pass回数
         score: score,
         name: name,
-        access_point: access_point, //スコアの送られた回数
-        game_page_count: game_page_count
+        access_point: access_point //スコアの送られた回数
     };
 
 
@@ -135,15 +139,13 @@ io.on("connection", (socket) => {
     });*/
 
     socket.on('OpenGamePage', (status) => {
-        ROOM[room].game_page_count++;
-        game_page_count++;
-        game_page_count = game_page_count % 4;
-        if (ROOM[room].game_page_count == 4 && MEMBER_COUNT == 4) {
-            io.to(room).emit('game_start', {
-                board_status: ROOM[room].board,
-                count: ROOM[room].count
-            });
-        }
+        game_page_countlist[room]++;
+        if (game_page_countlist[room] == 4) {
+        io.to(room).emit('game_start', {
+            board_status: ROOM[room].board,
+            count: ROOM[room].count
+        });
+       }
     });
 
     //ゲームの開始合図

@@ -60,6 +60,7 @@ function Display(operation) {
         document.getElementById("policy").style.display = "none";
         document.getElementById("rule").style.display = "none";
         document.getElementById("blokus").style.display = "none";
+        document.getElementById("footer").style.display = "flex";
     } else if (operation == "kiyaku") {
         $('#kiyaku').addClass('appear');
 

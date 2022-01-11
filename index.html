@@ -17,9 +17,8 @@
                 <div class="index-detail">
                     <h2 class="subtitle">みんなで楽しめるテリトリー戦略ゲーム</h2>
                     <h1 class="title">Blokus</h1>
-
+                    <button class="button-to-blokus" type="button" onClick="Display('blokus')">ゲームに参加</button>
                     <button class="button-in-index" type="button" onClick="Display('rule')">ルール・遊び方</button>
-                    <button class="button-in-index" type="button" onClick="Display('blokus')">ゲームに参加</button>
                     <button class="button-in-index" type="button" onClick="Display('kiyaku')">利用規約</button>
                     <button class="button-in-index" type="button" onClick="Display('policy')">プライバシーポリシー</button>
                 </div>
@@ -273,7 +272,6 @@
                 </ul>
             </nav>
             <div class="mains">
-                
                 <canvas id="rectangle3"  class="canvaswrap"></canvas>
                 <canvas id="rectangleBack"></canvas>
                 <canvas id="rectangle4"></canvas>
@@ -319,8 +317,5 @@
 
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
-        <script src="/socket.io/socket.io.js"></script>
-        <script src="./app.js" defer></script>
-        <script src="./main.js" defer></script>
     </body>
 </html>

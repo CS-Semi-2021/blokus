@@ -150,7 +150,7 @@ kiyaku, policy については同じように文章だけの画面になるの�
 */
 
 .rule {
-    padding: 100px;
+    padding-top: 100px;
 }
 
 #rule,
@@ -235,7 +235,6 @@ kiyaku, policy については同じように文章だけの画面になるの�
     justify-content: center;
     align-items: center;
     margin: 0 auto;
-    padding: 60px;
 }
 
 .rule-detail {

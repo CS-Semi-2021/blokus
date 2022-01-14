@@ -596,8 +596,12 @@ function mouseUp(event) {
     //メインキャンバス上でクリックされると実行される関数。
     console.log(nowturn);
     if (MyTurnFlag == 0) {
+        if (nowplayer == undefined) {
+            swal("プレイヤーがまだ集まっていません。");
+        } else {
+            swal("プレイヤー" + nowplayer + "のターンです。")
+        }
         //自分のターンじゃないならなにもしない
-        swal("プレイヤー" + nowplayer + "のターンです。")
         return;
     }
     if (SelectFlag == 0) {

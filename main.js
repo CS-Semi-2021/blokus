@@ -93,7 +93,7 @@ function Display(operation) {
         document.getElementById("rule").style.display = "none";
         document.getElementById("blokus").style.display = "none";
     } else if (operation == "blokus") {
-        soket.emit('OpenGamePage', {
+        socket.emit('OpenGamePage', {
             token: IAM.token
         });
         document.getElementById("index").style.display = "none";

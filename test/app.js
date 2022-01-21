@@ -7,6 +7,7 @@ let PassFlag = false; //passした時のフラグ
 let piece; //手持ちのコマ数
 let gamePageCount = 0;
 let GamePageFlag = false;
+let how_many_guests = 0;
 
 
 
@@ -41,6 +42,13 @@ socket.on("token", (data) => {
     });*/
 });
 
+socket.on('how_many', (data) => {
+    how_many_guests = data.count;
+    var elm = document.getElementById("waiting");
+    elm.textContent = "現在人数" + how_many_guests;
+
+});
+
 //game_startイベントの受信
 socket.on('game_start', (data) => {
     Board = data.board_status;
@@ -53,6 +61,12 @@ socket.on('game_start', (data) => {
     ctxTurn.beginPath();
     ctxTurn.arc(0.5 * squareSize, 1.2 * squareSize, 0.1 * squareSize, 0, Math.PI * 2, true);
     ctxTurn.fill();
+    
+    // 待機中か
+    console.log("ゲーム進行");
+    var elm = document.getElementById("waiting");
+    elm.textContent = 'ゲーム進行中';
+
     now = new Date();
     gTimeStart = now.getTime();
     gTid = setInterval('TimeDisplay()', 1000);

@@ -94,7 +94,7 @@ function Display(operation) {
         document.getElementById("blokus").style.display = "none";
     } else if (operation == "blokus") {
         if(socket !== void 0){
-            soket.emit('OpenGamePage', {
+            socket.emit('OpenGamePage', {
                 token: IAM.token
             });
         }

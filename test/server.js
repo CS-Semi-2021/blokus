@@ -21,36 +21,38 @@ const MEMBER = {};
 const ROOM = {};
 
 // チャット延べ参加者数
-let MEMBER_COUNT = 0;
+let MEMBER_COUNT = 1;
 let game_page_countlist = new Array(); //game_page_countlist[i]：ルームiのプレイやーでゲームページにいる人数
+
 const port = 3000;
+
 
 // ルーティングの設定
 app.get("/", (req, res) => {
     res.sendFile(`${__dirname}/index.html`);
-    console.log("/ へアクセスがありました");
+    //console.log("/ へアクセスがありました");
 });
 app.get("/images/:file", (req, res) => {
     const file = req.params.file;
 
     res.sendFile(`${__dirname}/images/${file}`);
-    console.log(`/images/${file} へアクセスがありました`);
+    //console.log(`/images/${file} へアクセスがありました`);
 });
 app.get("/main.js", (req, res) => {
     res.sendFile(`${__dirname}/main.js`);
-    console.log("/main.js へアクセスがありました");
+    //console.log("/main.js へアクセスがありました");
 });
 app.get("/app.js", (req, res) => {
     res.sendFile(`${__dirname}/app.js`);
-    console.log("/app.js へアクセスがありました");
+    //console.log("/app.js へアクセスがありました");
 });
 app.get("/style.css", (req, res) => {
     res.sendFile(`${__dirname}/style.css`);
-    console.log("/style.css へアクセスがありました");
+    //console.log("/style.css へアクセスがありました");
 });
 app.get("/util.js", (req, res) => {
     res.sendFile(`${__dirname}/util.js`);
-    console.log("/util.js へアクセスがありました");
+    //console.log("/util.js へアクセスがありました");
 });
 // HTTPサーバを起動する
 http.listen(port, () => {
@@ -98,22 +100,20 @@ io.on("connection", (socket) => {
         room = ~~(room_num / 4) + 1;
         room_num++;
 
-        if (MEMBER_COUNT < 4) {
-            MEMBER_COUNT++;
-        } else {
-            MEMBER_COUNT = 1;
-        }
-
-        if (MEMBER_COUNT == 1) {
-            game_page_countlist[room] = 0;
-        }
-
         MEMBER[socket.id] = {
             token: token,
             name: null,
             count: MEMBER_COUNT,
             score: score
         };
+        if (MEMBER_COUNT < 4) {
+            MEMBER_COUNT++;
+        } else {
+            MEMBER_COUNT = 1;
+        }
+        if (MEMBER_COUNT == 1) {
+            game_page_countlist[room] = 0;
+        }
         // 本人にトークンを送付
         io.to(socket.id).emit('token', {
             token: token,
@@ -123,7 +123,6 @@ io.on("connection", (socket) => {
         socket.join(room);
         console.log(room);
         //console.log(MEMBER[socket.id]);
-
     })();
 
     ROOM[room] = {
@@ -142,8 +141,7 @@ io.on("connection", (socket) => {
       ROOM[room].board = data.board_status;
     });*/
 
-    //ゲームの開始合図
-    socket.on('OpenGamePage', (status) => {
+    socket.on('OpenGamePage', function(data) {
         game_page_countlist[room]++;
         if (game_page_countlist[room] == 4) {
         io.to(room).emit('game_start', {
@@ -151,16 +149,14 @@ io.on("connection", (socket) => {
             count: ROOM[room].count
         });
        }
-    });
-
-    /*
-    if (MEMBER_COUNT == 4) {
+     });
+    //ゲームの開始合図
+    /*if (MEMBER_COUNT == 4) {
         io.to(room).emit('game_start', {
             board_status: ROOM[room].board,
             count: ROOM[room].count
         });
-    }
-    */
+    }*/
     socket.on('finish_turn', (status) => {
         ROOM[room].access_point = 0;
         ROOM[room].pass = 0;
@@ -179,6 +175,7 @@ io.on("connection", (socket) => {
             nowplayer: ROOM[room].nowplayer
         });
     });
+
     //passイベントの受信
     socket.on('PassTurn', function(data) {
         ROOM[room].board = data.board_status;
@@ -189,7 +186,6 @@ io.on("connection", (socket) => {
         if(ROOM[room].nowplayer > 4) ROOM[room].nowplayer = 1;
         if(ROOM[room].leave_num[ROOM[room].nowplayer] == 1) ROOM[room].nowplayer++;
         if(ROOM[room].nowplayer > 4) ROOM[room].nowplayer = 1;
-        console.log(board);
         //MEMBER[socket.id].score = scoreCal();
         if (ROOM[room].pass < game_page_countlist[room]) {
             //go_nextイベントの送信

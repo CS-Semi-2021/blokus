@@ -11,7 +11,6 @@ let GamePageFlag = false;
 
 
 
-
 //first_connectionイベント
 //自分自身の情報を入れる
 const IAM = {
@@ -24,6 +23,7 @@ const IAM = {
 //-------------------------------------
 const socket = io();
 let nowturn = 1;
+let leave_num = new Array();
 // 正常に接続したら
 socket.on("connect", () => {
     // 表示を切り替える
@@ -75,7 +75,7 @@ socket.on('next_turn', function(data) {
     nowturn = data.count;
     console.log('next_turn');
     Coloring();
-    nowplayer = nowturn % 4;
+    nowplayer = data.nowplayer;
     if (nowplayer == 0) {
         nowplayer = 4;
     }
@@ -126,6 +126,12 @@ socket.on('winner', function(data) {
     console.log(results);
     //試合結果の表示を処理する関数を呼び出す
     window.confirm("結果発表\n  １位：Player" + resultn[0] + " " + results[0] + "ポイント");
+});
+
+//leave_playerイベントの受信
+socket.on('leave_player', function(data) {
+    console.log("leave_player");
+    leave_num[data.leave_num] = 1; //出て行ったプレイヤーのナンバー取得
 });
 
 

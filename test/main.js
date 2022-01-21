@@ -118,6 +118,7 @@ function leaveAlert() {
     swal(options).then(function(value) {
         if (value) {
             Display("index");
+            socket.emit('leave');
         }
     });
 }

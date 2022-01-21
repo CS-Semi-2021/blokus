@@ -79,6 +79,8 @@ score = [0, 0, 0, 0]; //Playerの点数
 let name = new Array();
 let access_point = 0; //スコアの送られた回数
 let room_num = 0;
+let leave_num = new Array(); //出て行ったプレイヤー
+let nowplayer = 1; //現在のプレイヤー
 
 //connectionイベントを受信する
 io.on("connection", (socket) => {
@@ -130,7 +132,9 @@ io.on("connection", (socket) => {
         pass: pass, //pass回数
         score: score,
         name: name,
-        access_point: access_point //スコアの送られた回数
+        access_point: access_point, //スコアの送られた回数
+        leave_num: leave_num, //出て行ったプレイヤー
+        nowplayer: nowplayer
     };
 
 
@@ -138,6 +142,7 @@ io.on("connection", (socket) => {
       ROOM[room].board = data.board_status;
     });*/
 
+    //ゲームの開始合図
     socket.on('OpenGamePage', (status) => {
         game_page_countlist[room]++;
         if (game_page_countlist[room] == 4) {
@@ -148,7 +153,6 @@ io.on("connection", (socket) => {
        }
     });
 
-    //ゲームの開始合図
     /*
     if (MEMBER_COUNT == 4) {
         io.to(room).emit('game_start', {
@@ -164,10 +168,15 @@ io.on("connection", (socket) => {
         console.log(ROOM[room].pass);
         ROOM[room].board = status.board_status;
         ROOM[room].count = status.count + 1;
+        ROOM[room].nowplayer++;
+        if(ROOM[room].nowplayer > 4) ROOM[room].nowplayer = 1;
+        if(ROOM[room].leave_num[ROOM[room].nowplayer] == 1) ROOM[room].nowplayer++;
+        if(ROOM[room].nowplayer > 4) ROOM[room].nowplayer = 1;
         console.log(board);
         io.to(room).emit('next_turn', {
             board_status: ROOM[room].board,
-            count: ROOM[room].count
+            count: ROOM[room].count,
+            nowplayer: ROOM[room].nowplayer
         });
     });
     //passイベントの受信
@@ -176,12 +185,18 @@ io.on("connection", (socket) => {
         ROOM[room].count = data.count + 1;
         console.log("iiiiii");
         ROOM[room].pass++;
+        ROOM[room].nowplayer++;
+        if(ROOM[room].nowplayer > 4) ROOM[room].nowplayer = 1;
+        if(ROOM[room].leave_num[ROOM[room].nowplayer] == 1) ROOM[room].nowplayer++;
+        if(ROOM[room].nowplayer > 4) ROOM[room].nowplayer = 1;
+        console.log(board);
         //MEMBER[socket.id].score = scoreCal();
-        if (ROOM[room].pass < 4) {
+        if (ROOM[room].pass < game_page_countlist[room]) {
             //go_nextイベントの送信
             io.to(room).emit('next_turn', {
                 board_status: ROOM[room].board,
-                count: ROOM[room].count
+                count: ROOM[room].count,
+                nowplayer: ROOM[room].nowplayer
             });
         } else {
             //game_setイベントの送信
@@ -203,7 +218,7 @@ io.on("connection", (socket) => {
             ROOM[room].name[MEMBER[socket.id].count - 1] = MEMBER[socket.id].count;
             //score[MEMBER[socket.id].count-1] = data.point;
         }
-        if (ROOM[room].access_point == 4) { //全員がスコアを送り終えた後の処理
+        if (ROOM[room].access_point == game_page_countlist[room]) { //全員がスコアを送り終えた後の処理
             ROOM[room].score = scoreCal(ROOM[room].score, ROOM[room].board);
             rank();
             console.log("winner");
@@ -213,6 +228,52 @@ io.on("connection", (socket) => {
             io.to(room).emit('winner', {
                 user: ROOM[room].name,
                 point: ROOM[room].score
+            });
+        }
+    });
+
+    //切断時の処理
+    socket.on('disconnect', () => {
+        console.log('disconnect');
+        game_page_countlist[room]--;
+        ROOM[room].leave_num[MEMBER[socket.id].count] = 1;
+        MEMBER[socket.id].score = 10000;
+        io.to(room).emit('leave_player', {
+            leave_num: MEMBER[socket.id].count
+        });
+        if(MEMBER[socket.id].count == ROOM[room].nowplayer){
+            ROOM[room].nowplayer++;
+            if(ROOM[room].nowplayer > 4) ROOM[room].nowplayer = 1;
+            if(ROOM[room].leave_num[ROOM[room].nowplayer] == 1) ROOM[room].nowplayer++;
+            if(ROOM[room].nowplayer > 4) ROOM[room].nowplayer = 1;
+            console.log(board);
+            io.to(room).emit('next_turn', {
+                board_status: ROOM[room].board,
+                count: ROOM[room].count,
+                nowplayer: ROOM[room].nowplayer
+            });
+        }
+    });
+
+    //退出時の処理
+    socket.on('leave', () => {
+        console.log('leave');
+        game_page_countlist[room]--;
+        ROOM[room].leave_num[MEMBER[socket.id].count] = 1;
+        MEMBER[socket.id].score = 10000;
+        io.to(room).emit('leave_player', {
+            leave_num: MEMBER[socket.id].count
+        });
+        if(MEMBER[socket.id].count == ROOM[room].nowplayer){
+            ROOM[room].nowplayer++;
+            if(ROOM[room].nowplayer > 4) ROOM[room].nowplayer = 1;
+            if(ROOM[room].leave_num[ROOM[room].nowplayer] == 1) ROOM[room].nowplayer++;
+            if(ROOM[room].nowplayer > 4) ROOM[room].nowplayer = 1;
+            console.log(board);
+            io.to(room).emit('next_turn', {
+                board_status: ROOM[room].board,
+                count: ROOM[room].count,
+                nowplayer: ROOM[room].nowplayer
             });
         }
     });

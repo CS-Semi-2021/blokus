@@ -6,7 +6,7 @@ let mynumber; //自分の手番の順番
 let PassFlag = false; //passした時のフラグ
 let piece; //手持ちのコマ数
 let gamepageCount = 0;
-let GamePageFlag = False;
+let GamePageFlag = false;
 
 
 
@@ -23,6 +23,7 @@ const IAM = {
   //-------------------------------------
   const socket = io();
   let nowturn = 1;
+  let leave_num = new Array();
   // 正常に接続したら
   socket.on("connect", ()=>{
     // 表示を切り替える
@@ -74,7 +75,7 @@ socket.on('next_turn', function(data){
     nowturn = data.count;
     console.log('next_turn');
     Coloring();
-    nowplayer = nowturn % 4;
+    nowplayer = data.nowplayer;
     if (nowplayer == 0){
         nowplayer = 4;
     }
@@ -127,6 +128,11 @@ socket.on('winner', function(data){
     window.confirm("結果発表\n  １位：Player" + resultn[0] + " " + results[0] + "ポイント");
 });
 
+//leave_playerイベントの受信
+socket.on('leave_player', function(data) {
+    console.log("leave_player");
+    leave_num[data.leave_num] = 1; //出て行ったプレイヤーのナンバー取得
+});
 
 //-------------------------------
 //  呼び出し用関数

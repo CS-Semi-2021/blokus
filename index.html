@@ -259,66 +259,7 @@
             </div>
         </div>
 
-        <!-- ゲーム画面 blokus -->
-        <div class="blokus" id="blokus" style="display:none;">
-            <header>
-                <div id="hamburger">
-                    <span class="inner_line" id="line1"></span>
-                    <span class="inner_line" id="line2"></span>
-                    <span class="inner_line" id="line3"></span>
-                </div>
-            </header>
-            <nav id="nav">
-                <ul>
-                    <li>ピースをクリックすると、クリックしたピースの背景に色がつきます。その色があなたの使用するピースの色です。 </li>
-                    <li>ピースをクリックした後、Rotate!ボタンを押すとピースが回転し、Reverseボタンを押すとピースが反転します。</li>
-                    <li>置きたいピースをクリックしてカーソルを盤面の上に動かすと、そのピースを置いた位置が表示されます。自分の置きたい位置に合わせてクリックするとピースを置けます。</li>
-                    <li>制限時間は1分で1分が経過すると自動的にパスされます。Passボタンでパスをすることもできます。</li>
-                    <li>Caluculateボタンを押すと残っているピースの総数とピースごとの本数が表示されます。</li>
-                </ul>
-            </nav>
-            <div class="mains">
-                <canvas id="rectangle3"  class="canvaswrap"></canvas>
-                <canvas id="rectangleBack"></canvas>
-                <canvas id="rectangle4"></canvas>
-                <canvas id="rectangleTurn"></canvas>
-
-                <input id="button1" class="button-in-blokus" type="button" value="Rotate!" onclick="Rotate()">
-                <input id="button2" class="button-in-blokus" type="button" value="Reverse!" onclick="Reverse()">
-                <input id="button3" class="button-in-blokus" type="button" value="Caluculate" onclick="halfway_caluculation()">
-                <input id="buttonpass" class="button-in-blokus" type="button" value="Pass" onclick="doPass()">
-                <button id = "buttonout" class="button-in-blokus" onClick="leaveAlert()">退出する</button>
-            
-                <img id = "changes0" src="images/image0.png" onclick="loads(0);">   
-                <img id = "changes1" src="images/image1.png" onclick="loads(1);">
-                <img id = "changes2" src="images/image2.png" onclick="loads(2);">
-                <img id = "changes3" src="images/image3.png" onclick="loads(3);">
-                <img id = "changes4" src="images/image4.png" onclick="loads(4);">
-                <img id = "changes5" src="images/image5.png" onclick="loads(5);">
-                <img id = "changes6" src="images/image6.png" onclick="loads(6);">
-                <img id = "changes7" src="images/image7.png" onclick="loads(7);">
-                <img id = "changes8" src="images/image8.png" onclick="loads(8);">
-                <img id = "changes9" src="images/image9.png" onclick="loads(9);">
-                <img id = "changes10" src="images/image10.png" onclick="loads(10);">
-                <img id = "changes11" src="images/image11.png" onclick="loads(11);">
-                <img id = "changes12" src="images/image12.png" onclick="loads(12);">
-                <img id = "changes13" src="images/image13.png" onclick="loads(13);">
-                <img id = "changes14" src="images/image14.png" onclick="loads(14);">
-                <img id = "changes15" src="images/image15.png" onclick="loads(15);">
-                <img id = "changes16" src="images/image16.png" onclick="loads(16);">
-                <img id = "changes17" src="images/image17.png" onclick="loads(17);">
-                <img id = "changes18" src="images/image18.png" onclick="loads(18);">
-                <img id = "changes19" src="images/image19.png" onclick="loads(19);">
-                <img id = "changes20" src="images/image20.png" onclick="loads(20);">
-                <div id="waiting">
-                    待機中
-                </div>
-                <form id = "timelimit" name="TL">
-                    <p>制限時間（1分）：</p>
-                    <input size="15" type="text" readonly name="TLIMIT" value="00:00:00">
-                </form>
-            </div>
-        </div>
+        
 
         <footer id="footer">
             <p>© 2021 tmu.yokoyama.ac</p>

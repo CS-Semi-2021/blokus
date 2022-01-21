@@ -93,9 +93,11 @@ function Display(operation) {
         document.getElementById("rule").style.display = "none";
         document.getElementById("blokus").style.display = "none";
     } else if (operation == "blokus") {
-        soket.emit('OpenGamePage', {
-            token: IAM.token
-        });
+        if(socket !== void 0){
+            soket.emit('OpenGamePage', {
+                token: IAM.token
+            });
+        }
         document.getElementById("index").style.display = "none";
         document.getElementById("kiyaku").style.display = "none";
         document.getElementById("policy").style.display = "none";

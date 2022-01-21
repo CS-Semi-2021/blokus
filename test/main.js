@@ -443,9 +443,20 @@ function draw3() {
     targetOut.style.borderRadius = "2px";
     targetOut.style.cursor = "pointer";
 
+    let targetWaiting = document.getElementById("waiting");
+    targetWaiting.style.position = "absolute";
+    targetWaiting.style.top = squareSize * 4 + "px";
+    targetWaiting.style.left = squareSize * 21 + "px";
+    targetWaiting.style.width = squareSize * 5 + "px";
+    targetWaiting.style.height = squareSize * 1 + "px";
+    targetWaiting.style.fontSize = squareSize / 2 + "px";
+    targetWaiting.style.textAlign = "center";
+    targetWaiting.style.lineHeight = squareSize + "px";
+    targetWaiting.style.fontWeight = squareSize + "px";
+
     let targetTimeLimit = document.getElementById("timelimit");
     targetTimeLimit.style.position = "absolute";
-    targetTimeLimit.style.top = squareSize * 8 + "px";
+    targetTimeLimit.style.top = squareSize * 6 + "px";
     targetTimeLimit.style.left = squareSize * 21 + "px";
     targetTimeLimit.style.width = squareSize * 5 + "px";
     targetTimeLimit.style.height = squareSize * 1 + "px";

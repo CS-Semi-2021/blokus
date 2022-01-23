@@ -21,7 +21,7 @@ const MEMBER = {};
 const ROOM = {};
 
 // チャット延べ参加者数
-let MEMBER_COUNT = 1;
+let MEMBER_COUNT = 0;
 let game_page_countlist = new Array(); //game_page_countlist[i]：ルームiのプレイやーでゲームページにいる人数
 
 const port = 51234;
@@ -100,12 +100,6 @@ io.on("connection", (socket) => {
         room = ~~(room_num / 4) + 1;
         room_num++;
 
-        MEMBER[socket.id] = {
-            token: token,
-            name: null,
-            count: MEMBER_COUNT,
-            score: score
-        };
         if (MEMBER_COUNT < 4) {
             MEMBER_COUNT++;
         } else {
@@ -114,6 +108,14 @@ io.on("connection", (socket) => {
         if (MEMBER_COUNT == 1) {
             game_page_countlist[room] = 0;
         }
+        
+        MEMBER[socket.id] = {
+            token: token,
+            name: null,
+            count: MEMBER_COUNT,
+            score: score
+        };
+        
         // 本人にトークンを送付
         io.to(socket.id).emit('token', {
             token: token,

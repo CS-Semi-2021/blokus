@@ -30,29 +30,37 @@ const hostname = "tokyo.vldb2020.org";
 // ルーティングの設定
 app.get("/", (req, res) => {
     res.sendFile(`${__dirname}/index.html`);
-    //console.log("/ へアクセスがありました");
+    console.log("/index.html へアクセスがありました");
+});
+app.get("/game", (req, res) => {
+    res.sendFile(`${__dirname}/game.html`);
+    console.log("/game.html へアクセスがありました");
 });
 app.get("/images/:file", (req, res) => {
     const file = req.params.file;
 
     res.sendFile(`${__dirname}/images/${file}`);
-    //console.log(`/images/${file} へアクセスがありました`);
+    console.log(`/images/${file} へアクセスがありました`);
 });
 app.get("/main.js", (req, res) => {
     res.sendFile(`${__dirname}/main.js`);
-    //console.log("/main.js へアクセスがありました");
+    console.log("/main.js へアクセスがありました");
+});
+app.get("/top.js", (req, res) => {
+    res.sendFile(`${__dirname}/top.js`);
+    console.log("/top.js へアクセスがありました");
 });
 app.get("/app.js", (req, res) => {
     res.sendFile(`${__dirname}/app.js`);
-    //console.log("/app.js へアクセスがありました");
+    console.log("/app.js へアクセスがありました");
 });
 app.get("/style.css", (req, res) => {
     res.sendFile(`${__dirname}/style.css`);
-    //console.log("/style.css へアクセスがありました");
+    console.log("/style.css へアクセスがありました");
 });
 app.get("/util.js", (req, res) => {
     res.sendFile(`${__dirname}/util.js`);
-    //console.log("/util.js へアクセスがありました");
+    console.log("/util.js へアクセスがありました");
 });
 // HTTPサーバを起動する
 http.listen(port, hostname, () => {
@@ -147,12 +155,12 @@ io.on("connection", (socket) => {
             count: game_page_countlist[room]
         });
         if (game_page_countlist[room] == 4) {
-        io.to(room).emit('game_start', {
-            board_status: ROOM[room].board,
-            count: ROOM[room].count
-        });
-       }
-     });
+            io.to(room).emit('game_start', {
+                board_status: ROOM[room].board,
+                count: ROOM[room].count
+            });
+        }
+    });
     //ゲームの開始合図
     /*if (MEMBER_COUNT == 4) {
         io.to(room).emit('game_start', {
@@ -168,9 +176,9 @@ io.on("connection", (socket) => {
         ROOM[room].board = status.board_status;
         ROOM[room].count = status.count + 1;
         ROOM[room].nowplayer++;
-        if(ROOM[room].nowplayer > 4) ROOM[room].nowplayer = 1;
-        if(ROOM[room].leave_num[ROOM[room].nowplayer] == 1) ROOM[room].nowplayer++;
-        if(ROOM[room].nowplayer > 4) ROOM[room].nowplayer = 1;
+        if (ROOM[room].nowplayer > 4) ROOM[room].nowplayer = 1;
+        if (ROOM[room].leave_num[ROOM[room].nowplayer] == 1) ROOM[room].nowplayer++;
+        if (ROOM[room].nowplayer > 4) ROOM[room].nowplayer = 1;
         console.log(board);
         io.to(room).emit('next_turn', {
             board_status: ROOM[room].board,
@@ -186,9 +194,9 @@ io.on("connection", (socket) => {
         console.log("iiiiii");
         ROOM[room].pass++;
         ROOM[room].nowplayer++;
-        if(ROOM[room].nowplayer > 4) ROOM[room].nowplayer = 1;
-        if(ROOM[room].leave_num[ROOM[room].nowplayer] == 1) ROOM[room].nowplayer++;
-        if(ROOM[room].nowplayer > 4) ROOM[room].nowplayer = 1;
+        if (ROOM[room].nowplayer > 4) ROOM[room].nowplayer = 1;
+        if (ROOM[room].leave_num[ROOM[room].nowplayer] == 1) ROOM[room].nowplayer++;
+        if (ROOM[room].nowplayer > 4) ROOM[room].nowplayer = 1;
         //MEMBER[socket.id].score = scoreCal();
         if (ROOM[room].pass < game_page_countlist[room]) {
             //go_nextイベントの送信
@@ -240,11 +248,11 @@ io.on("connection", (socket) => {
         io.to(room).emit('leave_player', {
             leave_num: MEMBER[socket.id].count
         });
-        if(MEMBER[socket.id].count == ROOM[room].nowplayer){
+        if (MEMBER[socket.id].count == ROOM[room].nowplayer) {
             ROOM[room].nowplayer++;
-            if(ROOM[room].nowplayer > 4) ROOM[room].nowplayer = 1;
-            if(ROOM[room].leave_num[ROOM[room].nowplayer] == 1) ROOM[room].nowplayer++;
-            if(ROOM[room].nowplayer > 4) ROOM[room].nowplayer = 1;
+            if (ROOM[room].nowplayer > 4) ROOM[room].nowplayer = 1;
+            if (ROOM[room].leave_num[ROOM[room].nowplayer] == 1) ROOM[room].nowplayer++;
+            if (ROOM[room].nowplayer > 4) ROOM[room].nowplayer = 1;
             console.log(board);
             io.to(room).emit('next_turn', {
                 board_status: ROOM[room].board,
@@ -263,11 +271,11 @@ io.on("connection", (socket) => {
         io.to(room).emit('leave_player', {
             leave_num: MEMBER[socket.id].count
         });
-        if(MEMBER[socket.id].count == ROOM[room].nowplayer){
+        if (MEMBER[socket.id].count == ROOM[room].nowplayer) {
             ROOM[room].nowplayer++;
-            if(ROOM[room].nowplayer > 4) ROOM[room].nowplayer = 1;
-            if(ROOM[room].leave_num[ROOM[room].nowplayer] == 1) ROOM[room].nowplayer++;
-            if(ROOM[room].nowplayer > 4) ROOM[room].nowplayer = 1;
+            if (ROOM[room].nowplayer > 4) ROOM[room].nowplayer = 1;
+            if (ROOM[room].leave_num[ROOM[room].nowplayer] == 1) ROOM[room].nowplayer++;
+            if (ROOM[room].nowplayer > 4) ROOM[room].nowplayer = 1;
             console.log(board);
             io.to(room).emit('next_turn', {
                 board_status: ROOM[room].board,

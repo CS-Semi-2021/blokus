@@ -14,8 +14,8 @@ let how_many_guests = 0;
 //first_connectionイベント
 //自分自身の情報を入れる
 const IAM = {
-    token: null,  // トークン
-    name: null    // 名前
+    token: null, // トークン
+    name: null // 名前
 };
 
 //-------------------------------------
@@ -83,7 +83,7 @@ socket.on('game_start', (data) => {
 });
 
 //go_nextイベントの受信
-socket.on('next_turn', function (data) {
+socket.on('next_turn', function(data) {
     Board = data.board_status;
     console.log(data.board_status);
     nowturn = data.count;
@@ -116,7 +116,7 @@ socket.on('next_turn', function (data) {
 });
 
 //game\setイベントの受信
-socket.on('game_set', function (data) {
+socket.on('game_set', function(data) {
     console.log("game_set");
     clearInterval(gTid);
     Board = data.board_status;
@@ -132,18 +132,18 @@ let resultn = new Array();
 let results = new Array();
 
 //winnerイベントの受信
-socket.on('winner', function (data) {
+socket.on('winner', function(data) {
     console.log("winner");
     resultn = data.user;
     results = data.point;
     console.log(resultn);
     console.log(results);
     //試合結果の表示を処理する関数を呼び出す
-    window.confirm("結果発表\n  １位：Player" + resultn[0] + " " + results[0] + "ポイント");
+    swal("結果発表\n  １位：Player" + resultn[0] + " " + results[0] + "ポイント");
 });
 
 //leave_playerイベントの受信
-socket.on('leave_player', function (data) {
+socket.on('leave_player', function(data) {
     console.log("leave_player");
     leave_num[data.leave_num] = 1; //出て行ったプレイヤーのナンバー取得
 });

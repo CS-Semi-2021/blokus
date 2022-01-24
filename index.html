@@ -7,9 +7,7 @@
     </head>
 
     <body>
-        <script src="/socket.io/socket.io.js"></script>
-        <script src="./app.js" defer></script>
-        <script src="./main.js" defer></script>
+        <script src="./top.js"></script>
 
         <!--　タイトル画面 index -->
         <div class="index" id="index">
@@ -17,7 +15,7 @@
                 <div class="index-detail">
                     <h2 class="subtitle">みんなで楽しめるテリトリー戦略ゲーム</h2>
                     <h1 class="title">Blokus</h1>
-                    <button class="button-to-blokus" type="button" onClick="Display('blokus')">ゲームに参加</button>
+                    <button class="button-to-blokus" type="button" onClick="location.href='./game'">ゲームに参加</button>
                     <button class="button-in-index" type="button" onClick="Display('rule')">ルール・遊び方</button>
                     <button class="button-in-index" type="button" onClick="Display('kiyaku')">利用規約</button>
                     <button class="button-in-index" type="button" onClick="Display('policy')">プライバシーポリシー</button>

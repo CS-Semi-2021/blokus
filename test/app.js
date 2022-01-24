@@ -61,7 +61,7 @@ socket.on('game_start', (data) => {
     ctxTurn.beginPath();
     ctxTurn.arc(0.5 * squareSize, 1.2 * squareSize, 0.1 * squareSize, 0, Math.PI * 2, true);
     ctxTurn.fill();
-    
+
     // 待機中か
     console.log("ゲーム進行");
     var elm = document.getElementById("waiting");
@@ -139,7 +139,7 @@ socket.on('winner', function(data) {
     console.log(resultn);
     console.log(results);
     //試合結果の表示を処理する関数を呼び出す
-    window.confirm("結果発表\n  １位：Player" + resultn[0] + " " + results[0] + "ポイント");
+    swal("結果発表\n  １位：Player" + resultn[0] + " " + results[0] + "ポイント");
 });
 
 //leave_playerイベントの受信

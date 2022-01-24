@@ -52,59 +52,10 @@ document.getElementById('hamburger').addEventListener('click', function() {
     hamburger();
 });
 
-// 画面表示切り替え
-function Display(operation) {
-    if (operation == "index") {
-        document.getElementById("index").style.display = "block";
-        document.getElementById("kiyaku").style.display = "none";
-        document.getElementById("policy").style.display = "none";
-        document.getElementById("rule").style.display = "none";
-        document.getElementById("blokus").style.display = "none";
-        document.getElementById("footer").style.display = "flex";
-    } else if (operation == "kiyaku") {
-        $('#kiyaku').addClass('appear');
 
-        document.getElementById("index").style.display = "none";
-        document.getElementById("kiyaku").style.display = "block";
-        document.getElementById("policy").style.display = "none";
-        document.getElementById("rule").style.display = "none";
-        document.getElementById("blokus").style.display = "none";
-    } else if (operation == "policy") {
-        $('#policy').addClass('appear');
-
-        document.getElementById("index").style.display = "none";
-        document.getElementById("kiyaku").style.display = "none";
-        document.getElementById("policy").style.display = "block";
-        document.getElementById("rule").style.display = "none";
-        document.getElementById("blokus").style.display = "none";
-    } else if (operation == "rule") {
-        $('#rule').addClass('appear');
-
-        document.getElementById("index").style.display = "none";
-        document.getElementById("kiyaku").style.display = "none";
-        document.getElementById("policy").style.display = "none";
-        document.getElementById("rule").style.display = "block";
-        document.getElementById("blokus").style.display = "none";
-    } else if (operation == "create-room") {
-        $('#create-room').addClass('appear');
-        document.getElementById("index").style.display = "none";
-        document.getElementById("kiyaku").style.display = "none";
-        document.getElementById("policy").style.display = "none";
-        document.getElementById("rule").style.display = "none";
-        document.getElementById("blokus").style.display = "none";
-    } else if (operation == "blokus") {
-        socket.emit('OpenGamePage', {
-            token: IAM.token
-        });
-        document.getElementById("index").style.display = "none";
-        document.getElementById("kiyaku").style.display = "none";
-        document.getElementById("policy").style.display = "none";
-        document.getElementById("rule").style.display = "none";
-        document.getElementById("blokus").style.display = "block";
-        document.getElementById("footer").style.display = "none";
-        draw3();
-    }
-}
+socket.emit('OpenGamePage', {
+    token: IAM.token
+});
 
 // ゲームから退出するときの警告
 function leaveAlert() {
@@ -117,7 +68,7 @@ function leaveAlert() {
     };
     swal(options).then(function(value) {
         if (value) {
-            Display("index");
+            window.open('./');
             socket.emit('leave');
         }
     });
@@ -1011,3 +962,5 @@ function TimeDisplay() {
         }
     }
 }
+
+draw3();

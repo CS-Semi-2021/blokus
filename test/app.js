@@ -8,7 +8,7 @@ let piece; //手持ちのコマ数
 let gamePageCount = 0;
 let GamePageFlag = false;
 let how_many_guests = 0;
-
+let Colors = ["緑", "ピンク", "青", "オレンジ"];
 
 
 
@@ -139,7 +139,7 @@ socket.on('winner', function(data) {
     console.log(resultn);
     console.log(results);
     //試合結果の表示を処理する関数を呼び出す
-    swal("結果発表\n  １位：Player" + resultn[0] + " " + results[0] + "ポイント");
+    swal("結果発表\n 1位 : " + Colors[resultn[0] - 1] + "    " + results[0] + "ポイント\n 2位 : " + Colors[resultn[1] - 1] + "    " + results[1] + "ポイント\n 3位 : " + Colors[resultn[2] - 1] + "    " + results[2] + "ポイント\n 4位 : " + Colors[resultn[3] - 1] + "    " + results[3] + "ポイント");
 });
 
 //leave_playerイベントの受信

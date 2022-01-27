@@ -154,6 +154,7 @@ io.on("connection", (socket) => {
     socket.on('OpenGamePage', (status) => {
         game_page_countlist[room]++;
         io.to(room).emit('how_many', {
+            room_num: room, 
             count: game_page_countlist[room]
         });
         if (game_page_countlist[room] == 4) {

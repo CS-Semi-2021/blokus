@@ -405,6 +405,17 @@ function draw3() {
     targetWaiting.style.lineHeight = squareSize + "px";
     targetWaiting.style.fontWeight = squareSize + "px";
 
+    let targetWaiting2 = document.getElementById("waiting2");
+    targetWaiting2.style.position = "absolute";
+    targetWaiting2.style.top = squareSize * 3 + "px";
+    targetWaiting2.style.left = squareSize * 21 + "px";
+    targetWaiting2.style.width = squareSize * 5 + "px";
+    targetWaiting2.style.height = squareSize * 1 + "px";
+    targetWaiting2.style.fontSize = squareSize / 2 + "px";
+    targetWaiting2.style.textAlign = "center";
+    targetWaiting2.style.lineHeight = squareSize + "px";
+    targetWaiting2.style.fontWeight = squareSize + "px";
+
     let targetTimeLimit = document.getElementById("timelimit");
     targetTimeLimit.style.position = "absolute";
     targetTimeLimit.style.top = squareSize * 6 + "px";

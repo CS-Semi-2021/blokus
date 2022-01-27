@@ -9,6 +9,7 @@ let gamePageCount = 0;
 let GamePageFlag = false;
 let how_many_guests = 0;
 let Colors = ["緑", "ピンク", "青", "オレンジ"];
+let roomNum;
 
 
 
@@ -43,10 +44,13 @@ socket.on("token", (data) => {
 });
 
 socket.on('how_many', (data) => {
+    roomNum = data.room_num;
     how_many_guests = data.count;
     var elm = document.getElementById("waiting");
     elm.textContent = "現在人数" + how_many_guests;
-
+    var elm2 = document.getElementById("waiting2");
+    elm2.textContent = "ルーム" + roomNum;
+    Coloring2();
 });
 
 //game_startイベントの受信

@@ -13,6 +13,7 @@ let roomNum;
 
 
 
+
 //first_connectionイベント
 //自分自身の情報を入れる
 const IAM = {
@@ -127,7 +128,8 @@ socket.on('game_set', function(data) {
     MyTurnFlag = 0;
     ctxTurn.clearRect(0, squareSize, squareSize * 5, squareSize);
     var elm = document.getElementById("waiting");
-    elm.textContent = "ゲーム終了";
+    elm.textContent = "ゲーム終了" ;
+    FinishFlag = 1;
     socket.emit('holding_point', {
         user: IAM.token,
         point: piece

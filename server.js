@@ -123,6 +123,7 @@ io.on("connection", (socket) => {
             count: MEMBER_COUNT,
             score: score
         };
+
         // 本人にトークンを送付
         io.to(socket.id).emit('token', {
             token: token,

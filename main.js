@@ -18,6 +18,7 @@ let RegionFlag = 0; //ピースが20×20の盤面の外にでる部分があれ�
 let SelectFlag = 0; //Canvas4にピースが描画されており、それを選択したとき1になる。ピースをメインキャンバスに置くと０になる
 let FirstFlag = 0; //1ターン目のみつかう。自分から近い角にピースがおかれるなら1、おかれないなら0
 let MyTurnFlag = 0; //自分のターンなら1
+let FinishFlag = 0; //ゲームが終了しているなら１
 
 let selectNum = 21; //今選んでいるピースの番号が格納される。21は未選択状態
 let errmsg; //メインキャンバスにピースをおくときに、ルール上置けない場合に表示するエラーメッセージ
@@ -75,6 +76,10 @@ function leaveAlert() {
 }
 
 function doPass() {
+    if (FinishFlag == 1) {
+        swal("ゲームは終了しています。");
+        return;
+    }
     if (MyTurnFlag == 0) {
         swal("あなたのターンじゃないよ");
         return;
@@ -576,6 +581,10 @@ function mouseDown(event) {
 function mouseUp(event) {
     //メインキャンバス上でクリックされると実行される関数。
     console.log(nowturn);
+    if (FinishFlag == 1) {
+        swal("ゲームは終了しています。");
+        return;
+    }
     if (MyTurnFlag == 0) {
         if (nowplayer == undefined) {
             swal("プレイヤーがまだ集まっていません。");

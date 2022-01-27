@@ -69,7 +69,7 @@ function leaveAlert() {
     };
     swal(options).then(function(value) {
         if (value) {
-            window.open('./');
+            window.location.href = './'
             socket.emit('leave');
         }
     });

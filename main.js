@@ -53,59 +53,10 @@ document.getElementById('hamburger').addEventListener('click', function() {
     hamburger();
 });
 
-// 画面表示切り替え
-function Display(operation) {
-    if (operation == "index") {
-        document.getElementById("index").style.display = "block";
-        document.getElementById("kiyaku").style.display = "none";
-        document.getElementById("policy").style.display = "none";
-        document.getElementById("rule").style.display = "none";
-        document.getElementById("blokus").style.display = "none";
-        document.getElementById("footer").style.display = "flex";
-    } else if (operation == "kiyaku") {
-        $('#kiyaku').addClass('appear');
 
-        document.getElementById("index").style.display = "none";
-        document.getElementById("kiyaku").style.display = "block";
-        document.getElementById("policy").style.display = "none";
-        document.getElementById("rule").style.display = "none";
-        document.getElementById("blokus").style.display = "none";
-    } else if (operation == "policy") {
-        $('#policy').addClass('appear');
-
-        document.getElementById("index").style.display = "none";
-        document.getElementById("kiyaku").style.display = "none";
-        document.getElementById("policy").style.display = "block";
-        document.getElementById("rule").style.display = "none";
-        document.getElementById("blokus").style.display = "none";
-    } else if (operation == "rule") {
-        $('#rule').addClass('appear');
-
-        document.getElementById("index").style.display = "none";
-        document.getElementById("kiyaku").style.display = "none";
-        document.getElementById("policy").style.display = "none";
-        document.getElementById("rule").style.display = "block";
-        document.getElementById("blokus").style.display = "none";
-    } else if (operation == "create-room") {
-        $('#create-room').addClass('appear');
-        document.getElementById("index").style.display = "none";
-        document.getElementById("kiyaku").style.display = "none";
-        document.getElementById("policy").style.display = "none";
-        document.getElementById("rule").style.display = "none";
-        document.getElementById("blokus").style.display = "none";
-    } else if (operation == "blokus") {
-        socket.emit('OpenGamePage', {
-            token: IAM.token
-        });
-        document.getElementById("index").style.display = "none";
-        document.getElementById("kiyaku").style.display = "none";
-        document.getElementById("policy").style.display = "none";
-        document.getElementById("rule").style.display = "none";
-        document.getElementById("blokus").style.display = "block";
-        document.getElementById("footer").style.display = "none";
-        draw3();
-    }
-}
+socket.emit('OpenGamePage', {
+    token: IAM.token
+});
 
 // ゲームから退出するときの警告
 function leaveAlert() {
@@ -118,7 +69,7 @@ function leaveAlert() {
     };
     swal(options).then(function(value) {
         if (value) {
-            Display("index");
+            window.open('./');
             socket.emit('leave');
         }
     });
@@ -307,6 +258,7 @@ let Pieces = [piece0, piece1, piece2, piece3, piece4, piece5, piece6, piece7, pi
 ]
 
 function draw3() {
+    console.log("draw3 activate");
     if (document.documentElement.clientWidth / 2 > document.documentElement.clientHeight) {
         canvasSize = Math.floor(document.documentElement.clientHeight) * 0.9;
     } else {
@@ -458,6 +410,17 @@ function draw3() {
     targetWaiting.style.lineHeight = squareSize + "px";
     targetWaiting.style.fontWeight = squareSize + "px";
 
+    let targetWaiting2 = document.getElementById("waiting2");
+    targetWaiting2.style.position = "absolute";
+    targetWaiting2.style.top = squareSize * 3 + "px";
+    targetWaiting2.style.left = squareSize * 21 + "px";
+    targetWaiting2.style.width = squareSize * 5 + "px";
+    targetWaiting2.style.height = squareSize * 1 + "px";
+    targetWaiting2.style.fontSize = squareSize / 2 + "px";
+    targetWaiting2.style.textAlign = "center";
+    targetWaiting2.style.lineHeight = squareSize + "px";
+    targetWaiting2.style.fontWeight = squareSize + "px";
+
     let targetTimeLimit = document.getElementById("timelimit");
     targetTimeLimit.style.position = "absolute";
     targetTimeLimit.style.top = squareSize * 6 + "px";
@@ -538,21 +501,26 @@ function draw3() {
 
 
 function mouseMove(event) {
+    console.log("mouseMove activate");
     //メインキャンバス上でマウスが動かされると実行される
     if (MyTurnFlag == 0) {
+        console.log("MyTurnFlag == 0");
         //自分のターンじゃないならなにもしない
         return;
     }
     if (SelectFlag == 0) {
+        console.log("SelectFlag == 0");
         //ピースが選択状態にないときなにもしない
         return;
     }
     if (Math.floor(event.offsetX / squareSize) == x && Math.floor(event.offsetY / squareSize) == y) {
+        //console.log("Math.floor(event.offsetX / squareSize) == x && Math.floor(event.offsetY / squareSize) == y)");
         //マウスポインタがあるマスが前回と変わっていないなら処理なし
         return;
     }
     //前回の半透明でcanvasBackに塗ったマスを透明に塗る
     if (DrawFlag == 1) {
+        console.log("DrawFlag == 1");
         //DrawFlagが0の時は前回のマスで色塗りをしてないので白塗りの必要なし。
         for (let i = 0; i < Pieces[selectNum].childline.length; i++) {
             ctxBack.clearRect(x * squareSize + Pieces[selectNum].childcolumn[i] * squareSize, y * squareSize + Pieces[selectNum].childline[i] * squareSize, squareSize, squareSize);
@@ -570,6 +538,7 @@ function mouseMove(event) {
         }
     }
     //↓選択中のピースを裏キャンバスに半透明で描く
+    console.log("描く");
     DrawFlag = 1;
     ctxBack.globalAlpha = 0.3;
     ctxBack.fillStyle = PlayerColor[playerNum - 1];
@@ -1013,3 +982,5 @@ function TimeDisplay() {
         }
     }
 }
+
+draw3();

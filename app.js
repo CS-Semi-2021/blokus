@@ -61,6 +61,8 @@ socket.on('game_start', (data) => {
     nowplayer = nowturn % 4;
     if (playerNum == 1) {
         MyTurnFlag = 1;
+        var elm3 = document.getElementById("waiting3");
+        elm3.textContent = "あなたのターンです。";
     }
     ctxTurn.fillStyle = "red";
     ctxTurn.beginPath();
@@ -112,10 +114,14 @@ socket.on('next_turn', function(data) {
         //自分のターンのときの処理を関数で呼び出す
         //draw3();
         MyTurnFlag = 1;
+        var elm3 = document.getElementById("waiting3");
+        elm3.textContent = "あなたのターンです。";
     } else {
         //自分のターン出ないときの処理を関数で呼び出す
         //draw3();
         MyTurnFlag = 0;
+        var elm3 = document.getElementById("waiting3");
+        elm3.textContent = "";
     }
 
 });

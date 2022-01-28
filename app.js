@@ -88,6 +88,9 @@ socket.on('game_start', (data) => {
 
 //go_nextイベントの受信
 socket.on('next_turn', function(data) {
+    now = new Date();
+    gTimeStart = now.getTime();
+    gTid = setInterval('TimeDisplay()', 1000);
     Board = data.board_status;
     console.log(data.board_status);
     nowturn = data.count;
@@ -113,9 +116,6 @@ socket.on('next_turn', function(data) {
         //draw3();
         MyTurnFlag = 0;
     }
-    now = new Date();
-    gTimeStart = now.getTime();
-    gTid = setInterval('TimeDisplay()', 1000);
 
 });
 

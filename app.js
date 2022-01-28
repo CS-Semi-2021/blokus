@@ -135,6 +135,8 @@ socket.on('game_set', function(data) {
     ctxTurn.clearRect(0, squareSize, squareSize * 5, squareSize);
     var elm = document.getElementById("waiting");
     elm.textContent = "ゲーム終了";
+    var elm3 = document.getElementById("waiting3");
+    elm3.textContent = "";
     FinishFlag = 1;
     socket.emit('holding_point', {
         user: IAM.token,

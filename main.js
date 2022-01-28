@@ -434,7 +434,7 @@ function draw3() {
 
     let targetTimeLimit = document.getElementById("timelimit");
     targetTimeLimit.style.position = "absolute";
-    targetTimeLimit.style.top = squareSize * 6 + "px";
+    targetTimeLimit.style.top = squareSize * 7 + "px";
     targetTimeLimit.style.left = squareSize * 21 + "px";
     targetTimeLimit.style.width = squareSize * 5 + "px";
     targetTimeLimit.style.height = squareSize * 1 + "px";

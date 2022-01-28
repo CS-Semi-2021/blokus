@@ -5,10 +5,12 @@ let nowplayer; //現在手番のプレイヤー
 let mynumber; //自分の手番の順番
 let PassFlag = false; //passした時のフラグ
 let piece; //手持ちのコマ数
-let gamepageCount = 0;
+let gamePageCount = 0;
 let GamePageFlag = false;
 let how_many_guests = 0;
+let Colors = ["緑", "ピンク", "青", "オレンジ"];
 let roomNum;
+
 
 
 
@@ -40,7 +42,6 @@ socket.on("token", (data) => {
     /*socket.emit("board",{
         board_status: Board
     });*/
-
 });
 
 socket.on('how_many', (data) => {
@@ -77,7 +78,7 @@ socket.on('game_start', (data) => {
     /*if(data.order == 1){
       //main.jsのdraw3()内にある
       //canvas.addEventListener('mouseleave', mouseLeave);の制御をして
-     //盤面に関与できる人とできない人を条件分けしたい
+　    //盤面に関与できる人とできない人を条件分けしたい
       draw3();
     }else{
         //自分のターン出ないときの処理を関数で呼び出す
@@ -127,7 +128,7 @@ socket.on('game_set', function(data) {
     MyTurnFlag = 0;
     ctxTurn.clearRect(0, squareSize, squareSize * 5, squareSize);
     var elm = document.getElementById("waiting");
-    elm.textContent = 'ゲーム終了';
+    elm.textContent = "ゲーム終了";
     FinishFlag = 1;
     socket.emit('holding_point', {
         user: IAM.token,
@@ -146,7 +147,7 @@ socket.on('winner', function(data) {
     console.log(resultn);
     console.log(results);
     //試合結果の表示を処理する関数を呼び出す
-    swal("結果発表\n  １位：Player" + resultn[0] + " " + results[0] + "ポイント");
+    swal("結果発表\n 1位 : " + Colors[resultn[0] - 1] + "    " + results[0] + "ポイント\n 2位 : " + Colors[resultn[1] - 1] + "    " + results[1] + "ポイント\n 3位 : " + Colors[resultn[2] - 1] + "    " + results[2] + "ポイント\n 4位 : " + Colors[resultn[3] - 1] + "    " + results[3] + "ポイント");
 });
 
 //leave_playerイベントの受信
@@ -154,6 +155,7 @@ socket.on('leave_player', function(data) {
     console.log("leave_player");
     leave_num[data.leave_num] = 1; //出て行ったプレイヤーのナンバー取得
 });
+
 
 //-------------------------------
 //  呼び出し用関数
